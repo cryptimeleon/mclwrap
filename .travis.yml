@@ -1,14 +1,39 @@
 language: java
+install: true   # tells Travis that we run gradlew manually
 jdk:
 - openjdk8
 - openjdk11
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+
+stages:
+- name: build
+- name: snapshot
+  if: branch = master
+- name: release
+  if: branch = release
+
+jobs:
+  include:
+  - stage: build
+    script: ./gradlew build
+  - stage: snapshot
+    script: ./gradlew publish -x test -Dsnapshot=true -Dnexus.user=$NEXUS_USER -Dnexus.key=$NEXUS_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER
+  - stage: release
+    script: ./gradlew publish -x test -Dnexus.user=$NEXUS_USER -Dnexus.key=$NEXUS_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER
+
 deploy:
   provider: releases
   api_key:
-    secure: MzB4DEXioCIPvQmcdA607N/o88BM73x3lJtoYoR58GqGivNMkGabQFwR4G0Umtq7ZC699VrKob9EOXnqn9XuN0wX0Yd92cCKAxrtK5kg2satJ/+6cpEjXPFB+SCHPkTY1dZCWh84HRPB30lrZSYSuTOsFBzsrEWhgVlDJaVPA43XH72Zj6Y04g2sDcSYlyIPb3XJ0P/RLb4oF2wDxrjBOe+o/FBX7QTyYly+CJiq2FmGZYYmAiwTPQ0/TV9MPxEe9tBupcopwy3dnx9vv+Zp9Hd6Wk991ZKXIdcMdWUpfYGVJux/jp0J46owsA2f/VqdciLpgJcgocJyZp1jsQDGy9JUw9kAdfDBct3ZOPiPNgqSItt7qKPIggdydceBHFaC0EvtT9O22KAukQoV52Ga6LirByJ8uXxZnszuYlw9HJPZfXMfUzfu7LVlUI6x6KtRclaSJHQfv8R3abwtJSgrvQZgW4s/Px17Fp8sTF16dOsAsVVEBlKVLY6zkjHxV0Q2Su02Uwq/UU7FMdYC/BMvx2VAIaGMD+syeFvUH9CxyuI+gdTOZs8u/1IsDCUP5bLYy8GHAkinQpD/BjRVJX3A1rqPbt6QJjmJOpRyigpN06yrm9fUw6pohggk4/wWJpU4QZEvJGUr/8UWFoG2lvwtJiIkCCB9vy5+mXKgo/E2UKo=
+    secure: dZzO5HrovScF//eLWLH+kCKZR7PWMt3epAwKM2RcS1KKZCpXeiD+4aTL/SAivoeFUZ+25E5cD5C5WbxImGHaTjrcV8m3WW1O5SqVYFfHz1xcsDJekCsm6YyV4xQo7e22X1+xK2ZTQ40b8PwwgXHsMsRYYZuAZu4dOfLLhDcFiYJHlvQ3UT7SetKsKo+iev7e8d1lKb9fIR0SA9CCo/DxmTsFbu4pl+OgpxrLTPYnEO1QIBmus7uZYG9w0laLJ2UMFO7agwhN4b4DTEwkHKuQrSynKIaUxeaVCctSS1X/ldwFWJ1OqdUitL+kjhM+STEZU45Y5E11w78lcAkiqcHCss2Dbhe83QFsOGShvBnE/tBrD3uH6Uhqj01sRVF8xzkETLrobyoavUPgzUXdExcsHu+MGZWO/CC/nHxpxXkH9lnidC0dYlh4lpci2FbNIX9lSdS5KyzbUdy4pJKaz9z6UewPF719QPVqo/uyJfsx+tRS7LBk8m+i2Le36KG7gd1Vu2N+8BmJRbJ/8gmqdLfufuDEINdHH0P4VlR9/VXnaWiz4+W9cOlL7iw439vUl+BJsq/0904Hh207dArGXD7ypxZQ7WvEeLZJOfZPsnIPhrbGQKTTrlyacNLo8heAOD4lz1o4Pt8EGblLHpJ4ScgqbcoeNvyc0/36dJyk0J5OQE4=
   file_glob: true
   file: build/libs/*
   skip_cleanup: true
   on:
-    repo: upbcuk/upb.crypto.math
-    tags: true
+    repo: upbcuk/upb.crypto.mclwrap
+    branch: release
