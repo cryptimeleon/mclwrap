@@ -116,4 +116,14 @@ public class MclBilinearGroup implements BilinearGroup {
     public Representation getRepresentation() {
         return new StringRepresentation("bn256");
     }
+
+    @Override
+    public int hashCode() {
+        return 1;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof MclBilinearGroup;
+    }
 }

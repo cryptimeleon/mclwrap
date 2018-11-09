@@ -11,8 +11,10 @@ import de.upb.crypto.math.serialization.Representation;
 
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.Objects;
 
 public class MclPairing implements BilinearMap {
+
     private MclBilinearGroup bilinearGroup;
 
     public MclPairing(MclBilinearGroup bilinearGroup) {
@@ -100,5 +102,18 @@ public class MclPairing implements BilinearMap {
     @Override
     public Representation getRepresentation() {
         return bilinearGroup.getRepresentation();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MclPairing that = (MclPairing) o;
+        return Objects.equals(bilinearGroup, that.bilinearGroup);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bilinearGroup);
     }
 }
