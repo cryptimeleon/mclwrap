@@ -6,6 +6,8 @@ import de.upb.crypto.math.interfaces.structures.GroupElement;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;
 
+import java.util.Objects;
+
 public abstract class MclGroupElement implements GroupElement {
     protected MclGroup group;
     protected Object element;
@@ -38,15 +40,22 @@ public abstract class MclGroupElement implements GroupElement {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return new StringRepresentation(getElement().toString());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MclGroupElement)) return false;
+        MclGroupElement that = (MclGroupElement) o;
+        return Objects.equals(group, that.group) &&
+                Objects.equals(element, that.element);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null || !this.getClass().equals(obj.getClass()))
-            return false;
-        return this.op((MclGroupElement) obj).isNeutralElement();
+    public int hashCode() {
+        return Objects.hash(group, element);
+    }
+
+    @Override
+    public Representation getRepresentation() {
+        return new StringRepresentation(getElement().toString());
     }
 
     @Override

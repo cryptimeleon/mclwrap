@@ -10,6 +10,9 @@ public class MclBilinearGroupProvider implements BilinearGroupProvider {
 
     @Override
     public BilinearGroup provideBilinearGroup(int securityParameter, BilinearGroupRequirement requirements) {
+        if (!checkRequirements(securityParameter, requirements)) {
+            throw new IllegalArgumentException("The requirements are not fulfilled by this bilinear group");
+        }
         return new MclBilinearGroup();
     }
 
