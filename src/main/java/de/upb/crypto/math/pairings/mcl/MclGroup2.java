@@ -3,6 +3,7 @@ package de.upb.crypto.math.pairings.mcl;
 import com.herumi.mcl.Bn256;
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G2;
+import de.upb.crypto.math.interfaces.structures.GroupElement;
 import de.upb.crypto.math.interfaces.structures.PowProductExpression;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;
@@ -20,29 +21,28 @@ public class MclGroup2 extends MclGroup {
 
     @Override
     public MclGroup2Element getElement(String string) {
-        G2 res = new G2();
-        res.setStr(string);
-        return createElement(res);
+        return createElement(getInternalObjectFromString(string));
     }
 
     @Override
-    protected G2 getEmptyInternalObject() {
-        return new G2();
+    public GroupElement getElement(Representation repr) {
+        return new MclGroup2Element(this, repr);
+    }
+
+    @Override
+    protected G2 getInternalObjectFromString(String str) {
+        G2 res = new G2();
+        res.setStr(str);
+        return (G2) res;
     }
 
     protected MclGroup2Element createElement(G2 G2) {
         return new MclGroup2Element(this, G2);
     }
 
-    private MclGroup2Element createElement(String str) {
-        G2 result = new G2();
-        result.setStr(str);
-        return createElement(result);
-    }
-
     @Override
     public MclGroup2Element getNeutralElement() {
-        return createElement("0");
+        return getElement("0");
     }
 
     @Override

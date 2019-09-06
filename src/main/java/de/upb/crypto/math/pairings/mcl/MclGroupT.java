@@ -19,29 +19,28 @@ public class MclGroupT extends MclGroup {
 
     @Override
     public MclGroupElement getElement(String string) {
-        GT res = new GT();
-        res.setStr(string);
-        return createElement(res);
+        return createElement(getInternalObjectFromString(string));
     }
 
     @Override
-    protected GT getEmptyInternalObject() {
-        return new GT();
+    public GroupElement getElement(Representation repr) {
+        return new MclGroupTElement(this, repr);
+    }
+
+    @Override
+    protected GT getInternalObjectFromString(String str) {
+        GT res = new GT();
+        res.setStr(str);
+        return (GT) res;
     }
 
     protected MclGroupTElement createElement(GT GT) {
         return new MclGroupTElement(this, GT);
     }
 
-    private MclGroupElement createElement(String str) {
-        GT result = new GT();
-        result.setStr(str);
-        return createElement(result);
-    }
-
     @Override
     public GroupElement getNeutralElement() {
-        return createElement("1 0 0 0 0 0 0 0 0 0 0 0");
+        return getElement("1 0 0 0 0 0 0 0 0 0 0 0");
     }
 
     @Override

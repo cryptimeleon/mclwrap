@@ -24,18 +24,12 @@ public abstract class MclGroup implements Group {
         return new BigInteger("16798108731015832284940804142231733909759579603404752749028378864165570215949");
     }
 
-
-    @Override
-    public GroupElement getElement(Representation repr) {
-        return getElement(repr.str().get());
-    }
-
     protected abstract MclGroupElement getElement(String string);
 
     /**
-     * Outputs an object of type mcl.G1, mcl.G2, or mcl.GT
+     * Outputs an object of type mcl.G1, mcl.G2, or mcl.GT given its toString()
      */
-    protected abstract Object getEmptyInternalObject();
+    protected abstract Object getInternalObjectFromString(String str);
 
     @Override
     public Optional<Integer> getUniqueByteLength() {

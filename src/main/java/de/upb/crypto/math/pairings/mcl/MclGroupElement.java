@@ -3,9 +3,9 @@ package de.upb.crypto.math.pairings.mcl;
 import de.upb.crypto.math.interfaces.hash.ByteAccumulator;
 import de.upb.crypto.math.interfaces.structures.Group;
 import de.upb.crypto.math.interfaces.structures.GroupElement;
-import de.upb.crypto.math.serialization.Representation;
-import de.upb.crypto.math.serialization.StringRepresentation;
+import de.upb.crypto.math.serialization.*;
 
+import java.math.BigInteger;
 import java.util.Objects;
 
 public abstract class MclGroupElement implements GroupElement {
@@ -18,7 +18,17 @@ public abstract class MclGroupElement implements GroupElement {
     }
 
     public MclGroupElement(MclGroup group, Representation repr) {
-        this(group, group.getElement(repr.str().get()));
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        for (Representation part : repr.list()) {
+            if (!first)
+                sb.append(" ");
+            sb.append(part.bigInt().get().toString());
+            first = false;
+        }
+
+        this.group = group;
+        this.element = group.getInternalObjectFromString(sb.toString());
     }
 
     /**
@@ -55,7 +65,12 @@ public abstract class MclGroupElement implements GroupElement {
 
     @Override
     public Representation getRepresentation() {
-        return new StringRepresentation(getElement().toString());
+        ListRepresentation result = new ListRepresentation();
+        String repr = getElement().toString(); //bunch of decimal numbers separated by spaces.
+        for (String str : repr.split(" "))
+            result.put(new BigIntegerRepresentation(new BigInteger(str)));
+
+        return result;
     }
 
     @Override
