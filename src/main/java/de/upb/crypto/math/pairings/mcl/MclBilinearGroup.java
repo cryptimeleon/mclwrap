@@ -39,7 +39,7 @@ public class MclBilinearGroup implements BilinearGroup {
 
     protected static void init(boolean printError) {
         if (!isInitialized) {
-            String lib = "mcl_bn256";
+            String lib = "mclbn256";
             try {
                 System.loadLibrary(lib);
             } catch (UnsatisfiedLinkError le) {

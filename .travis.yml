@@ -21,6 +21,14 @@ stages:
 jobs:
   include:
   - stage: build
+    before_install:
+    - sudo apt-get update
+    - sudo apt-get -y install libgmp-dev
+    - git clone git://github.com/herumi/mcl
+    - cd mcl || exit
+    - make -j4
+    - sudo cp lib/libmclbn256.so /usr/lib/libmclbn256.so
+    - cd ..
     script: ./gradlew build
   - stage: snapshot
     script: ./gradlew publish -x test -Dsnapshot=true -Dnexus.user=$NEXUS_USER -Dnexus.key=$NEXUS_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER
