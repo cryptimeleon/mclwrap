@@ -27,7 +27,7 @@ jobs:
     - git clone git://github.com/herumi/mcl
     - cd mcl || exit
     - make -j4
-    - sudo cp lib/libmclbn256.so /usr/lib/libmclbn256.so
+    - sudo cp lib/libmcljava.so /usr/lib/libmcljava.so
     - cd ..
     script: ./gradlew build
   - stage: snapshot

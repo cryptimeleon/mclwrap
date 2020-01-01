@@ -1,6 +1,6 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import com.herumi.mcl.Bn256;
+import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.factory.BilinearGroup;
 import de.upb.crypto.math.interfaces.hash.HashIntoStructure;
 import de.upb.crypto.math.interfaces.mappings.BilinearMap;
@@ -24,7 +24,7 @@ public class MclBilinearGroup implements BilinearGroup {
 
     public MclBilinearGroup(Representation repr) {
         this();
-        if (!repr.str().get().equals("bn256")) {
+        if (!repr.str().get().equals("bn254")) {
             throw new IllegalArgumentException("Invalid representation");
         }
     }
@@ -39,7 +39,7 @@ public class MclBilinearGroup implements BilinearGroup {
 
     protected static void init(boolean printError) {
         if (!isInitialized) {
-            String lib = "mclbn256";
+            String lib = "mcljava";
             try {
                 System.loadLibrary(lib);
             } catch (UnsatisfiedLinkError le) {
@@ -52,7 +52,8 @@ public class MclBilinearGroup implements BilinearGroup {
                 return;
             }
             try {
-                Bn256.SystemInit();
+                // TODO: DO we want to offer the other curve type too?
+                Mcl.SystemInit(Mcl.BN254);
             } catch (UnsatisfiedLinkError le) {
                 if (printError) {
                     le.printStackTrace();

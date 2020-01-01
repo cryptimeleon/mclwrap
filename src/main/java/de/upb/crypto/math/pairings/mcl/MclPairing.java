@@ -1,9 +1,9 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import com.herumi.mcl.Bn256;
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
 import com.herumi.mcl.GT;
+import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.interfaces.mappings.BilinearMap;
 import de.upb.crypto.math.interfaces.mappings.PairingProductExpression;
 import de.upb.crypto.math.interfaces.structures.GroupElement;
@@ -48,8 +48,8 @@ public class MclPairing implements BilinearMap {
 
         Fr exp = new Fr();
         exp.setStr(exponent.toString(10));
-        Bn256.mul(g1Exponentiated, ((MclGroup1Element) g1).getElement(), exp);
-        Bn256.pairing(result, g1Exponentiated, ((MclGroup2Element) g2).getElement());
+        Mcl.mul(g1Exponentiated, ((MclGroup1Element) g1).getElement(), exp);
+        Mcl.pairing(result, g1Exponentiated, ((MclGroup2Element) g2).getElement());
         return getGT().createElement(result);
     }
 
@@ -76,8 +76,8 @@ public class MclPairing implements BilinearMap {
             lhs.setStr("0");
             base.getGExpression().pow(exponent).forEach((gbase, gexp) -> { //compute g^x
                 tmpExponent.setStr(gexp.toString(10));
-                Bn256.mul(tmp, ((MclGroup1Element) gbase).getElement(), tmpExponent);
-                Bn256.add(lhs, lhs, tmp);
+                Mcl.mul(tmp, ((MclGroup1Element) gbase).getElement(), tmpExponent);
+                Mcl.add(lhs, lhs, tmp);
             });
 
             rhs.setStr("0");

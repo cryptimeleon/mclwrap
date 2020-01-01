@@ -1,10 +1,9 @@
 package de.upb.crypto.math.pairings.mcl;
 
 import com.herumi.mcl.G1;
+import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.interfaces.hash.HashIntoStructure;
 import de.upb.crypto.math.serialization.Representation;
-
-import java.util.Base64;
 
 public class MclHashIntoG1 implements HashIntoStructure {
     protected MclGroup1 group;
@@ -20,7 +19,7 @@ public class MclHashIntoG1 implements HashIntoStructure {
     @Override
     public MclGroup1Element hashIntoStructure(byte[] x) {
         G1 result = new G1();
-        result.hashAndMapToG1(Base64.getEncoder().encodeToString(x));
+        Mcl.hashAndMapToG1(result, x);
         return group.createElement(result);
     }
 
