@@ -3,6 +3,8 @@ install: true   # tells Travis that we run gradlew manually
 jdk:
 - openjdk8
 - openjdk11
+env:
+  - JAVA_INC=-I/usr/lib/jvm/java-8-openjdk-amd64/include
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -16,8 +18,9 @@ before_install:
   - git clone git://github.com/herumi/mcl
   - cd mcl
   - make -j4 # build mcl library
+  - ls /usr/lib/jvm/
   - cd ffi/java
-  - make test_mcl JAVA_INC=-I/usr/lib/jvm/java-8-openjdk-amd64/include # build java bindings, set include manually
+  - make test_mcl JAVA_INC=$JAVA_INC # build java bindings, set include manually
   - cd ../..
   - sudo cp lib/libmcljava.so /usr/lib/libmcljava.so
   - cd ..
