@@ -10,6 +10,17 @@ cache:
   directories:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y install libgmp-dev # requirement for mcl
+  - git clone git://github.com/herumi/mcl
+  - cd mcl
+  - make -j4 # build mcl library
+  - cd ffi/java
+  - make test_mcl JAVA_INC=-I/usr/lib/jvm/java-8-openjdk-amd64/include # build java bindings, set include manually
+  - cd ../..
+  - sudo cp lib/libmcljava.so /usr/lib/libmcljava.so
+  - cd ..
 
 stages:
 - name: build
@@ -21,17 +32,6 @@ stages:
 jobs:
   include:
   - stage: build
-    before_install:
-    - sudo apt-get update
-    - sudo apt-get -y install libgmp-dev # requirement for mcl
-    - git clone git://github.com/herumi/mcl
-    - cd mcl
-    - make -j4 # build mcl library
-    - cd ffi/java
-    - make test_mcl JAVA_INC=-I/usr/lib/jvm/java-8-openjdk-amd64/include # build java bindings, set include manually
-    - cd ../..
-    - sudo cp lib/libmcljava.so /usr/lib/libmcljava.so
-    - cd ..
     script: ./gradlew build
   - stage: snapshot
     script: ./gradlew publish -x test -Dsnapshot=true -Dnexus.user=$NEXUS_USER -Dnexus.key=$NEXUS_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER
