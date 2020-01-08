@@ -13,17 +13,8 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
 before_install:
-  - sudo apt-get update
-  - sudo apt-get -y install libgmp-dev # requirement for mcl
-  - git clone git://github.com/herumi/mcl
-  - cd mcl
-  - make -j4 # build mcl library
-  - ls /usr/lib/jvm/
-  - cd ffi/java
-  - make test_mcl JAVA_INC=$JAVA_INC # build java bindings, set include manually
-  - cd ../..
-  - sudo cp lib/libmcljava.so /usr/lib/libmcljava.so
-  - cd ..
+  - chmod +x install_mcl.sh
+  - ./install_mcl.sh
 
 stages:
 - name: build
