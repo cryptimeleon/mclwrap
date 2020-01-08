@@ -1,8 +1,8 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import com.herumi.mcl.Bn256;
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
+import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.interfaces.structures.Element;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.structures.zn.Zn;
@@ -32,7 +32,7 @@ public class MclGroup1Element extends MclGroupElement {
     @Override
     public MclGroup1Element inv() {
         G1 res = new G1();
-        Bn256.neg(res, getElement());
+        Mcl.neg(res, getElement());
         return getStructure().createElement(res);
     }
 
@@ -40,9 +40,9 @@ public class MclGroup1Element extends MclGroupElement {
     public MclGroup1Element op(Element e) throws IllegalArgumentException {
         G1 res = new G1();
         if (e == this)
-            Bn256.dbl(res, getElement());
+            Mcl.dbl(res, getElement());
         else
-            Bn256.add(res, getElement(), ((MclGroup1Element) e).getElement());
+            Mcl.add(res, getElement(), ((MclGroup1Element) e).getElement());
         return getStructure().createElement(res);
     }
 
@@ -56,7 +56,7 @@ public class MclGroup1Element extends MclGroupElement {
         G1 res = new G1();
         Fr exponent = new Fr();
         exponent.setStr(k.getInteger().toString());
-        Bn256.mul(res, getElement(), exponent);
+        Mcl.mul(res, getElement(), exponent);
         return getStructure().createElement(res);
     }
 

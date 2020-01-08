@@ -58,7 +58,7 @@ public class MclGroupT extends MclGroup {
         G2 h = new MclGroup2().getGenerator().getElement();
 
         GT res = new GT();
-        Bn256.pairing(res, g, h);
+        Mcl.pairing(res, g, h);
 
         return generator = createElement(res);
     }
@@ -73,8 +73,8 @@ public class MclGroupT extends MclGroup {
         expr = expr.dynamicOptimization();
         expr.getExpression().forEach((g, k) -> {
             intermediateExp.setStr(k.toString(10));
-            Bn256.pow(intermediate, ((MclGroupTElement) g).getElement(), intermediateExp);
-            Bn256.mul(result, result, intermediate);
+            Mcl.pow(intermediate, ((MclGroupTElement) g).getElement(), intermediateExp);
+            Mcl.mul(result, result, intermediate);
         });
 
         return createElement(result);

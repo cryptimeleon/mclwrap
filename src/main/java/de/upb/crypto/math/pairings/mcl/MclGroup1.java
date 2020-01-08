@@ -1,8 +1,8 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import com.herumi.mcl.Bn256;
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
+import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.interfaces.structures.PowProductExpression;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;
@@ -55,7 +55,7 @@ public class MclGroup1 extends MclGroup {
         if (generator != null)
             return generator;
         G1 res = new G1();
-        res.hashAndMapToG1("some arbitrary element");
+        Mcl.hashAndMapToG1(res, "some arbitrary element".getBytes());
         return generator = createElement(res);
     }
 
@@ -69,8 +69,8 @@ public class MclGroup1 extends MclGroup {
         expr = expr.dynamicOptimization();
         expr.getExpression().forEach((g, k) -> {
             intermediateExp.setStr(k.toString(10));
-            Bn256.mul(intermediate, ((MclGroup1Element) g).getElement(), intermediateExp);
-            Bn256.add(result, result, intermediate);
+            Mcl.mul(intermediate, ((MclGroup1Element) g).getElement(), intermediateExp);
+            Mcl.add(result, result, intermediate);
         });
 
         return createElement(result);

@@ -1,8 +1,9 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import com.herumi.mcl.Bn256;
+import com.herumi.mcl.Fp;
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G2;
+import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.interfaces.structures.PowProductExpression;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;
@@ -54,10 +55,10 @@ public class MclGroup2 extends MclGroup {
     public MclGroup2Element getGenerator() throws UnsupportedOperationException {
         if (generator != null)
             return generator;
-        String xa = "12723517038133731887338407189719511622662176727675373276651903807414909099441";
-        String xb = "4168783608814932154536427934509895782246573715297911553964171371032945126671";
-        String ya = "13891744915211034074451795021214165905772212241412891944830863846330766296736";
-        String yb = "7937318970632701341203597196594272556916396164729705624521405069090520231616";
+        Fp xa = new Fp("12723517038133731887338407189719511622662176727675373276651903807414909099441");
+        Fp xb = new Fp("4168783608814932154536427934509895782246573715297911553964171371032945126671");
+        Fp ya = new Fp("13891744915211034074451795021214165905772212241412891944830863846330766296736");
+        Fp yb = new Fp("7937318970632701341203597196594272556916396164729705624521405069090520231616");
 
         G2 res = new G2(xa, xb, ya, yb);
 
@@ -74,8 +75,8 @@ public class MclGroup2 extends MclGroup {
         expr = expr.dynamicOptimization();
         expr.getExpression().forEach((g, k) -> {
             intermediateExp.setStr(k.toString(10));
-            Bn256.mul(intermediate, ((MclGroup2Element) g).getElement(), intermediateExp);
-            Bn256.add(result, result, intermediate);
+            Mcl.mul(intermediate, ((MclGroup2Element) g).getElement(), intermediateExp);
+            Mcl.add(result, result, intermediate);
         });
 
         return createElement(result);

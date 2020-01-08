@@ -3,6 +3,8 @@ install: true   # tells Travis that we run gradlew manually
 jdk:
 - openjdk8
 - openjdk11
+env:
+  - JAVA_INC=-I/usr/lib/jvm/java-8-openjdk-amd64/include
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -10,6 +12,9 @@ cache:
   directories:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
+before_install:
+  - chmod +x install_mcl.sh
+  - ./install_mcl.sh
 
 stages:
 - name: build
