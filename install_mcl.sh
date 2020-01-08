@@ -1,10 +1,13 @@
 #!/bin/sh
+mcl_version="v1.03"
+
 echo "----- Installing libgmp-dev -----"
 sudo apt-get update
 sudo apt-get -y install libgmp-dev # requirement for mcl
 echo "----- Cloning mcl from git://github.com/herumi/mcl -----"
 git clone git://github.com/herumi/mcl
-echo "----- Building mcl -----"
+git checkout $mcl_version
+echo "----- Building mcl $(mcl_version) -----"
 cd mcl || exit
 make -j4 # build mcl library
 echo "----- Building mcl java bindings -----"
