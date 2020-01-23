@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'de.upb.crypto'
-version = '0.0.2' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+version = '0.0.2' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "SNAPSHOT")
 
 description = """"""
 
