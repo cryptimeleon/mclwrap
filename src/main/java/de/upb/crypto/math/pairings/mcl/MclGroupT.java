@@ -64,6 +64,11 @@ public class MclGroupT extends MclGroup {
     }
 
     @Override
+    public int estimateCostOfInvert() {
+        return 200;
+    }
+
+    @Override
     public GroupElement evaluate(PowProductExpression expr) throws IllegalArgumentException {
         GT result = new GT();
         GT intermediate = new GT();

@@ -49,7 +49,7 @@ public abstract class MclGroup implements Group {
 
     @Override
     public int estimateCostOfInvert() {
-        return 0;
+        return 25;
     }
 
     @Override
