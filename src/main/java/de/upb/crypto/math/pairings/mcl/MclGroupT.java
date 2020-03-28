@@ -2,7 +2,6 @@ package de.upb.crypto.math.pairings.mcl;
 
 import com.herumi.mcl.*;
 import de.upb.crypto.math.interfaces.structures.GroupElement;
-import de.upb.crypto.math.interfaces.structures.PowProductExpression;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;
 
@@ -66,22 +65,5 @@ public class MclGroupT extends MclGroup {
     @Override
     public int estimateCostOfInvert() {
         return 200;
-    }
-
-    @Override
-    public GroupElement evaluate(PowProductExpression expr) throws IllegalArgumentException {
-        GT result = new GT();
-        GT intermediate = new GT();
-        Fr intermediateExp = new Fr();
-        result.setStr("1 0 0 0 0 0 0 0 0 0 0 0");
-
-        expr = expr.dynamicOptimization();
-        expr.getExpression().forEach((g, k) -> {
-            intermediateExp.setStr(k.toString(10));
-            Mcl.pow(intermediate, ((MclGroupTElement) g).getElement(), intermediateExp);
-            Mcl.mul(result, result, intermediate);
-        });
-
-        return createElement(result);
     }
 }

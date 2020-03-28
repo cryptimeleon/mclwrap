@@ -1,10 +1,7 @@
 package de.upb.crypto.math.pairings.mcl;
 
 import com.herumi.mcl.Fp;
-import com.herumi.mcl.Fr;
 import com.herumi.mcl.G2;
-import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.interfaces.structures.PowProductExpression;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;
 
@@ -63,22 +60,5 @@ public class MclGroup2 extends MclGroup {
         G2 res = new G2(xa, xb, ya, yb);
 
         return generator = createElement(res);
-    }
-
-    @Override
-    public MclGroup2Element evaluate(PowProductExpression expr) throws IllegalArgumentException {
-        G2 result = new G2();
-        G2 intermediate = new G2();
-        Fr intermediateExp = new Fr();
-        result.setStr("0");
-
-        expr = expr.dynamicOptimization();
-        expr.getExpression().forEach((g, k) -> {
-            intermediateExp.setStr(k.toString(10));
-            Mcl.mul(intermediate, ((MclGroup2Element) g).getElement(), intermediateExp);
-            Mcl.add(result, result, intermediate);
-        });
-
-        return createElement(result);
     }
 }
