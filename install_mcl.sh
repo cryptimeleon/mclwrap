@@ -11,9 +11,6 @@ fi
 
 java_inc=$1
 
-echo "----- Installing libgmp-dev -----"
-sudo apt-get update
-sudo apt-get -y install libgmp-dev # requirement for mcl
 echo "----- Cloning mcl from git://github.com/herumi/mcl -----"
 git clone git://github.com/herumi/mcl
 git checkout $mcl_version
