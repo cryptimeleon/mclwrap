@@ -23,7 +23,7 @@ make -j4 || exit # build mcl library
 echo "----- Building mcl java bindings -----"
 echo "----- Java include path: $java_inc -----"
 cd ffi/java || exit
-make test_mcl JAVA_INC=-I$java_inc # build java bindings, set include manually
+make test_mcl JAVA_INC=-I$java_inc || exit # build java bindings, set include manually
 cd ../..
 echo "----- Copying mcl java shared library to /usr/lib/ -----"
 sudo cp lib/libmcljava.so /usr/lib/libmcljava.so
