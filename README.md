@@ -2,4 +2,4 @@ This is a wrapper for [upb.crypto](https://github.com/upbcuk/upb.crypto.math) fo
 
 To use it, you need to compile the mcl library and make it accessible into one of the paths that JNI will look into at runtime (those locations are printed to the console whenever the wrapper is loaded but fails to locate the library)
 
-You can do this automatically by using the `install_mcl.sh` script contained in this directory. It will install all necessary prerequisites, install the mcl library (version v1.03), and move the shared library to `/usr/lib/`. You may have to make it executable by executing `chmod +x install_mcl.sh` before execution.
+You can do this automatically by using the `install_mcl.sh` script contained in this directory. It will install all necessary prerequisites, install the mcl library (version v1.03), and move the shared library to `/usr/lib/`. You may have to make it executable by executing `chmod +x install_mcl.sh` before execution, as well as install the `libgmp-dev` package.
