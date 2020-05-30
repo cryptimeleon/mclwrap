@@ -9,6 +9,6 @@
 package com.herumi.mcl;
 
 public interface MclConstants {
-    public final static int BN254 = 0;
-    public final static int BLS12_381 = 5;
+  public final static int BN254 = 0;
+  public final static int BLS12_381 = 5;
 }
