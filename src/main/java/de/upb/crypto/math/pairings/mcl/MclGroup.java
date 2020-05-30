@@ -24,6 +24,10 @@ public abstract class MclGroup implements Group {
         return new BigInteger("16798108731015832284940804142231733909759579603404752749028378864165570215949");
     }
 
+    @Override
+    public boolean hasPrimeSize() throws UnsupportedOperationException {
+        return true;
+    }
 
     @Override
     public GroupElement getElement(Representation repr) {
