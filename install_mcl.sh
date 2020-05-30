@@ -15,13 +15,18 @@ echo "----- Cloning mcl from git://github.com/herumi/mcl -----"
 git clone git://github.com/herumi/mcl
 git checkout $mcl_version
 echo "----- Building mcl $mcl_version -----"
-cd mcl || exit
-make -j4 || exit # build mcl library
-echo "----- Building mcl java bindings -----"
-echo "----- Java include path: $java_inc -----"
-cd ffi/java || exit
-make test_mcl JAVA_INC=-I$java_inc || exit # build java bindings, set include manually
-cd ../..
-echo "----- Copying mcl java shared library to /usr/lib/ -----"
-sudo cp lib/libmcljava.so /usr/lib/libmcljava.so
-echo "----- Installation finished successfully. -----"
+(
+  cd mcl || exit
+  make -j4 || exit # build mcl library
+  echo "----- Building mcl java bindings and running tests -----"
+  echo "----- Java include path: $java_inc -----"
+  cd ffi/java || exit
+  make test_mcl JAVA_INC=-I$java_inc || exit # build java bindings, set include manually
+  cd ../..
+  echo "----- Copying mcl java shared library to /usr/lib/ -----"
+  sudo cp lib/libmcljava.so /usr/lib/libmcljava.so
+)
+echo "----- Installation finished successfully. Deleting mcl repository folder -----"
+rm -rf mcl
+echo "----- Done -----"
+
