@@ -1,5 +1,7 @@
 #!/bin/sh
 mcl_version="v1.03"
+# exit immediately on error
+set -e
 
 # check that JAVA_INC is given
 if [ $# -eq 0 ]; then
@@ -11,22 +13,23 @@ fi
 
 java_inc=$1
 
-echo "----- Cloning mcl from git://github.com/herumi/mcl -----"
-git clone git://github.com/herumi/mcl
-git checkout $mcl_version
-echo "----- Building mcl $mcl_version -----"
 (
-  cd mcl || exit
+  echo "----- Cloning mcl from git://github.com/herumi/mcl -----"
+  cd /tmp
+  git clone git://github.com/herumi/mcl
+  cd mcl
+  git checkout $mcl_version || exit
+  echo "----- Building mcl $mcl_version -----"
   make -j4 || exit # build mcl library
   echo "----- Building mcl java bindings and running tests -----"
   echo "----- Java include path: $java_inc -----"
-  cd ffi/java || exit
+  cd ffi/java
   make test_mcl JAVA_INC=-I$java_inc || exit # build java bindings, set include manually
-  cd ../..
   echo "----- Copying mcl java shared library to /usr/lib/ -----"
-  sudo cp lib/libmcljava.so /usr/lib/libmcljava.so
-)
-echo "----- Installation finished successfully. Deleting mcl repository folder -----"
-rm -rf mcl
-echo "----- Done -----"
-
+  cd ../..
+  sudo cp lib/libmcljava.so /usr/lib/
+  echo "----- Installation finished successfully. Deleting mcl repository folder -----"
+  cd ..
+  rm -rf mcl
+  echo "----- Done -----"
+) || rm -rf /tmp/mcl
