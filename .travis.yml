@@ -13,8 +13,8 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
 before_install:
-  - chmod +x install_mcl.sh
-  - ./install_mcl.sh $JAVA_INC
+  - chmod +x install_mcl_linux.sh
+  - ./install_mcl_linux.sh $JAVA_INC
 
 stages:
 - name: build
