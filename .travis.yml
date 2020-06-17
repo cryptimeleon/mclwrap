@@ -16,6 +16,9 @@ before_install:
   - chmod +x install_mcl.sh
   - ./install_mcl.sh $JAVA_INC
 
+before_script:
+  git checkout ${TRAVIS_BRANCH}
+
 stages:
 - name: build
 - name: snapshot
