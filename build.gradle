@@ -31,7 +31,11 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
 
     // For tests
-    testImplementation group: 'de.upb.crypto', name: 'math', version:'2.0.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT"), classifier: 'tests'
+    testImplementation(group: 'de.upb.crypto', name: 'math', version:'2.0.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")) {
+            capabilities {
+                requireCapability("de.upb.crypto:math-tests")
+            }
+    }
     testCompileOnly(
             'junit:junit:4.12'
     )
@@ -61,17 +65,10 @@ test {
     }
 }
 
-//packaging tests
-task packageTests(type: Jar) {
-    from sourceSets.test.output
-    classifier = 'tests'
-}
-
-configurations {
-    testArtifacts
-}
-artifacts {
-    testArtifacts packageTests
+java {
+    registerFeature("tests") {
+        usingSourceSet(sourceSets.test)
+    }
 }
 
 
@@ -79,9 +76,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact packageTests
         }
-
     }
 
     repositories {

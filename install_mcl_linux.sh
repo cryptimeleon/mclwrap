@@ -33,4 +33,3 @@ java_inc=$1
   rm -rf mcl
   echo "----- Done -----"
 ) || rm -rf /tmp/mcl
-

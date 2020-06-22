@@ -4,3 +4,7 @@ out/**
 .idea/**
 .composite-enable
 mcl/**
+/.gradle/
+/build/
+.classpath
+.project
