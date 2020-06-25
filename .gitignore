@@ -6,5 +6,4 @@ out/**
 mcl/**
 /.gradle/
 /build/
-.classpath
-.project
+gradle.properties
