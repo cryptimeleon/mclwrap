@@ -13,8 +13,8 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
 before_install:
-  - chmod +x install_mcl_linux.sh
-  - ./install_mcl_linux.sh $JAVA_INC
+  - chmod +x install_mcl.sh
+  - ./install_mcl.sh $JAVA_INC
 
 before_script:
   git checkout ${TRAVIS_BRANCH}
@@ -29,7 +29,7 @@ stages:
 jobs:
   include:
   - stage: build
-    script: ./gradlew build
+    script: ./gradlew build -PcheckoutIfCloned
   - stage: snapshot
     script: ./gradlew publish -x test -Dsnapshot=true -Dnexus.user=$NEXUS_USER -Dnexus.key=$NEXUS_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER
   - stage: release
