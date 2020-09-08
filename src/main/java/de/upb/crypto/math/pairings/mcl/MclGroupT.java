@@ -1,6 +1,9 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import com.herumi.mcl.*;
+import com.herumi.mcl.G1;
+import com.herumi.mcl.G2;
+import com.herumi.mcl.GT;
+import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.interfaces.structures.GroupElement;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;

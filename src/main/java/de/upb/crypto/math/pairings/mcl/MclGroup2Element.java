@@ -4,6 +4,7 @@ import com.herumi.mcl.Fr;
 import com.herumi.mcl.G2;
 import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.interfaces.structures.Element;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.structures.zn.Zn;
 
@@ -37,7 +38,7 @@ public class MclGroup2Element extends MclGroupElement {
     }
 
     @Override
-    public MclGroup2Element op(Element e) throws IllegalArgumentException {
+    public MclGroup2Element op(GroupElementImpl e) throws IllegalArgumentException {
         G2 res = new G2();
         if (e == this)
             Mcl.dbl(res, getElement());
@@ -50,8 +51,7 @@ public class MclGroup2Element extends MclGroupElement {
     public MclGroup2Element pow(BigInteger k) {
         return pow(Zn.valueOf(k, getStructure().size()));
     }
-
-    @Override
+    
     public MclGroup2Element pow(Zn.ZnElement k) {
         G2 res = new G2();
         Fr exponent = new Fr();

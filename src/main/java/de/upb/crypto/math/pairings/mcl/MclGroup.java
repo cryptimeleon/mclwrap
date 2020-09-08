@@ -1,14 +1,14 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import de.upb.crypto.math.interfaces.structures.Group;
-import de.upb.crypto.math.interfaces.structures.GroupElement;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;
 
 import java.math.BigInteger;
 import java.util.Optional;
 
-public abstract class MclGroup implements Group {
+public abstract class MclGroup implements GroupImpl {
 
     public MclGroup() {
         MclBilinearGroup.init(true);
@@ -30,7 +30,7 @@ public abstract class MclGroup implements Group {
     }
 
     @Override
-    public GroupElement getElement(Representation repr) {
+    public GroupElementImpl getElement(Representation repr) {
         return getElement(repr.str().get());
     }
 
@@ -49,11 +49,6 @@ public abstract class MclGroup implements Group {
     @Override
     public boolean isCommutative() {
         return true;
-    }
-
-    @Override
-    public int estimateCostOfInvert() {
-        return 25;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package de.upb.crypto.math.pairings.mcl.test;
 
 import de.upb.crypto.math.interfaces.mappings.BilinearMap;
-import de.upb.crypto.math.pairings.mcl.MclBilinearGroup;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 

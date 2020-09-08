@@ -1,15 +1,14 @@
 package de.upb.crypto.math.pairings.mcl;
 
 import de.upb.crypto.math.interfaces.hash.ByteAccumulator;
-import de.upb.crypto.math.interfaces.structures.Group;
-import de.upb.crypto.math.interfaces.structures.GroupElement;
-import de.upb.crypto.math.interfaces.structures.AbstractGroupElement;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;
 
 import java.util.Objects;
 
-public abstract class MclGroupElement extends AbstractGroupElement implements GroupElement {
+public abstract class MclGroupElement implements GroupElementImpl {
     protected MclGroup group;
     protected Object element;
 
@@ -30,7 +29,7 @@ public abstract class MclGroupElement extends AbstractGroupElement implements Gr
     }
 
     @Override
-    public Group getStructure() {
+    public GroupImpl getStructure() {
         return group;
     }
 

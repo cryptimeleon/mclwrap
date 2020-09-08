@@ -1,15 +1,14 @@
 package de.upb.crypto.math.pairings.mcl;
 
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.factory.BilinearGroup;
-import de.upb.crypto.math.interfaces.hash.HashIntoStructure;
-import de.upb.crypto.math.interfaces.mappings.BilinearMap;
-import de.upb.crypto.math.interfaces.mappings.GroupHomomorphism;
+import de.upb.crypto.math.factory.BilinearGroupImpl;
+import de.upb.crypto.math.interfaces.mappings.impl.BilinearMapImpl;
+import de.upb.crypto.math.interfaces.mappings.impl.GroupHomomorphismImpl;
+import de.upb.crypto.math.interfaces.mappings.impl.HashIntoGroupImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;
-import de.upb.crypto.math.structures.zn.HashIntoZn;
 
-public class MclBilinearGroup implements BilinearGroup {
+public class MclBilinearGroupImpl implements BilinearGroupImpl {
     private static boolean isInitialized = false;
     protected static MclGroup1 g1;
     protected static MclGroup2 g2;
@@ -18,11 +17,11 @@ public class MclBilinearGroup implements BilinearGroup {
     protected static MclHashIntoG1 hashIntoG1 = new MclHashIntoG1(g1);
 
 
-    public MclBilinearGroup() {
+    public MclBilinearGroupImpl() {
         init(true);
     }
 
-    public MclBilinearGroup(Representation repr) {
+    public MclBilinearGroupImpl(Representation repr) {
         this();
         if (!repr.str().get().equals("bn254")) {
             throw new IllegalArgumentException("Invalid representation");
@@ -84,33 +83,28 @@ public class MclBilinearGroup implements BilinearGroup {
     }
 
     @Override
-    public BilinearMap getBilinearMap() {
+    public BilinearMapImpl getBilinearMap() {
         return new MclPairing(this);
     }
 
     @Override
-    public GroupHomomorphism getHomomorphismG2toG1() throws UnsupportedOperationException {
+    public GroupHomomorphismImpl getHomomorphismG2toG1() throws UnsupportedOperationException {
         throw new UnsupportedOperationException("No homomorphism (type 3)");
     }
 
     @Override
-    public HashIntoStructure getHashIntoG1() throws UnsupportedOperationException {
+    public HashIntoGroupImpl getHashIntoG1() throws UnsupportedOperationException {
         return hashIntoG1;
     }
 
     @Override
-    public HashIntoStructure getHashIntoG2() throws UnsupportedOperationException {
+    public HashIntoGroupImpl getHashIntoG2() throws UnsupportedOperationException {
         throw new UnsupportedOperationException("No hash available.");
     }
 
     @Override
-    public HashIntoStructure getHashIntoGT() throws UnsupportedOperationException {
+    public HashIntoGroupImpl getHashIntoGT() throws UnsupportedOperationException {
         throw new UnsupportedOperationException("No hash available.");
-    }
-
-    @Override
-    public HashIntoStructure getHashIntoZGroupExponent() throws UnsupportedOperationException {
-        return new HashIntoZn(g1.size());
     }
 
     @Override
@@ -125,6 +119,6 @@ public class MclBilinearGroup implements BilinearGroup {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof MclBilinearGroup;
+        return obj instanceof MclBilinearGroupImpl;
     }
 }
