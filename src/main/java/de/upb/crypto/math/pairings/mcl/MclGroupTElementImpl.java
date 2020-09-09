@@ -3,20 +3,20 @@ package de.upb.crypto.math.pairings.mcl;
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.GT;
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.interfaces.structures.Element;
 import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.structures.zn.Zn;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
-public class MclGroupTElement extends MclGroupElement {
+public class MclGroupTElementImpl extends MclGroupElementImpl {
 
-    public MclGroupTElement(MclGroupT group, Representation repr) {
+    public MclGroupTElementImpl(MclGroupTImpl group, Representation repr) {
         super(group, repr);
     }
 
-    public MclGroupTElement(MclGroupT group, GT elem) {
+    public MclGroupTElementImpl(MclGroupTImpl group, GT elem) {
         super(group, elem);
     }
 
@@ -26,12 +26,12 @@ public class MclGroupTElement extends MclGroupElement {
     }
 
     @Override
-    public MclGroupT getStructure() {
-        return (MclGroupT) super.getStructure();
+    public MclGroupTImpl getStructure() {
+        return (MclGroupTImpl) super.getStructure();
     }
 
     @Override
-    public MclGroupTElement inv() {
+    public MclGroupTElementImpl inv() {
         GT res = new GT();
         //Mcl.inv(res, getElement());
         //return getStructure().createElement(res);
@@ -42,18 +42,18 @@ public class MclGroupTElement extends MclGroupElement {
     }
 
     @Override
-    public MclGroupTElement op(GroupElementImpl e) throws IllegalArgumentException {
+    public MclGroupTElementImpl op(GroupElementImpl e) throws IllegalArgumentException {
         GT res = new GT();
-        Mcl.mul(res, getElement(), ((MclGroupTElement) e).getElement());
+        Mcl.mul(res, getElement(), ((MclGroupTElementImpl) e).getElement());
         return getStructure().createElement(res);
     }
 
     @Override
-    public MclGroupTElement pow(BigInteger k) {
+    public MclGroupTElementImpl pow(BigInteger k) {
         return pow(Zn.valueOf(k, getStructure().size()));
     }
 
-    public MclGroupTElement pow(Zn.ZnElement k) {
+    public MclGroupTElementImpl pow(Zn.ZnElement k) {
         GT res = new GT();
         Fr exponent = new Fr();
         exponent.setStr(k.getInteger().toString());
@@ -62,12 +62,16 @@ public class MclGroupTElement extends MclGroupElement {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof MclGroupTElement && getElement().equals(((MclGroupTElement) obj).getElement());
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || this.getClass() != other.getClass()) return false;
+        MclGroupTElementImpl that = (MclGroupTElementImpl) other;
+        return getElement().equals(that.getElement()) // need to use this method since G1 does not override equals
+                && Objects.equals(super.group, that.group);
     }
 
     @Override
     public int hashCode() {
-        return getElement().toString().hashCode();
+        return super.hashCode();
     }
 }

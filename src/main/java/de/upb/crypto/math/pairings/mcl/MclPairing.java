@@ -31,8 +31,8 @@ public class MclPairing implements BilinearMapImpl {
 
         Fr exp = new Fr();
         exp.setStr(exponent.toString(10));
-        Mcl.mul(g1Exponentiated, ((MclGroup1Element) g1).getElement(), exp);
-        Mcl.pairing(result, g1Exponentiated, ((MclGroup2Element) g2).getElement());
+        Mcl.mul(g1Exponentiated, ((MclGroup1ElementImpl) g1).getElement(), exp);
+        Mcl.pairing(result, g1Exponentiated, ((MclGroup2ElementImpl) g2).getElement());
         return bilinearGroup.getGT().createElement(result);
     }
 

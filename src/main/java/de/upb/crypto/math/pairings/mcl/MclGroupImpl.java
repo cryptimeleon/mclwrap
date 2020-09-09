@@ -8,13 +8,13 @@ import de.upb.crypto.math.serialization.StringRepresentation;
 import java.math.BigInteger;
 import java.util.Optional;
 
-public abstract class MclGroup implements GroupImpl {
+public abstract class MclGroupImpl implements GroupImpl {
 
-    public MclGroup() {
-        MclBilinearGroup.init(true);
+    public MclGroupImpl() {
+        MclBilinearGroupImpl.init(true);
     }
 
-    public MclGroup(Representation repr) {
+    public MclGroupImpl(Representation repr) {
         this();
         //Nothing to do
     }
@@ -34,7 +34,7 @@ public abstract class MclGroup implements GroupImpl {
         return getElement(repr.str().get());
     }
 
-    protected abstract MclGroupElement getElement(String string);
+    protected abstract MclGroupElementImpl getElement(String string);
 
     /**
      * Outputs an object of type mcl.G1, mcl.G2, or mcl.GT

@@ -4,23 +4,23 @@ import com.herumi.mcl.G1;
 import com.herumi.mcl.G2;
 import com.herumi.mcl.GT;
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.interfaces.structures.GroupElement;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;
 
-public class MclGroupT extends MclGroup {
-    protected MclGroupTElement generator = null;
+public class MclGroupTImpl extends MclGroupImpl {
+    protected MclGroupTElementImpl generator = null;
 
-    public MclGroupT() {
+    public MclGroupTImpl() {
         super();
     }
 
-    public MclGroupT(Representation repr) {
+    public MclGroupTImpl(Representation repr) {
         super(repr);
     }
 
     @Override
-    public MclGroupElement getElement(String string) {
+    public MclGroupElementImpl getElement(String string) {
         GT res = new GT();
         res.setStr(string);
         return createElement(res);
@@ -31,42 +31,37 @@ public class MclGroupT extends MclGroup {
         return new GT();
     }
 
-    protected MclGroupTElement createElement(GT GT) {
-        return new MclGroupTElement(this, GT);
+    protected MclGroupTElementImpl createElement(GT GT) {
+        return new MclGroupTElementImpl(this, GT);
     }
 
-    private MclGroupElement createElement(String str) {
+    private MclGroupElementImpl createElement(String str) {
         GT result = new GT();
         result.setStr(str);
         return createElement(result);
     }
 
     @Override
-    public GroupElement getNeutralElement() {
+    public GroupElementImpl getNeutralElement() {
         return createElement("1 0 0 0 0 0 0 0 0 0 0 0");
     }
 
     @Override
-    public GroupElement getUniformlyRandomElement() throws UnsupportedOperationException {
+    public GroupElementImpl getUniformlyRandomElement() throws UnsupportedOperationException {
         return getGenerator().pow(RandomGeneratorSupplier.getRnd().getRandomElement(size()));
     }
 
     @Override
-    public GroupElement getGenerator() throws UnsupportedOperationException {
+    public GroupElementImpl getGenerator() throws UnsupportedOperationException {
         if (generator != null)
             return generator;
 
-        G1 g = new MclGroup1().getGenerator().getElement();
-        G2 h = new MclGroup2().getGenerator().getElement();
+        G1 g = new MclGroup1Impl().getGenerator().getElement();
+        G2 h = new MclGroup2Impl().getGenerator().getElement();
 
         GT res = new GT();
         Mcl.pairing(res, g, h);
 
         return generator = createElement(res);
-    }
-
-    @Override
-    public int estimateCostOfInvert() {
-        return 200;
     }
 }

@@ -5,19 +5,19 @@ import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;
 
-public class MclGroup1 extends MclGroup {
-    protected MclGroup1Element generator = null;
+public class MclGroup1Impl extends MclGroupImpl {
+    protected MclGroup1ElementImpl generator = null;
 
-    public MclGroup1() {
+    public MclGroup1Impl() {
         super();
     }
 
-    public MclGroup1(Representation repr) {
+    public MclGroup1Impl(Representation repr) {
         super(repr);
     }
 
     @Override
-    public MclGroup1Element getElement(String string) {
+    public MclGroup1ElementImpl getElement(String string) {
         G1 res = new G1();
         res.setStr(string);
         return createElement(res);
@@ -28,28 +28,28 @@ public class MclGroup1 extends MclGroup {
         return new G1();
     }
 
-    protected MclGroup1Element createElement(G1 g1) {
-        return new MclGroup1Element(this, g1);
+    protected MclGroup1ElementImpl createElement(G1 g1) {
+        return new MclGroup1ElementImpl(this, g1);
     }
 
-    private MclGroup1Element createElement(String str) {
+    private MclGroup1ElementImpl createElement(String str) {
         G1 result = new G1();
         result.setStr(str);
         return createElement(result);
     }
 
     @Override
-    public MclGroup1Element getNeutralElement() {
+    public MclGroup1ElementImpl getNeutralElement() {
         return createElement("0");
     }
 
     @Override
-    public MclGroup1Element getUniformlyRandomElement() throws UnsupportedOperationException {
+    public MclGroup1ElementImpl getUniformlyRandomElement() throws UnsupportedOperationException {
         return getGenerator().pow(RandomGeneratorSupplier.getRnd().getRandomElement(size()));
     }
 
     @Override
-    public MclGroup1Element getGenerator() throws UnsupportedOperationException {
+    public MclGroup1ElementImpl getGenerator() throws UnsupportedOperationException {
         if (generator != null)
             return generator;
         G1 res = new G1();

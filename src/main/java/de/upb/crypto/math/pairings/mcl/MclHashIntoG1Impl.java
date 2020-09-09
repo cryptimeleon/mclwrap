@@ -6,15 +6,15 @@ import de.upb.crypto.math.interfaces.mappings.impl.HashIntoGroupImpl;
 import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
 import de.upb.crypto.math.serialization.Representation;
 
-public class MclHashIntoG1 implements HashIntoGroupImpl {
-    protected MclGroup1 group;
+public class MclHashIntoG1Impl implements HashIntoGroupImpl {
+    protected MclGroup1Impl group;
 
-    public MclHashIntoG1(MclGroup1 group) {
+    public MclHashIntoG1Impl(MclGroup1Impl group) {
         this.group = group;
     }
 
-    public MclHashIntoG1(Representation repr) {
-        group = new MclGroup1(repr);
+    public MclHashIntoG1Impl(Representation repr) {
+        group = new MclGroup1Impl(repr);
     }
 
     @Override

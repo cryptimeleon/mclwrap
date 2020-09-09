@@ -5,19 +5,19 @@ import com.herumi.mcl.G2;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;
 
-public class MclGroup2 extends MclGroup {
-    protected MclGroup2Element generator = null;
+public class MclGroup2Impl extends MclGroupImpl {
+    protected MclGroup2ElementImpl generator = null;
 
-    public MclGroup2() {
+    public MclGroup2Impl() {
         super();
     }
 
-    public MclGroup2(Representation repr) {
+    public MclGroup2Impl(Representation repr) {
         super(repr);
     }
 
     @Override
-    public MclGroup2Element getElement(String string) {
+    public MclGroup2ElementImpl getElement(String string) {
         G2 res = new G2();
         res.setStr(string);
         return createElement(res);
@@ -28,28 +28,28 @@ public class MclGroup2 extends MclGroup {
         return new G2();
     }
 
-    protected MclGroup2Element createElement(G2 G2) {
-        return new MclGroup2Element(this, G2);
+    protected MclGroup2ElementImpl createElement(G2 G2) {
+        return new MclGroup2ElementImpl(this, G2);
     }
 
-    private MclGroup2Element createElement(String str) {
+    private MclGroup2ElementImpl createElement(String str) {
         G2 result = new G2();
         result.setStr(str);
         return createElement(result);
     }
 
     @Override
-    public MclGroup2Element getNeutralElement() {
+    public MclGroup2ElementImpl getNeutralElement() {
         return createElement("0");
     }
 
     @Override
-    public MclGroup2Element getUniformlyRandomElement() throws UnsupportedOperationException {
+    public MclGroup2ElementImpl getUniformlyRandomElement() throws UnsupportedOperationException {
         return getGenerator().pow(RandomGeneratorSupplier.getRnd().getRandomElement(size()));
     }
 
     @Override
-    public MclGroup2Element getGenerator() throws UnsupportedOperationException {
+    public MclGroup2ElementImpl getGenerator() throws UnsupportedOperationException {
         if (generator != null)
             return generator;
         Fp xa = new Fp("12723517038133731887338407189719511622662176727675373276651903807414909099441");

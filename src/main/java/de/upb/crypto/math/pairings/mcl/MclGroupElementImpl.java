@@ -8,16 +8,16 @@ import de.upb.crypto.math.serialization.StringRepresentation;
 
 import java.util.Objects;
 
-public abstract class MclGroupElement implements GroupElementImpl {
-    protected MclGroup group;
+public abstract class MclGroupElementImpl implements GroupElementImpl {
+    protected MclGroupImpl group;
     protected Object element;
 
-    public MclGroupElement(MclGroup group, Object element) {
+    public MclGroupElementImpl(MclGroupImpl group, Object element) {
         this.group = group;
         this.element = element;
     }
 
-    public MclGroupElement(MclGroup group, Representation repr) {
+    public MclGroupElementImpl(MclGroupImpl group, Representation repr) {
         this(group, group.getElement(repr.str().get()));
     }
 
@@ -40,17 +40,17 @@ public abstract class MclGroupElement implements GroupElementImpl {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MclGroupElement)) return false;
-        MclGroupElement that = (MclGroupElement) o;
-        return Objects.equals(group, that.group) &&
-                Objects.equals(element, that.element);
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || this.getClass() != other.getClass()) return false;
+        MclGroup1ElementImpl that = (MclGroup1ElementImpl) other;
+        return getElement().equals(that.getElement()) // need to use this method since G1 does not override equals
+                && Objects.equals(group, that.group);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(group, element);
+        return Objects.hash(group, element.toString());
     }
 
     @Override

@@ -10,11 +10,11 @@ import de.upb.crypto.math.serialization.StringRepresentation;
 
 public class MclBilinearGroupImpl implements BilinearGroupImpl {
     private static boolean isInitialized = false;
-    protected static MclGroup1 g1;
-    protected static MclGroup2 g2;
-    protected static MclGroupT gt;
+    protected static MclGroup1Impl g1;
+    protected static MclGroup2Impl g2;
+    protected static MclGroupTImpl gt;
 
-    protected static MclHashIntoG1 hashIntoG1 = new MclHashIntoG1(g1);
+    protected static MclHashIntoG1Impl hashIntoG1 = new MclHashIntoG1Impl(g1);
 
 
     public MclBilinearGroupImpl() {
@@ -61,24 +61,24 @@ public class MclBilinearGroupImpl implements BilinearGroupImpl {
                 return;
             }
             isInitialized = true;
-            g1 = new MclGroup1();
-            g2 = new MclGroup2();
-            gt = new MclGroupT();
+            g1 = new MclGroup1Impl();
+            g2 = new MclGroup2Impl();
+            gt = new MclGroupTImpl();
         }
     }
 
     @Override
-    public MclGroup1 getG1() {
+    public MclGroup1Impl getG1() {
         return g1;
     }
 
     @Override
-    public MclGroup2 getG2() {
+    public MclGroup2Impl getG2() {
         return g2;
     }
 
     @Override
-    public MclGroupT getGT() {
+    public MclGroupTImpl getGT() {
         return gt;
     }
 
