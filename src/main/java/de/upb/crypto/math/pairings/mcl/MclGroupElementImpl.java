@@ -44,7 +44,7 @@ public abstract class MclGroupElementImpl implements GroupElementImpl {
         if (this == other) return true;
         if (other == null || this.getClass() != other.getClass()) return false;
         MclGroup1ElementImpl that = (MclGroup1ElementImpl) other;
-        return getElement().equals(that.getElement()) // need to use this method since G1 does not override equals
+        return getElement().equals(that.getElement()) // need to use this method since Gx does not override equals
                 && Objects.equals(group, that.group);
     }
 

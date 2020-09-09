@@ -55,8 +55,7 @@ public class MclGroupTElementImpl extends MclGroupElementImpl {
 
     public MclGroupTElementImpl pow(Zn.ZnElement k) {
         GT res = new GT();
-        Fr exponent = new Fr();
-        exponent.setStr(k.getInteger().toString());
+        Fr exponent = new Fr(k.getInteger().toString());
         Mcl.pow(res, getElement(), exponent);
         return getStructure().createElement(res);
     }
@@ -66,7 +65,7 @@ public class MclGroupTElementImpl extends MclGroupElementImpl {
         if (this == other) return true;
         if (other == null || this.getClass() != other.getClass()) return false;
         MclGroupTElementImpl that = (MclGroupTElementImpl) other;
-        return getElement().equals(that.getElement()) // need to use this method since G1 does not override equals
+        return getElement().equals(that.getElement()) // need to use this method since GT does not override equals
                 && Objects.equals(super.group, that.group);
     }
 

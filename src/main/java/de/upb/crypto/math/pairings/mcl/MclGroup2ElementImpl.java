@@ -54,8 +54,7 @@ public class MclGroup2ElementImpl extends MclGroupElementImpl {
     
     public MclGroup2ElementImpl pow(Zn.ZnElement k) {
         G2 res = new G2();
-        Fr exponent = new Fr();
-        exponent.setStr(k.getInteger().toString());
+        Fr exponent = new Fr(k.getInteger().toString());
         Mcl.mul(res, getElement(), exponent);
         return getStructure().createElement(res);
     }
@@ -65,7 +64,7 @@ public class MclGroup2ElementImpl extends MclGroupElementImpl {
         if (this == other) return true;
         if (other == null || this.getClass() != other.getClass()) return false;
         MclGroup2ElementImpl that = (MclGroup2ElementImpl) other;
-        return getElement().equals(that.getElement()) // need to use this method since G1 does not override equals
+        return getElement().equals(that.getElement()) // need to use this method since G2 does not override equals
                 && Objects.equals(super.group, that.group);
     }
 
