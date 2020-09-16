@@ -4,51 +4,36 @@ import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
 import com.herumi.mcl.GT;
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.interfaces.mappings.BilinearMap;
-import de.upb.crypto.math.interfaces.structures.GroupElement;
+import de.upb.crypto.math.interfaces.mappings.impl.BilinearMapImpl;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
 import de.upb.crypto.math.serialization.Representation;
 
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class MclPairing implements BilinearMap {
+public class MclPairing implements BilinearMapImpl {
 
-    private MclBilinearGroup bilinearGroup;
+    private MclBilinearGroupImpl bilinearGroup;
 
-    public MclPairing(MclBilinearGroup bilinearGroup) {
+    public MclPairing(MclBilinearGroupImpl bilinearGroup) {
         this.bilinearGroup = bilinearGroup;
     }
 
     public MclPairing(Representation repr) {
-        this(new MclBilinearGroup(repr));
+        this(new MclBilinearGroupImpl(repr));
     }
 
     @Override
-    public MclGroup1 getG1() {
-        return bilinearGroup.getG1();
-    }
-
-    @Override
-    public MclGroup2 getG2() {
-        return bilinearGroup.getG2();
-    }
-
-    @Override
-    public MclGroupT getGT() {
-        return bilinearGroup.getGT();
-    }
-
-    @Override
-    public GroupElement apply(GroupElement g1, GroupElement g2, BigInteger exponent) {
+    public GroupElementImpl apply(GroupElementImpl g1, GroupElementImpl g2, BigInteger exponent) {
         GT result = new GT();
         G1 g1Exponentiated = new G1();
         exponent = exponent.mod(bilinearGroup.getG1().size());
 
         Fr exp = new Fr();
         exp.setStr(exponent.toString(10));
-        Mcl.mul(g1Exponentiated, ((MclGroup1Element) g1).getElement(), exp);
-        Mcl.pairing(result, g1Exponentiated, ((MclGroup2Element) g2).getElement());
-        return getGT().createElement(result);
+        Mcl.mul(g1Exponentiated, ((MclGroup1ElementImpl) g1).getElement(), exp);
+        Mcl.pairing(result, g1Exponentiated, ((MclGroup2ElementImpl) g2).getElement());
+        return bilinearGroup.getGT().createElement(result);
     }
 
     @Override
@@ -56,7 +41,6 @@ public class MclPairing implements BilinearMap {
         return false;
     }
 
-    @Override
     public Representation getRepresentation() {
         return bilinearGroup.getRepresentation();
     }

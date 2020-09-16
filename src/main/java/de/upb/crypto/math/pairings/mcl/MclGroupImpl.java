@@ -1,20 +1,20 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import de.upb.crypto.math.interfaces.structures.Group;
-import de.upb.crypto.math.interfaces.structures.GroupElement;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;
 
 import java.math.BigInteger;
 import java.util.Optional;
 
-public abstract class MclGroup implements Group {
+public abstract class MclGroupImpl implements GroupImpl {
 
-    public MclGroup() {
-        MclBilinearGroup.init(true);
+    public MclGroupImpl() {
+        MclBilinearGroupImpl.init(true);
     }
 
-    public MclGroup(Representation repr) {
+    public MclGroupImpl(Representation repr) {
         this();
         //Nothing to do
     }
@@ -29,17 +29,12 @@ public abstract class MclGroup implements Group {
         return true;
     }
 
-    @Override
-    public GroupElement getElement(Representation repr) {
-        return getElement(repr.str().get());
-    }
-
-    protected abstract MclGroupElement getElement(String string);
+    protected abstract MclGroupElementImpl getElement(String string);
 
     /**
      * Outputs an object of type mcl.G1, mcl.G2, or mcl.GT
      */
-    protected abstract Object getEmptyInternalObject();
+    protected abstract Object getInternalObjectFromString(String str);
 
     @Override
     public Optional<Integer> getUniqueByteLength() {
@@ -49,11 +44,6 @@ public abstract class MclGroup implements Group {
     @Override
     public boolean isCommutative() {
         return true;
-    }
-
-    @Override
-    public int estimateCostOfInvert() {
-        return 25;
     }
 
     @Override
