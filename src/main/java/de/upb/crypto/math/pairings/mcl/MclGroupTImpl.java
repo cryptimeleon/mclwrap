@@ -21,29 +21,29 @@ public class MclGroupTImpl extends MclGroupImpl {
 
     @Override
     public MclGroupElementImpl getElement(String string) {
-        GT res = new GT();
-        res.setStr(string);
-        return createElement(res);
+        return createElement(getInternalObjectFromString(string));
     }
 
     @Override
-    protected GT getEmptyInternalObject() {
-        return new GT();
+    public GroupElementImpl getElement(Representation repr) {
+        return new MclGroupTElementImpl(this, repr);
+    }
+
+    @Override
+    protected GT getInternalObjectFromString(String str) {
+        GT result = new GT();
+        result.setStr(str);
+        return result;
     }
 
     protected MclGroupTElementImpl createElement(GT GT) {
         return new MclGroupTElementImpl(this, GT);
     }
 
-    private MclGroupElementImpl createElement(String str) {
-        GT result = new GT();
-        result.setStr(str);
-        return createElement(result);
-    }
 
     @Override
     public GroupElementImpl getNeutralElement() {
-        return createElement("1 0 0 0 0 0 0 0 0 0 0 0");
+        return getElement("1 0 0 0 0 0 0 0 0 0 0 0");
     }
 
     @Override

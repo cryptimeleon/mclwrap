@@ -29,17 +29,12 @@ public abstract class MclGroupImpl implements GroupImpl {
         return true;
     }
 
-    @Override
-    public GroupElementImpl getElement(Representation repr) {
-        return getElement(repr.str().get());
-    }
-
     protected abstract MclGroupElementImpl getElement(String string);
 
     /**
      * Outputs an object of type mcl.G1, mcl.G2, or mcl.GT
      */
-    protected abstract Object getEmptyInternalObject();
+    protected abstract Object getInternalObjectFromString(String str);
 
     @Override
     public Optional<Integer> getUniqueByteLength() {

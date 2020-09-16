@@ -2,6 +2,7 @@ package de.upb.crypto.math.pairings.mcl;
 
 import com.herumi.mcl.G1;
 import com.herumi.mcl.Mcl;
+import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
 import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
 import de.upb.crypto.math.serialization.Representation;
 
@@ -18,29 +19,27 @@ public class MclGroup1Impl extends MclGroupImpl {
 
     @Override
     public MclGroup1ElementImpl getElement(String string) {
-        G1 res = new G1();
-        res.setStr(string);
-        return createElement(res);
+        return createElement(getInternalObjectFromString(string));
+    }
+    
+    public GroupElementImpl getElement(Representation repr) {
+        return new MclGroup1ElementImpl(this, repr);
     }
 
     @Override
-    protected G1 getEmptyInternalObject() {
-        return new G1();
+    protected G1 getInternalObjectFromString(String str) {
+        G1 result = new G1();
+        result.setStr(str);
+        return result;
     }
 
     protected MclGroup1ElementImpl createElement(G1 g1) {
         return new MclGroup1ElementImpl(this, g1);
     }
 
-    private MclGroup1ElementImpl createElement(String str) {
-        G1 result = new G1();
-        result.setStr(str);
-        return createElement(result);
-    }
-
     @Override
     public MclGroup1ElementImpl getNeutralElement() {
-        return createElement("0");
+        return getElement("0");
     }
 
     @Override
