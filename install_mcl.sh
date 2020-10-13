@@ -29,12 +29,13 @@ fi
 java_inc=$1
 
 (
-  echo "----- Cloning mcl from git://github.com/herumi/mcl -----"
+  echo "----- Cloning mcl from git@github.com:upbcuk/mcl.git -----"
   cd /tmp
-  git clone git://github.com/herumi/mcl
+  #git clone git://github.com/herumi/mcl
+  git clone git@github.com:upbcuk/mcl.git
   cd mcl
-  git checkout $mcl_version || exit
-  echo "----- Building mcl $mcl_version -----"
+  #git checkout $mcl_version || exit
+  echo "----- Building mcl master -----"
   make -j4 || exit # build mcl library
   echo "----- Building mcl java bindings and running tests -----"
   echo "----- Java include path: $java_inc -----"

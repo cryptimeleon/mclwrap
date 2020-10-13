@@ -33,12 +33,8 @@ public class MclGroupTElementImpl extends MclGroupElementImpl {
     @Override
     public MclGroupTElementImpl inv() {
         GT res = new GT();
-        //Mcl.inv(res, getElement());
-        //return getStructure().createElement(res);
-        Fr minusOne = new Fr("-1");
-        Mcl.pow(res, getElement(), minusOne);
+        Mcl.inv(res, getElement());
         return getStructure().createElement(res);
-        //return pow(getStructure().size().subtract(BigInteger.ONE)); //TODO change!
     }
 
     @Override
