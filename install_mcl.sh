@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-mcl_version="v1.03"
+mcl_version="dev"
 # exit immediately on error
 set -e
 
@@ -29,13 +29,12 @@ fi
 java_inc=$1
 
 (
-  echo "----- Cloning mcl from git@github.com:upbcuk/mcl.git -----"
+  echo "----- Cloning mcl from git://github.com/herumi/mcl -----"
   cd /tmp
-  #git clone git://github.com/herumi/mcl
-  git clone git@github.com:upbcuk/mcl.git
+  git clone git://github.com/herumi/mcl
   cd mcl
-  #git checkout $mcl_version || exit
-  echo "----- Building mcl master -----"
+  git checkout $mcl_version || exit
+  echo "----- Building mcl -----"
   make -j4 || exit # build mcl library
   echo "----- Building mcl java bindings and running tests -----"
   echo "----- Java include path: $java_inc -----"

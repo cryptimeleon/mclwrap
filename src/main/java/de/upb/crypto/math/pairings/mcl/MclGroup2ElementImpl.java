@@ -60,6 +60,11 @@ public class MclGroup2ElementImpl extends MclGroupElementImpl {
     }
 
     @Override
+    public boolean isNeutralElement() {
+        return getElement().isZero();
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (this == other) return true;
         if (other == null || this.getClass() != other.getClass()) return false;
