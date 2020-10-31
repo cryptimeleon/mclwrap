@@ -55,4 +55,9 @@ public class MclGroup1Impl extends MclGroupImpl {
         Mcl.hashAndMapToG1(res, "some arbitrary element".getBytes());
         return generator = createElement(res);
     }
+
+    @Override
+    public double estimateCostInvPerOp() {
+        return 1.875;
+    }
 }

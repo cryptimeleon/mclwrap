@@ -64,4 +64,9 @@ public class MclGroupTImpl extends MclGroupImpl {
 
         return generator = createElement(res);
     }
+
+    @Override
+    public double estimateCostInvPerOp() {
+        return 3.4;
+    }
 }
