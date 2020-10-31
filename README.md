@@ -8,7 +8,7 @@ We give a more detailed tutorial below.
 # Linux/Mac OS
 
 You can peform most of the installation automatically by using the `install_mcl.sh` script contained in this directory. 
-It will compile the mcl library (version v1.03) as well as the Java bindings, and move the shared library to the correct library folder.
+It will compile the mcl library (version v1.26) as well as the Java bindings, and move the shared library to the correct library folder.
 As a prerequisite, you need to have the `libgmp-dev` package installed.
 Additionally, you may have to make the script executable by executing `chmod +x install_mcl.sh` before execution.
 
@@ -31,7 +31,7 @@ Now, we need to clone [Mcl](https://github.com/herumi/mcl) and [Cybozu_ext](http
 git clone https://github.com/herumi/mcl.git
 git clone https://github.com/herumi/cybozulib_ext.git
 cd mcl
-git checkout v1.03
+git checkout v1.26
 ```
 
 Next, we build Mcl:

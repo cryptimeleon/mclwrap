@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-mcl_version="dev"
+mcl_version="v1.26"
 # exit immediately on error
 set -e
 
