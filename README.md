@@ -26,7 +26,7 @@ The below commands are executed in the Developer Command Prompt for VS 2019 sinc
 Before you start with the actual installation, you need to make sure that x64 is selected as target architecure in the Command Prompt.
 For VS 2017 or later, this is done by executing `vcvarsall.bat x64` in the `C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\` folder (replace with your Visual Studio location). For VS 2015, the batch file will be in `C:\Program Files (x86)\Microsoft Visual Studio 15.0\VC\` instead.
 
-Now, we need to clone [Mcl](https://github.com/herumi/mcl) and [Cybozu_ext](https://github.com/herumi/cybozulib_ext). The repositories need to be in the same folder. Furthermore, we need to ensure that the correct version of Mcl is checked out. We currently use version v1.03.
+Now, we need to clone [Mcl](https://github.com/herumi/mcl) and [Cybozu_ext](https://github.com/herumi/cybozulib_ext). The repositories need to be in the same folder. Furthermore, we need to ensure that the correct version of Mcl is checked out. We currently use version v1.26.
 ```
 git clone https://github.com/herumi/mcl.git
 git clone https://github.com/herumi/cybozulib_ext.git
