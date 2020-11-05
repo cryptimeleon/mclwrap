@@ -15,6 +15,7 @@ public class MclBilinearGroupImpl implements BilinearGroupImpl {
     protected static MclGroupTImpl gt;
 
     protected static MclHashIntoG1Impl hashIntoG1 = new MclHashIntoG1Impl(g1);
+    protected static MclHashIntoG2Impl hashIntoG2 = new MclHashIntoG2Impl(g2);
 
 
     public MclBilinearGroupImpl() {
@@ -99,7 +100,7 @@ public class MclBilinearGroupImpl implements BilinearGroupImpl {
 
     @Override
     public HashIntoGroupImpl getHashIntoG2() throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("No hash available.");
+        return hashIntoG2;
     }
 
     @Override
