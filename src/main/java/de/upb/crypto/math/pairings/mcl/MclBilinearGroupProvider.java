@@ -37,7 +37,6 @@ public class MclBilinearGroupProvider implements BilinearGroupProvider {
                 && requirements.getNumPrimeFactorsOfSize() == 1
                 && requirements.getType() == TYPE_3
                 && securityParameter <= 256
-                && !requirements.isHashIntoGTNeeded()
-                && !requirements.isHashIntoG2Needed();
+                && !requirements.isHashIntoGTNeeded();
     }
 }
