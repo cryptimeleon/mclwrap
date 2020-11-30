@@ -21,7 +21,7 @@ public class PairingTest extends PairingTests {
     public static Collection<BilinearMap[]> data() {
         BilinearMap[][] params = new BilinearMap[][]{{
             new MclBilinearGroupProvider().provideBilinearGroup(
-                        128, new BilinearGroupRequirement(BilinearGroup.Type.TYPE_3, 1)
+                        100, new BilinearGroupRequirement(BilinearGroup.Type.TYPE_3, 1)
                 ).getBilinearMap()
         }};
         return Arrays.asList(params);

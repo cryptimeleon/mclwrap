@@ -21,7 +21,7 @@ public class PairingPerformanceTest extends de.upb.crypto.math.performance.pairi
         ArrayList<BilinearMap> pairings = new ArrayList<>();
         pairings.add(
                 new MclBilinearGroupProvider().provideBilinearGroup(
-                        128, new BilinearGroupRequirement(BilinearGroup.Type.TYPE_3, 1)
+                        100, new BilinearGroupRequirement(BilinearGroup.Type.TYPE_3, 1)
                 ).getBilinearMap()
         );
 
