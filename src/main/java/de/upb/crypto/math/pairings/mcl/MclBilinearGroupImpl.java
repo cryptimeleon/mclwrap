@@ -1,10 +1,11 @@
 package de.upb.crypto.math.pairings.mcl;
 
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.factory.BilinearGroupImpl;
-import de.upb.crypto.math.interfaces.mappings.impl.BilinearMapImpl;
 import de.upb.crypto.math.interfaces.mappings.impl.GroupHomomorphismImpl;
 import de.upb.crypto.math.interfaces.mappings.impl.HashIntoGroupImpl;
+import de.upb.crypto.math.pairings.generic.BilinearGroup;
+import de.upb.crypto.math.pairings.generic.BilinearGroupImpl;
+import de.upb.crypto.math.pairings.generic.BilinearMapImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;
 
@@ -106,6 +107,16 @@ public class MclBilinearGroupImpl implements BilinearGroupImpl {
     @Override
     public HashIntoGroupImpl getHashIntoGT() throws UnsupportedOperationException {
         throw new UnsupportedOperationException("No hash available.");
+    }
+
+    @Override
+    public Integer getSecurityLevel() {
+        return 100;
+    }
+
+    @Override
+    public BilinearGroup.Type getPairingType() {
+        return BilinearGroup.Type.TYPE_3;
     }
 
     @Override
