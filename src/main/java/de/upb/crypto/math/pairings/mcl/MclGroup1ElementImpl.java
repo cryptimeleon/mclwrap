@@ -4,7 +4,6 @@ import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
 import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
-import de.upb.crypto.math.pairings.debug.DebugGroupImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.structures.zn.Zn;
 

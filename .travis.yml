@@ -27,9 +27,9 @@ stages:
 jobs:
   include:
   - stage: build
-    script: ./gradlew build -PcheckoutIfCloned
+    script: "./gradlew build -PcheckoutIfCloned=true"
   - stage: release
-    script: ./gradlew publish -x test -Dnexus.user=$NEXUS_USER -Dnexus.key=$NEXUS_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER
+    script: "./gradlew publish -x test -Dnexus.user=$NEXUS_USER -Dnexus.key=$NEXUS_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER"
 
 deploy:
   provider: releases

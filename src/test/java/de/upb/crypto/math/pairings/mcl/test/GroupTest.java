@@ -1,6 +1,5 @@
 package de.upb.crypto.math.pairings.mcl.test;
 
-import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.pairings.mcl.MclGroup1Impl;
 import de.upb.crypto.math.pairings.mcl.MclGroup2Impl;
 import de.upb.crypto.math.pairings.mcl.MclGroupTImpl;
