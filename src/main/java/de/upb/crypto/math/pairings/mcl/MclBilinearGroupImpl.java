@@ -9,6 +9,12 @@ import de.upb.crypto.math.pairings.generic.BilinearMapImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;
 
+/**
+ * A wrapper around the efficient type 3 Barreto-Naehrig pairing implementation with a group order of 254 bits provided
+ * by the Mcl library.
+ *
+ * @see <a href="https://github.com/herumi/mcl">Mcl library on Github</a>
+ */
 public class MclBilinearGroupImpl implements BilinearGroupImpl {
     private static boolean isInitialized = false;
     protected static MclGroup1Impl g1;
