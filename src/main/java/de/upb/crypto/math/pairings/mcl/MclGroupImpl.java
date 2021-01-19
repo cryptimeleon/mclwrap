@@ -1,6 +1,5 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
 import de.upb.crypto.math.interfaces.structures.group.impl.GroupImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;

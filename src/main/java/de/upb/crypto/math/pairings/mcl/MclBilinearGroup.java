@@ -9,8 +9,6 @@ import de.upb.crypto.math.structures.groups.lazy.LazyBilinearGroup;
  * Essentially just a {@link LazyBilinearGroup} wrapper around {@link MclBilinearGroup}.
  *
  * @see MclBilinearGroupImpl
- *
- * @author Raphael Heitjohann
  */
 public class MclBilinearGroup extends LazyBilinearGroup {
 

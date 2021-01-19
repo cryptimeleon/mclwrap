@@ -6,7 +6,6 @@ import de.upb.crypto.math.interfaces.structures.group.impl.GroupImpl;
 import de.upb.crypto.math.serialization.BigIntegerRepresentation;
 import de.upb.crypto.math.serialization.ListRepresentation;
 import de.upb.crypto.math.serialization.Representation;
-import de.upb.crypto.math.serialization.StringRepresentation;
 
 import java.math.BigInteger;
 import java.util.Objects;

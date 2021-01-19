@@ -1,6 +1,5 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import com.herumi.mcl.G1;
 import com.herumi.mcl.G2;
 import com.herumi.mcl.Mcl;
 import de.upb.crypto.math.interfaces.mappings.impl.HashIntoGroupImpl;
