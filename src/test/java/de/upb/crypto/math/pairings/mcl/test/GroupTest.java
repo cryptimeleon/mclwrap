@@ -3,8 +3,8 @@ package de.upb.crypto.math.pairings.mcl.test;
 import de.upb.crypto.math.pairings.mcl.MclGroup1Impl;
 import de.upb.crypto.math.pairings.mcl.MclGroup2Impl;
 import de.upb.crypto.math.pairings.mcl.MclGroupTImpl;
+import de.upb.crypto.math.structures.GroupTests;
 import de.upb.crypto.math.structures.groups.basic.BasicGroup;
-import de.upb.crypto.math.structures.test.GroupTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -14,7 +14,7 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class GroupTest extends GroupTests {
 
-    public GroupTest(TestParams params) {
+    public GroupTest(GroupTests.TestParams params) {
         super(params);
     }
 

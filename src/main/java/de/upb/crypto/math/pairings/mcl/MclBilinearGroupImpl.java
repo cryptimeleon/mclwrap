@@ -1,13 +1,13 @@
 package de.upb.crypto.math.pairings.mcl;
 
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.interfaces.mappings.impl.GroupHomomorphismImpl;
-import de.upb.crypto.math.interfaces.mappings.impl.HashIntoGroupImpl;
-import de.upb.crypto.math.pairings.generic.BilinearGroup;
-import de.upb.crypto.math.pairings.generic.BilinearGroupImpl;
-import de.upb.crypto.math.pairings.generic.BilinearMapImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;
+import de.upb.crypto.math.structures.groups.elliptic.BilinearGroup;
+import de.upb.crypto.math.structures.groups.elliptic.BilinearGroupImpl;
+import de.upb.crypto.math.structures.groups.elliptic.BilinearMapImpl;
+import de.upb.crypto.math.structures.groups.mappings.impl.GroupHomomorphismImpl;
+import de.upb.crypto.math.structures.groups.mappings.impl.HashIntoGroupImpl;
 
 /**
  * A wrapper around the efficient type 3 Barreto-Naehrig pairing implementation with a group order of 254 bits provided

@@ -4,9 +4,9 @@ import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
 import com.herumi.mcl.GT;
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
-import de.upb.crypto.math.pairings.generic.BilinearMapImpl;
 import de.upb.crypto.math.serialization.Representation;
+import de.upb.crypto.math.structures.groups.GroupElementImpl;
+import de.upb.crypto.math.structures.groups.elliptic.BilinearMapImpl;
 
 import java.math.BigInteger;
 import java.util.Objects;

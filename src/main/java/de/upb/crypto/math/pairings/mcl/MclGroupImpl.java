@@ -1,8 +1,8 @@
 package de.upb.crypto.math.pairings.mcl;
 
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupImpl;
 import de.upb.crypto.math.serialization.Representation;
 import de.upb.crypto.math.serialization.StringRepresentation;
+import de.upb.crypto.math.structures.groups.GroupImpl;
 
 import java.math.BigInteger;
 import java.util.Optional;

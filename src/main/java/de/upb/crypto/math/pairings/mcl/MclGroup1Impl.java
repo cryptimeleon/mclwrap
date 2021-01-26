@@ -2,9 +2,9 @@ package de.upb.crypto.math.pairings.mcl;
 
 import com.herumi.mcl.G1;
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
-import de.upb.crypto.math.random.interfaces.RandomGeneratorSupplier;
+import de.upb.crypto.math.random.RandomGenerator;
 import de.upb.crypto.math.serialization.Representation;
+import de.upb.crypto.math.structures.groups.GroupElementImpl;
 
 public class MclGroup1Impl extends MclGroupImpl {
     protected MclGroup1ElementImpl generator = null;
@@ -44,7 +44,7 @@ public class MclGroup1Impl extends MclGroupImpl {
 
     @Override
     public MclGroup1ElementImpl getUniformlyRandomElement() throws UnsupportedOperationException {
-        return getGenerator().pow(RandomGeneratorSupplier.getRnd().getRandomElement(size()));
+        return getGenerator().pow(RandomGenerator.getRandomNumber(size()));
     }
 
     @Override

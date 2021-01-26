@@ -2,9 +2,9 @@ package de.upb.crypto.math.pairings.mcl;
 
 import com.herumi.mcl.G1;
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.interfaces.mappings.impl.HashIntoGroupImpl;
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
 import de.upb.crypto.math.serialization.Representation;
+import de.upb.crypto.math.structures.groups.GroupElementImpl;
+import de.upb.crypto.math.structures.groups.mappings.impl.HashIntoGroupImpl;
 
 public class MclHashIntoG1Impl implements HashIntoGroupImpl {
     protected MclGroup1Impl group;
