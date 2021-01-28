@@ -2,7 +2,6 @@ language: java
 install: true   # tells Travis that we run gradlew manually
 jdk:
 - openjdk8
-- openjdk11
 env:
   - JAVA_INC=/usr/lib/jvm/java-8-openjdk-amd64/include
 before_cache:
