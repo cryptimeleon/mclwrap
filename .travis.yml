@@ -1,22 +1,23 @@
 language: java
-install: true   # tells Travis that we run gradlew manually
+
 jdk:
 - openjdk8
+
 env:
   - JAVA_INC=/usr/lib/jvm/java-8-openjdk-amd64/include
+
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
-before_install:
-  - chmod +x install_mcl.sh
-  - ./install_mcl.sh $JAVA_INC
 
-before_script:
-  git checkout ${TRAVIS_BRANCH}
+
+before_install:
+
 
 stages:
 - name: build
@@ -26,9 +27,16 @@ stages:
 jobs:
   include:
   - stage: build
-    script: "./gradlew build -PcheckoutIfCloned=true"
+    before_install:
+      git checkout ${TRAVIS_BRANCH} # to fix travis checking out HEAD branch (breaks grgit)
+    install:
+      - chmod +x install_mcl.sh
+      - ./install_mcl.sh $JAVA_INC
+      - ./gradlew assemble -PcheckoutIfCloned=true
+    script: ./gradlew check -PcheckoutIfCloned=true
   - stage: release
-    script: "./gradlew publish -x test -Dnexus.user=$NEXUS_USER -Dnexus.key=$NEXUS_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER"
+    install: skip # publish task already includes assembling
+    script: ./gradlew publish -Ddisablesnapshot=true -Dnexus.user=$NEXUS_USER -Dnexus.key=$NEXUS_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER
 
 deploy:
   provider: releases
