@@ -15,10 +15,6 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
 
-
-before_install:
-
-
 stages:
 - name: build
 - name: release
