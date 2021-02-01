@@ -52,4 +52,4 @@ java_inc=$1
   cd ..
   rm -rf mcl
   echo "----- Done -----"
-) || rm -rf /tmp/mcl
+) || { echo "----- Failed installation. Deleting mcl folder -----"; rm -rf /tmp/mcl; exit 3; }
