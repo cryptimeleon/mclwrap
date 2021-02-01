@@ -13,7 +13,7 @@ jobs:
           java-version: 1.8
       - name: Install Mcl Java bindings
         run: |
-          ls -a $JAVA_HOME
+          ls -a $JAVA_HOME/include
           chmod +x install_mcl.sh
           ./install_mcl.sh JAVA_INC=$JAVA_HOME/include
       - name: Build with Gradle
