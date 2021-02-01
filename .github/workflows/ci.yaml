@@ -14,6 +14,6 @@ jobs:
       - name: Install Mcl Java bindings
         run: |
           chmod +x install_mcl.sh
-          ./install_mcl.sh JAVA_INC=/usr/lib/jvm/java-8-openjdk-amd64/include
+          ./install_mcl.sh JAVA_INC=$JAVA_HOME/include
       - name: Build with Gradle
         run: ./gradlew build -PcheckoutIfCloned=true
