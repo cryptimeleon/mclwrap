@@ -1,10 +1,10 @@
-package de.upb.crypto.math.pairings.mcl;
+package org.cryptimeleon.math.pairings.mcl;
 
 import com.herumi.mcl.G2;
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.serialization.Representation;
-import de.upb.crypto.math.structures.groups.GroupElementImpl;
-import de.upb.crypto.math.structures.groups.mappings.impl.HashIntoGroupImpl;
+import org.cryptimeleon.math.serialization.Representation;
+import org.cryptimeleon.math.structures.groups.GroupElementImpl;
+import org.cryptimeleon.math.structures.groups.mappings.impl.HashIntoGroupImpl;
 
 public class MclHashIntoG2Impl implements HashIntoGroupImpl {
     protected MclGroup2Impl group;

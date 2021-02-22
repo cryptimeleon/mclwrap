@@ -1,8 +1,8 @@
-package de.upb.crypto.math.pairings.mcl.test;
+package org.cryptimeleon.math.pairings.mcl.test;
 
-import de.upb.crypto.math.pairings.PairingTests;
-import de.upb.crypto.math.pairings.mcl.MclBilinearGroup;
-import de.upb.crypto.math.structures.groups.elliptic.BilinearMap;
+import org.cryptimeleon.math.pairings.PairingTests;
+import org.cryptimeleon.math.pairings.mcl.MclBilinearGroup;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearMap;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 

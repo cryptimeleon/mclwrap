@@ -1,10 +1,10 @@
-package de.upb.crypto.math.pairings.mcl;
+package org.cryptimeleon.math.pairings.mcl;
 
 import com.herumi.mcl.Fp;
 import com.herumi.mcl.G2;
-import de.upb.crypto.math.random.RandomGenerator;
-import de.upb.crypto.math.serialization.Representation;
-import de.upb.crypto.math.structures.groups.GroupElementImpl;
+import org.cryptimeleon.math.random.RandomGenerator;
+import org.cryptimeleon.math.serialization.Representation;
+import org.cryptimeleon.math.structures.groups.GroupElementImpl;
 
 public class MclGroup2Impl extends MclGroupImpl {
     protected MclGroup2ElementImpl generator = null;

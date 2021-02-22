@@ -1,4 +1,4 @@
-This is a wrapper for [upb.crypto](https://github.com/upbcuk/upb.crypto.math) for the excellent mcl pairing library: https://github.com/herumi/mcl
+This is a wrapper for [Cryptimeleon.Math](https://github.com/cryptimeleon/upb.crypto.math) for the excellent mcl pairing library: https://github.com/herumi/mcl
 
 # Installation
 
