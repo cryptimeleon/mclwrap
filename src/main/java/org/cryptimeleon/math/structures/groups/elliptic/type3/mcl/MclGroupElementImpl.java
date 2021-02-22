@@ -1,4 +1,4 @@
-package org.cryptimeleon.math.pairings.mcl;
+package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
 
 import org.cryptimeleon.math.hash.ByteAccumulator;
 import org.cryptimeleon.math.serialization.BigIntegerRepresentation;

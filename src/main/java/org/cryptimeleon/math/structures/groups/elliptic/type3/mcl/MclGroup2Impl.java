@@ -1,4 +1,4 @@
-package org.cryptimeleon.math.pairings.mcl;
+package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
 
 import com.herumi.mcl.Fp;
 import com.herumi.mcl.G2;
