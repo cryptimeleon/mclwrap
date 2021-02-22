@@ -1,7 +1,7 @@
-package de.upb.crypto.math.pairings.mcl;
+package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
 
-import de.upb.crypto.math.serialization.Representation;
-import de.upb.crypto.math.structures.groups.lazy.LazyBilinearGroup;
+import org.cryptimeleon.math.serialization.Representation;
+import org.cryptimeleon.math.structures.groups.lazy.LazyBilinearGroup;
 
 /**
  * Offers a less verbose way to instantiate the Mcl bilinear group which uses lazy evaluation.

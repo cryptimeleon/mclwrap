@@ -1,8 +1,8 @@
-package de.upb.crypto.math.pairings.mcl;
+package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
 
-import de.upb.crypto.math.serialization.Representation;
-import de.upb.crypto.math.serialization.StringRepresentation;
-import de.upb.crypto.math.structures.groups.GroupImpl;
+import org.cryptimeleon.math.serialization.Representation;
+import org.cryptimeleon.math.serialization.StringRepresentation;
+import org.cryptimeleon.math.structures.groups.GroupImpl;
 
 import java.math.BigInteger;
 import java.util.Optional;

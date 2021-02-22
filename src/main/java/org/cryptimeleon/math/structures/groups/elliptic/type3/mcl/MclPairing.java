@@ -1,12 +1,12 @@
-package de.upb.crypto.math.pairings.mcl;
+package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
 
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
 import com.herumi.mcl.GT;
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.serialization.Representation;
-import de.upb.crypto.math.structures.groups.GroupElementImpl;
-import de.upb.crypto.math.structures.groups.elliptic.BilinearMapImpl;
+import org.cryptimeleon.math.serialization.Representation;
+import org.cryptimeleon.math.structures.groups.GroupElementImpl;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearMapImpl;
 
 import java.math.BigInteger;
 import java.util.Objects;

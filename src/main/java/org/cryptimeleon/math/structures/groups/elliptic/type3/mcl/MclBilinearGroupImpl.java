@@ -1,13 +1,13 @@
-package de.upb.crypto.math.pairings.mcl;
+package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
 
 import com.herumi.mcl.Mcl;
-import de.upb.crypto.math.serialization.Representation;
-import de.upb.crypto.math.serialization.StringRepresentation;
-import de.upb.crypto.math.structures.groups.elliptic.BilinearGroup;
-import de.upb.crypto.math.structures.groups.elliptic.BilinearGroupImpl;
-import de.upb.crypto.math.structures.groups.elliptic.BilinearMapImpl;
-import de.upb.crypto.math.structures.groups.mappings.impl.GroupHomomorphismImpl;
-import de.upb.crypto.math.structures.groups.mappings.impl.HashIntoGroupImpl;
+import org.cryptimeleon.math.serialization.Representation;
+import org.cryptimeleon.math.serialization.StringRepresentation;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearGroup;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearGroupImpl;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearMapImpl;
+import org.cryptimeleon.math.structures.groups.mappings.impl.GroupHomomorphismImpl;
+import org.cryptimeleon.math.structures.groups.mappings.impl.HashIntoGroupImpl;
 
 /**
  * A wrapper around the efficient type 3 Barreto-Naehrig pairing implementation with a group order of 254 bits provided

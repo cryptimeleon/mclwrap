@@ -1,10 +1,10 @@
-package de.upb.crypto.math.pairings.mcl.test;
+package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
 
-import de.upb.crypto.math.pairings.mcl.MclGroup1Impl;
-import de.upb.crypto.math.pairings.mcl.MclGroup2Impl;
-import de.upb.crypto.math.pairings.mcl.MclGroupTImpl;
-import de.upb.crypto.math.structures.GroupTests;
-import de.upb.crypto.math.structures.groups.basic.BasicGroup;
+import org.cryptimeleon.math.structures.groups.elliptic.type3.mcl.MclGroup1Impl;
+import org.cryptimeleon.math.structures.groups.elliptic.type3.mcl.MclGroup2Impl;
+import org.cryptimeleon.math.structures.groups.elliptic.type3.mcl.MclGroupTImpl;
+import org.cryptimeleon.math.structures.GroupTests;
+import org.cryptimeleon.math.structures.groups.basic.BasicGroup;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
