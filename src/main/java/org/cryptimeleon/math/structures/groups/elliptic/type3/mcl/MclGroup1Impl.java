@@ -22,7 +22,7 @@ public class MclGroup1Impl extends MclGroupImpl {
         return createElement(getInternalObjectFromString(string));
     }
     
-    public GroupElementImpl getElement(Representation repr) {
+    public GroupElementImpl restoreElement(Representation repr) {
         return new MclGroup1ElementImpl(this, repr);
     }
 

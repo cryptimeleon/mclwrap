@@ -25,7 +25,7 @@ public class MclGroupTImpl extends MclGroupImpl {
     }
 
     @Override
-    public GroupElementImpl getElement(Representation repr) {
+    public GroupElementImpl restoreElement(Representation repr) {
         return new MclGroupTElementImpl(this, repr);
     }
 
