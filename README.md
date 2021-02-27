@@ -1,18 +1,24 @@
-This is a wrapper for [Cryptimeleon Math](https://github.com/cryptimeleon/upb.crypto.math) for the excellent mcl pairing library: https://github.com/herumi/mcl
+# Mclwrap
 
-# Installation
+Mclwrap provides a wrapper around the BN-254 bilinear group implemented in the [MCL library](https://github.com/herumi/mcl). As the bilinear groups implemented in the Cryptimeleon Math library are not particulary efficient, use of this wrapper is recommended for proper benchmarks.
+Specifically, the Mclwrap implementation's group operations are roughly 100 times as fast as our own implementation.
+
+## Security Disclaimer
+**WARNING: This library is meant to be used for prototyping and as a research tool *only*. It has not been sufficiently vetted for use in security-critical production environments. All implementations are to be considered experimental.**
+
+## Installation
 
 To use the wrapper, you need to compile the mcl library as well as the Java bindings, and copy the latter to one of the paths that JNI will search at runtime (those locations are printed to the console whenever the wrapper is loaded but fails to locate the library).
 We give a more detailed tutorial below.
 
-# Linux/Mac OS
+### Linux/Mac OS
 
 You can peform most of the installation automatically by using the `install_mcl.sh` script contained in this directory. 
 It will compile the mcl library (version v1.26) as well as the Java bindings, and move the shared library to the correct library folder.
 As a prerequisite, you need to have the `libgmp-dev` package installed.
 Additionally, you may have to make the script executable by executing `chmod +x install_mcl.sh` before execution.
 
-# Windows
+### Windows
 
 As prerequisites you need Visual Studio with C++ build tools and the Windows 10 SDK installed.
 These should be easily installable using the setup application that comes with Visual Studio, which you can access by going to the program deinstallation settings in Windows and then selecting modify under Visual Studio.
