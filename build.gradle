@@ -26,12 +26,15 @@ repositories {
 }
 
 dependencies {
+
+    def mathVersion = '1.0.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api group: 'org.cryptimeleon', name: 'math', version:'1.0.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+    api group: 'org.cryptimeleon', name: 'math', version: mathVersion
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
 
     // For tests
-    testImplementation(group: 'org.cryptimeleon', name: 'math', version:'1.0.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")) {
+    testImplementation(group: 'org.cryptimeleon', name: 'math', version: mathVersion) {
             capabilities {
                 requireCapability("org.cryptimeleon:math-tests")
             }
