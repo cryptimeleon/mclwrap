@@ -6,6 +6,15 @@ Specifically, the Mclwrap implementation's group operations are roughly 100 time
 ## Security Disclaimer
 **WARNING: This library is meant to be used for prototyping and as a research tool *only*. It has not been sufficiently vetted for use in security-critical production environments. All implementations are to be considered experimental.**
 
+## Table Of Contents
+
+* [Quickstart Guide](#quickstart)
+    * [Mcl Java JNI Installation](#installing-mcl-java-jni)
+    * [Adding Maven Dependency](#adding-mclwrap-dependency-with-maven)
+    * [Adding Gradle Dependency](#adding-gradle-dependency-with-maven)
+* [Miscellaneous Information](#miscellaneous-information)
+* [Authors](#authors)
+
 ## Quickstart
 
 There are two parts to the installation. Compiling and installing the Mcl Java bindings, and adding the Mclwrap project as a dependency.
