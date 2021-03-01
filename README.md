@@ -79,7 +79,7 @@ To add the newest Mclwrap version as a dependency, add this to your project's PO
 </dependency>
 ```
 
-### Adding Gradle Dependency With Gradle
+### Adding Mclwrap Dependency With Gradle
 
 Mclwrap is published via Maven Central.
 Therefore, you need to add `mavenCentral()` to the `repositories` section of your project's `build.gradle` file.
