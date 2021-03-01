@@ -6,19 +6,23 @@ Specifically, the Mclwrap implementation's group operations are roughly 100 time
 ## Security Disclaimer
 **WARNING: This library is meant to be used for prototyping and as a research tool *only*. It has not been sufficiently vetted for use in security-critical production environments. All implementations are to be considered experimental.**
 
-## Installation
+## Quickstart
+
+There are two parts to the installation. Compiling and installing the Mcl Java bindings, and adding the Mclwrap project as a dependency.
+
+### Installing Mcl Java JNI
 
 To use the wrapper, you need to compile the mcl library as well as the Java bindings, and copy the latter to one of the paths that JNI will search at runtime (those locations are printed to the console whenever the wrapper is loaded but fails to locate the library).
 We give a more detailed tutorial below.
 
-### Linux/Mac OS
+#### Linux/Mac OS
 
 You can peform most of the installation automatically by using the `install_mcl.sh` script contained in this directory. 
 It will compile the mcl library (version v1.26) as well as the Java bindings, and move the shared library to the correct library folder.
 As a prerequisite, you need to have the `libgmp-dev` package installed.
 Additionally, you may have to make the script executable by executing `chmod +x install_mcl.sh` before execution.
 
-### Windows
+#### Windows
 
 As prerequisites you need Visual Studio with C++ build tools and the Windows 10 SDK installed.
 These should be easily installable using the setup application that comes with Visual Studio, which you can access by going to the program deinstallation settings in Windows and then selecting modify under Visual Studio.
@@ -63,3 +67,43 @@ Lastly, we need to move the compiled DLL to the correct path.
 You can find it under `mcl\bin\mcljava.dll`.
 The target path should be printed in the console when running the Mclwrap tests (the first exception thrown).
 For me this was `C:\Users\<User>\.jdks\openjdk-15\bin`.
+
+### Adding Mclwrap Dependency With Maven
+To add the newest Mclwrap version as a dependency, add this to your project's POM:
+
+```xml
+<dependency>
+    <groupId>org.cryptimeleon</groupId>
+    <artifactId>mclwrap</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### Adding Gradle Dependency With Gradle
+
+Mclwrap is published via Maven Central.
+Therefore, you need to add `mavenCentral()` to the `repositories` section of your project's `build.gradle` file.
+Then, add `implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '1.0.0'` to the `dependencies` section of your `build.gradle` file.
+
+For example:
+
+```groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '1.0.0'
+}
+```
+
+## Miscellaneous Information
+
+- Official Documentation can be found [here](https://cryptimeleon.github.io/).
+    - The *For Contributors* area includes information on how to contribute.
+- Mclwrap adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+- The changelog can be found [here](CHANGELOG.md).
+- Mclwrap is licensed under Apache License 2.0, see [LICENSE file](LICENSE).
+
+## Authors
+The library was implemented at Paderborn University in the research group ["Codes und Cryptography"](https://cs.uni-paderborn.de/en/cuk/).
