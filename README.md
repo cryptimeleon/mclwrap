@@ -33,6 +33,9 @@ It will compile the mcl library (version v1.26) as well as the Java bindings, an
 As a prerequisite, you need to have the `libgmp-dev` package installed.
 Additionally, you may have to make the script executable by executing `chmod +x install_mcl.sh` before execution.
 
+The `install_mcl.sh` script takes the `include` path of your Java JVM as its only argument. 
+The path should be given without a trailing forward slash.
+
 #### Windows
 
 As prerequisites you need Visual Studio with C++ build tools and the Windows 10 SDK installed.
