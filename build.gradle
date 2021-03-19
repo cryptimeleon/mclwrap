@@ -1,15 +1,13 @@
 plugins {
-    // Apply the java-library plugin to add support for Java Library
     id 'java-library'
     id 'maven-publish'
+    id 'signing'
 }
 
 group 'org.cryptimeleon'
 archivesBaseName = project.name
 boolean isRelease = project.hasProperty("release")
 version = '1.0.0'  + (isRelease ? "" : "-SNAPSHOT")
-
-description = """"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -78,8 +76,93 @@ task javadocLink(type: Javadoc) {
     }
 }
 
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadocLink) {
+    from javadoc.destinationDir
+    archiveClassifier = 'javadoc'
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
 java {
     registerFeature("tests") {
         usingSourceSet(sourceSets.test)
     }
+    withJavadocJar()
+    withSourcesJar()
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            artifacts {
+                archives javadocJar, sourcesJar
+            }
+
+            pom {
+                name = 'mclwrap'
+                url = 'https://cryptimeleon.org'
+                description = "Mclwrap provides a wrapper around the BN-254 bilinear group implemented in " +
+                        "the MCL library. As the bilinear groups implemented in the Cryptimeleon Math library " +
+                        "are not particulary efficient, use of this wrapper is recommended for proper benchmarks. " +
+                        "Specifically, the Mclwrap implementation's group operations are roughly 100 times " +
+                        "as fast as our own implementation."
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'cryptimeleon-dev'
+                        name = 'cryptimeleon Developers'
+                        email = 'dev@cryptimeleon.org'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/cryptimeleon/mclwrap.git'
+                    developerConnection = 'scm:git:https://github.com/cryptimeleon/mclwrap.git'
+                    url = 'https://github.com/cryptimeleon/mclwrap/'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_TOKEN")
+            }
+            name = 'OSSRH'
+            def releasesRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+            url = version.endsWith('SNAPSHOT') ? '' : releasesRepoUrl
+        }
+    }
+}
+
+signing {
+    required(project.hasProperty("release"))
+    def signingKey = findProperty("signingKey")
+    def signingPassword = findProperty("signingPassword")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.mavenJava
 }

@@ -1,6 +1,16 @@
-name: Java CI
+name: Development Java CI
 
-on: push
+on:
+  push:
+    branches-ignore:
+      - main
+      - 'release/**'
+  pull_request:
+    branches:
+      - develop
+  # Nightly builds to ensure dependencies don't break anything
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -16,4 +26,4 @@ jobs:
           chmod +x install_mcl.sh
           ./install_mcl.sh $JAVA_HOME/include
       - name: Build with Gradle
-        run: ./gradlew build -PcheckoutIfCloned=true
+        run: ./gradlew build -PcheckoutIfCloned

@@ -1,3 +1,5 @@
+![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Development%20Java%20CI/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Release%20Java%20CI/badge.svg)
 # Mclwrap
 
 Mclwrap provides a wrapper around the BN-254 bilinear group implemented in the [MCL library](https://github.com/herumi/mcl). As the bilinear groups implemented in the Cryptimeleon Math library are not particulary efficient, use of this wrapper is recommended for proper benchmarks.
@@ -30,6 +32,9 @@ You can peform most of the installation automatically by using the `install_mcl.
 It will compile the mcl library (version v1.26) as well as the Java bindings, and move the shared library to the correct library folder.
 As a prerequisite, you need to have the `libgmp-dev` package installed.
 Additionally, you may have to make the script executable by executing `chmod +x install_mcl.sh` before execution.
+
+The `install_mcl.sh` script takes the `include` path of your Java JVM as its only argument. 
+The path should be given without a trailing forward slash.
 
 #### Windows
 
