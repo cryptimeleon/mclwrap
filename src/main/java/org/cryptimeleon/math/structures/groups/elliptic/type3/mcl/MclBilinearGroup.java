@@ -4,11 +4,12 @@ import org.cryptimeleon.math.serialization.Representation;
 import org.cryptimeleon.math.structures.groups.lazy.LazyBilinearGroup;
 
 /**
- * Offers a less verbose way to instantiate the Mcl bilinear group which uses lazy evaluation.
+ * A wrapper around the efficient type 3 Barreto-Naehrig pairing implementation with a group order of 254 bits provided
+ * by the Mcl library.
  * <p>
- * Essentially just a {@link LazyBilinearGroup} wrapper around {@link MclBilinearGroup}.
+ * Operation evaluation is done lazily via {@link LazyBilinearGroup}.
  *
- * @see MclBilinearGroupImpl
+ * @see <a href="https://github.com/herumi/mcl">Mcl library on Github</a>
  */
 public class MclBilinearGroup extends LazyBilinearGroup {
 
