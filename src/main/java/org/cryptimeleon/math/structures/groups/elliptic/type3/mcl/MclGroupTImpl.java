@@ -8,7 +8,7 @@ import org.cryptimeleon.math.random.RandomGenerator;
 import org.cryptimeleon.math.serialization.Representation;
 import org.cryptimeleon.math.structures.groups.GroupElementImpl;
 
-public class MclGroupTImpl extends MclGroupImpl {
+class MclGroupTImpl extends MclGroupImpl {
     protected MclGroupTElementImpl generator = null;
 
     public MclGroupTImpl() {

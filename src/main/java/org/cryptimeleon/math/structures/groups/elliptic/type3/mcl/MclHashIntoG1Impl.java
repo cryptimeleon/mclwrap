@@ -6,7 +6,7 @@ import org.cryptimeleon.math.serialization.Representation;
 import org.cryptimeleon.math.structures.groups.GroupElementImpl;
 import org.cryptimeleon.math.structures.groups.mappings.impl.HashIntoGroupImpl;
 
-public class MclHashIntoG1Impl implements HashIntoGroupImpl {
+class MclHashIntoG1Impl implements HashIntoGroupImpl {
     protected MclGroup1Impl group;
 
     public MclHashIntoG1Impl(MclGroup1Impl group) {

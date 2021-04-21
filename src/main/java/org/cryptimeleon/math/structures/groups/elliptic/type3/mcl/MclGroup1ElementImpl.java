@@ -10,7 +10,7 @@ import org.cryptimeleon.math.structures.rings.zn.Zn;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class MclGroup1ElementImpl extends MclGroupElementImpl {
+class MclGroup1ElementImpl extends MclGroupElementImpl {
 
     public MclGroup1ElementImpl(MclGroup1Impl group, Representation repr) {
         super(group, repr);

@@ -15,7 +15,7 @@ import org.cryptimeleon.math.structures.groups.mappings.impl.HashIntoGroupImpl;
  *
  * @see <a href="https://github.com/herumi/mcl">Mcl library on Github</a>
  */
-public class MclBilinearGroupImpl implements BilinearGroupImpl {
+class MclBilinearGroupImpl implements BilinearGroupImpl {
     private static boolean isInitialized = false;
     protected static MclGroup1Impl g1;
     protected static MclGroup2Impl g2;

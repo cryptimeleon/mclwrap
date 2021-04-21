@@ -7,7 +7,7 @@ import org.cryptimeleon.math.structures.groups.GroupImpl;
 import java.math.BigInteger;
 import java.util.Optional;
 
-public abstract class MclGroupImpl implements GroupImpl {
+abstract class MclGroupImpl implements GroupImpl {
 
     public MclGroupImpl() {
         MclBilinearGroupImpl.init(true);

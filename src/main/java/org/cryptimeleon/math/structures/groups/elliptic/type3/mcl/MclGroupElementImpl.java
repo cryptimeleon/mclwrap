@@ -10,7 +10,7 @@ import org.cryptimeleon.math.structures.groups.GroupImpl;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public abstract class MclGroupElementImpl implements GroupElementImpl {
+abstract class MclGroupElementImpl implements GroupElementImpl {
     protected MclGroupImpl group;
     protected Object element;
 

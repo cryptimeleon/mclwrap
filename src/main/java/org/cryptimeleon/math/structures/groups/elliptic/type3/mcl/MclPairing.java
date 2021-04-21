@@ -11,7 +11,7 @@ import org.cryptimeleon.math.structures.groups.elliptic.BilinearMapImpl;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class MclPairing implements BilinearMapImpl {
+class MclPairing implements BilinearMapImpl {
 
     private MclBilinearGroupImpl bilinearGroup;
 
