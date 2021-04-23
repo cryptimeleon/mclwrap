@@ -1,4 +1,4 @@
-package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
+package org.cryptimeleon.mclwrap.bn254;
 
 import org.cryptimeleon.math.serialization.Representation;
 import org.cryptimeleon.math.serialization.StringRepresentation;
