@@ -1,4 +1,4 @@
-name: Release Java CI
+name: Scheduled Release Java CI
 
 on:
   # Nightly builds to ensure dependencies don't break anything
