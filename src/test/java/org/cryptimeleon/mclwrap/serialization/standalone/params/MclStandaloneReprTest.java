@@ -2,6 +2,7 @@ package org.cryptimeleon.mclwrap.serialization.standalone.params;
 
 import org.cryptimeleon.math.serialization.standalone.StandaloneReprSubTest;
 import org.cryptimeleon.math.structures.groups.elliptic.BilinearGroup;
+import org.cryptimeleon.mclwrap.bn254.MclBasicBilinearGroup;
 import org.cryptimeleon.mclwrap.bn254.MclBilinearGroup;
 
 public class MclStandaloneReprTest extends StandaloneReprSubTest {
@@ -26,5 +27,6 @@ public class MclStandaloneReprTest extends StandaloneReprSubTest {
 
     public void testMclBilinearGroup() {
         testBilinearGroup(new MclBilinearGroup());
+        testBilinearGroup(new MclBasicBilinearGroup());
     }
 }

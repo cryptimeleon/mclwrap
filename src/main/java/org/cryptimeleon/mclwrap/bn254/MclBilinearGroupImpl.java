@@ -21,8 +21,8 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
     protected static MclGroup2Impl g2;
     protected static MclGroupTImpl gt;
 
-    protected static MclHashIntoG1Impl hashIntoG1 = new MclHashIntoG1Impl(g1);
-    protected static MclHashIntoG2Impl hashIntoG2 = new MclHashIntoG2Impl(g2);
+    protected static MclHashIntoG1Impl hashIntoG1;
+    protected static MclHashIntoG2Impl hashIntoG2;
 
 
     public MclBilinearGroupImpl() {
@@ -72,6 +72,8 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
             g1 = new MclGroup1Impl();
             g2 = new MclGroup2Impl();
             gt = new MclGroupTImpl();
+            hashIntoG1 = new MclHashIntoG1Impl(g1);
+            hashIntoG2 = new MclHashIntoG2Impl(g2);
         }
     }
 
@@ -127,7 +129,7 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
 
     @Override
     public Representation getRepresentation() {
-        return new StringRepresentation("bn256");
+        return new StringRepresentation("bn254");
     }
 
     @Override

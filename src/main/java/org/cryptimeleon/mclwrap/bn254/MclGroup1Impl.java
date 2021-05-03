@@ -60,4 +60,5 @@ class MclGroup1Impl extends MclGroupImpl {
     public double estimateCostInvPerOp() {
         return 1.875;
     }
+
 }
