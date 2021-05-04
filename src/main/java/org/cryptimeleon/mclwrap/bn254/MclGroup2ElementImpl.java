@@ -1,4 +1,4 @@
-package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
+package org.cryptimeleon.mclwrap.bn254;
 
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G2;
@@ -10,7 +10,7 @@ import org.cryptimeleon.math.structures.rings.zn.Zn;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class MclGroup2ElementImpl extends MclGroupElementImpl {
+class MclGroup2ElementImpl extends MclGroupElementImpl {
 
     public MclGroup2ElementImpl(MclGroup2Impl group, Representation repr) {
         super(group, repr);

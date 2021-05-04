@@ -1,8 +1,5 @@
-package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
+package org.cryptimeleon.mclwrap.bn254;
 
-import org.cryptimeleon.math.structures.groups.elliptic.type3.mcl.MclGroup1Impl;
-import org.cryptimeleon.math.structures.groups.elliptic.type3.mcl.MclGroup2Impl;
-import org.cryptimeleon.math.structures.groups.elliptic.type3.mcl.MclGroupTImpl;
 import org.cryptimeleon.math.structures.GroupTests;
 import org.cryptimeleon.math.structures.groups.basic.BasicGroup;
 import org.junit.runner.RunWith;

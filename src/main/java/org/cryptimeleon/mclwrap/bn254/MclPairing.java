@@ -1,4 +1,4 @@
-package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
+package org.cryptimeleon.mclwrap.bn254;
 
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
@@ -11,7 +11,7 @@ import org.cryptimeleon.math.structures.groups.elliptic.BilinearMapImpl;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class MclPairing implements BilinearMapImpl {
+class MclPairing implements BilinearMapImpl {
 
     private MclBilinearGroupImpl bilinearGroup;
 

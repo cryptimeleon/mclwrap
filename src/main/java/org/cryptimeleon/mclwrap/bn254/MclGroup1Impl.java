@@ -1,4 +1,4 @@
-package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
+package org.cryptimeleon.mclwrap.bn254;
 
 import com.herumi.mcl.G1;
 import com.herumi.mcl.Mcl;
@@ -6,7 +6,7 @@ import org.cryptimeleon.math.random.RandomGenerator;
 import org.cryptimeleon.math.serialization.Representation;
 import org.cryptimeleon.math.structures.groups.GroupElementImpl;
 
-public class MclGroup1Impl extends MclGroupImpl {
+class MclGroup1Impl extends MclGroupImpl {
     protected MclGroup1ElementImpl generator = null;
 
     public MclGroup1Impl() {
@@ -60,4 +60,5 @@ public class MclGroup1Impl extends MclGroupImpl {
     public double estimateCostInvPerOp() {
         return 1.875;
     }
+
 }

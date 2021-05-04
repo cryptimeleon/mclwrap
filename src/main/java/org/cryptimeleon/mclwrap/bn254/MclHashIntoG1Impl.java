@@ -1,4 +1,4 @@
-package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
+package org.cryptimeleon.mclwrap.bn254;
 
 import com.herumi.mcl.G1;
 import com.herumi.mcl.Mcl;
@@ -6,7 +6,9 @@ import org.cryptimeleon.math.serialization.Representation;
 import org.cryptimeleon.math.structures.groups.GroupElementImpl;
 import org.cryptimeleon.math.structures.groups.mappings.impl.HashIntoGroupImpl;
 
-public class MclHashIntoG1Impl implements HashIntoGroupImpl {
+import java.util.Objects;
+
+class MclHashIntoG1Impl implements HashIntoGroupImpl {
     protected MclGroup1Impl group;
 
     public MclHashIntoG1Impl(MclGroup1Impl group) {
@@ -27,5 +29,18 @@ public class MclHashIntoG1Impl implements HashIntoGroupImpl {
     @Override
     public Representation getRepresentation() {
         return group.getRepresentation();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MclHashIntoG1Impl that = (MclHashIntoG1Impl) o;
+        return group.equals(that.group);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(group);
     }
 }

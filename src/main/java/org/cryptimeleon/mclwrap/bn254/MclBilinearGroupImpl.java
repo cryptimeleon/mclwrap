@@ -1,4 +1,4 @@
-package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
+package org.cryptimeleon.mclwrap.bn254;
 
 import com.herumi.mcl.Mcl;
 import org.cryptimeleon.math.serialization.Representation;
@@ -15,14 +15,14 @@ import org.cryptimeleon.math.structures.groups.mappings.impl.HashIntoGroupImpl;
  *
  * @see <a href="https://github.com/herumi/mcl">Mcl library on Github</a>
  */
-public class MclBilinearGroupImpl implements BilinearGroupImpl {
+class MclBilinearGroupImpl implements BilinearGroupImpl {
     private static boolean isInitialized = false;
     protected static MclGroup1Impl g1;
     protected static MclGroup2Impl g2;
     protected static MclGroupTImpl gt;
 
-    protected static MclHashIntoG1Impl hashIntoG1 = new MclHashIntoG1Impl(g1);
-    protected static MclHashIntoG2Impl hashIntoG2 = new MclHashIntoG2Impl(g2);
+    protected static MclHashIntoG1Impl hashIntoG1;
+    protected static MclHashIntoG2Impl hashIntoG2;
 
 
     public MclBilinearGroupImpl() {
@@ -72,6 +72,8 @@ public class MclBilinearGroupImpl implements BilinearGroupImpl {
             g1 = new MclGroup1Impl();
             g2 = new MclGroup2Impl();
             gt = new MclGroupTImpl();
+            hashIntoG1 = new MclHashIntoG1Impl(g1);
+            hashIntoG2 = new MclHashIntoG2Impl(g2);
         }
     }
 
@@ -127,7 +129,7 @@ public class MclBilinearGroupImpl implements BilinearGroupImpl {
 
     @Override
     public Representation getRepresentation() {
-        return new StringRepresentation("bn256");
+        return new StringRepresentation("bn254");
     }
 
     @Override
