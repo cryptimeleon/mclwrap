@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed serialization of `MclBilinearGroup` returning "bn256" instead of the correct "bn254" which lead to deserialization not working
+
+
 ### Changed
 - Made most of the mcl wrapper classes package-private
 
