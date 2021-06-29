@@ -1,4 +1,4 @@
-package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
+package org.cryptimeleon.mclwrap.bn254;
 
 import org.cryptimeleon.math.serialization.Representation;
 import org.cryptimeleon.math.serialization.StringRepresentation;
@@ -7,7 +7,7 @@ import org.cryptimeleon.math.structures.groups.GroupImpl;
 import java.math.BigInteger;
 import java.util.Optional;
 
-public abstract class MclGroupImpl implements GroupImpl {
+abstract class MclGroupImpl implements GroupImpl {
 
     public MclGroupImpl() {
         MclBilinearGroupImpl.init(true);

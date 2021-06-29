@@ -1,10 +1,6 @@
-name: Development Java CI
+name: Scheduled Main Java CI
 
 on:
-  push:
-    branches-ignore:
-      - main
-      - 'release/**'
   # Nightly builds to ensure dependencies don't break anything
   schedule:
     - cron: '0 0 * * *'
@@ -13,7 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses:  actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          ref: main
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
@@ -23,4 +21,4 @@ jobs:
           chmod +x install_mcl.sh
           ./install_mcl.sh $JAVA_HOME/include
       - name: Build with Gradle
-        run: ./gradlew build -PcheckoutIfCloned
+        run: ./gradlew build -PcheckoutIfCloned -Prelease

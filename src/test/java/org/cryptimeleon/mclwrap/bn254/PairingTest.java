@@ -1,7 +1,6 @@
-package org.cryptimeleon.math.structures.groups.elliptic.type3.mcl;
+package org.cryptimeleon.mclwrap.bn254;
 
 import org.cryptimeleon.math.pairings.PairingTests;
-import org.cryptimeleon.math.structures.groups.elliptic.type3.mcl.MclBilinearGroup;
 import org.cryptimeleon.math.structures.groups.elliptic.BilinearMap;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

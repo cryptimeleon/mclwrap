@@ -1,5 +1,6 @@
 ![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Development%20Java%20CI/badge.svg)
 ![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Release%20Java%20CI/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Scheduled%20Release%20Java%20CI/badge.svg)
 # Mclwrap
 
 Mclwrap provides a wrapper around the BN-254 bilinear group implemented in the [MCL library](https://github.com/herumi/mcl). As the bilinear groups implemented in the Cryptimeleon Math library are not particulary efficient, use of this wrapper is recommended for proper benchmarks.
@@ -89,7 +90,7 @@ To add the newest Mclwrap version as a dependency, add this to your project's PO
 <dependency>
     <groupId>org.cryptimeleon</groupId>
     <artifactId>mclwrap</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -97,7 +98,7 @@ To add the newest Mclwrap version as a dependency, add this to your project's PO
 
 Mclwrap is published via Maven Central.
 Therefore, you need to add `mavenCentral()` to the `repositories` section of your project's `build.gradle` file.
-Then, add `implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '1.0.0'` to the `dependencies` section of your `build.gradle` file.
+Then, add `implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '2.0.0'` to the `dependencies` section of your `build.gradle` file.
 
 For example:
 
@@ -107,7 +108,7 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '1.0.0'
+    implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '2.0.0'
 }
 ```
 
