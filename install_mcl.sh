@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-mcl_version="v1.28"
+mcl_version="5faedff92a72a685d4e6c94e1974ec2033b9d352"
 # exit immediately on error
 set -e
 
@@ -10,7 +10,7 @@ if [ "$(uname)" == "Darwin" ]; then
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   os="linux"
 else
-  echo "Unsupported operating system. This script only works on Linux and Mac OS."
+  echo "Unsupported operating system. This script only works on Linux and macOS."
   exit 2
 fi
 

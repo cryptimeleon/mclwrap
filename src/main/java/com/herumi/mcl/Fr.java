@@ -64,6 +64,10 @@ public class Fr {
     return MclJNI.Fr_isZero(swigCPtr, this);
   }
 
+  public boolean isOne() {
+    return MclJNI.Fr_isOne(swigCPtr, this);
+  }
+
   public void setStr(String str, int base) {
     MclJNI.Fr_setStr__SWIG_0(swigCPtr, this, str, base);
   }
@@ -94,6 +98,14 @@ public class Fr {
 
   public void deserialize(byte[] cbuf) {
     MclJNI.Fr_deserialize(swigCPtr, this, cbuf);
+  }
+
+  public void setLittleEndianMod(byte[] cbuf) {
+    MclJNI.Fr_setLittleEndianMod(swigCPtr, this, cbuf);
+  }
+
+  public void setHashOf(byte[] cbuf) {
+    MclJNI.Fr_setHashOf(swigCPtr, this, cbuf);
   }
 
   public byte[] serialize() { return MclJNI.Fr_serialize(swigCPtr, this); }
