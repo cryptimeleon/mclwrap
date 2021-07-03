@@ -17,11 +17,14 @@ fi
 # check that JAVA_INC is given
 if [ $# -eq 0 ]; then
 	echo "Missing Java include argument"
-	echo "Please give path of Java include folder as first argument"
+	echo "Please specify path of your JDK 'include' directory as first argument"
 	if [ $os == "linux" ]; then
-    echo "For example: /usr/lib/jvm/java-8-openjdk-amd64/include"
+    echo "For example: ./install_mcl.sh /usr/lib/jvm/java-8-openjdk-amd64/include"
   else # mac os
-    echo "For example: /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
+    echo "For example: ./install_mcl.sh /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
+    echo "For your system, it's probably: "
+    javahome=$(/usr/libexec/java_home)
+    echo ./install_mcl.sh $javahome/include
   fi
 	exit 1
 fi
