@@ -54,7 +54,7 @@ class MclGroup2ElementImpl extends MclGroupElementImpl {
     
     public MclGroup2ElementImpl pow(Zn.ZnElement k) {
         G2 res = new G2();
-        Fr exponent = new Fr(k.getInteger().toString());
+        Fr exponent = new Fr(k.asInteger().toString());
         Mcl.mul(res, getElement(), exponent);
         return getStructure().createElement(res);
     }
