@@ -59,7 +59,7 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
                 return;
             }
             try {
-                // TODO: DO we want to offer the other curve type too?
+                // only offer BN254, offering both difficult since it is done statically inside Mcl
                 Mcl.SystemInit(Mcl.BN254);
             } catch (UnsatisfiedLinkError le) {
                 if (printError) {
@@ -68,6 +68,8 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
                 }
                 return;
             }
+            Mcl.verifyOrderG1(true);
+            Mcl.verifyOrderG2(true);
             isInitialized = true;
             g1 = new MclGroup1Impl();
             g2 = new MclGroup2Impl();
