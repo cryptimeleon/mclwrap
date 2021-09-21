@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-mcl_version="v1.26"
+mcl_version="5faedff92a72a685d4e6c94e1974ec2033b9d352"
 # exit immediately on error
 set -e
 
@@ -10,18 +10,21 @@ if [ "$(uname)" == "Darwin" ]; then
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   os="linux"
 else
-  echo "Unsupported operating system. This script only works on Linux and Mac OS."
+  echo "Unsupported operating system. This script only works on Linux and macOS."
   exit 2
 fi
 
 # check that JAVA_INC is given
 if [ $# -eq 0 ]; then
 	echo "Missing Java include argument"
-	echo "Please give path of Java include folder as first argument"
+	echo "Please specify path of your JDK 'include' directory as first argument"
 	if [ $os == "linux" ]; then
-    echo "For example: /usr/lib/jvm/java-8-openjdk-amd64/include"
+    echo "For example: ./install_mcl.sh /usr/lib/jvm/java-8-openjdk-amd64/include"
   else # mac os
-    echo "For example: /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
+    echo "For example: ./install_mcl.sh /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
+    echo "For your system, it's probably: "
+    javahome=$(/usr/libexec/java_home)
+    echo ./install_mcl.sh $javahome/include
   fi
 	exit 1
 fi
