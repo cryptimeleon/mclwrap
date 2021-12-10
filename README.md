@@ -27,9 +27,9 @@ There are two parts to the installation. Compiling and installing the Mcl Java b
 To use the wrapper, you need to compile the mcl library as well as the Java bindings, and copy the latter to one of the paths that JNI will search at runtime (those locations are printed to the console whenever the wrapper is loaded but fails to locate the library).
 We give a more detailed tutorial below.
 
-#### Linux/Mac OS
+#### Linux/Mac OS - Fast Library
 
-You can peform most of the installation automatically by using the `install_mcl.sh` script contained in this directory. 
+You can peform most of the installation automatically by using the `scripts/install_fast_mcljava_linux.sh` script contained in this repository. 
 It will compile the mcl library (version v1.28) as well as the Java bindings, and move the shared library to the correct library folder.
 As a prerequisite, you need to have the `libgmp-dev` package installed.
 You will also need `make` and `g++` (or `clang++` if using FreeBSD or OpenBSD).
@@ -38,7 +38,8 @@ Additionally, you may have to make the script executable by executing `chmod +x 
 The `install_mcl.sh` script takes the `include` path of your Java JVM as its only argument. 
 The path should be given without a trailing forward slash.
 
-#### Windows
+#### Windows - Fast Library
+This describes how to compile the mcl library and Java bindings for maximum performance on modern x64 CPUs.
 
 As prerequisites you need Visual Studio with C++ build tools and the Windows 10 SDK installed.
 These should be easily installable using the setup application that comes with Visual Studio, which you can access by going to the program deinstallation settings in Windows and then selecting modify under Visual Studio.
@@ -83,6 +84,16 @@ Lastly, we need to move the compiled DLL to the correct path.
 You can find it under `mcl\bin\mcljava.dll`.
 The target path should be printed in the console when running the Mclwrap tests (the first exception thrown).
 For me this was `C:\Users\<User>\.jdks\openjdk-15\bin`.
+
+#### Windows - Portable Library
+This describes how to compile the mcl library and Java bindings for maximum portability across all kinds of x86 and x86_64 CPUs. This is the exact way the included Windows DLLs were created.  
+The `scripts\install_portable_mcljava_windows.pl` should handle this automatically if you have the following prerequisites:
+ - Execution of PowerShell Scripts is enabled. For this, run `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` in an Administrator PowerShell prompt. You may want to set this back to `Restricted` when you are finished.
+ - You have Visual Studio installed (I tested with 2019) and use a Developer Powershell prompt.
+ - You have [CMake](https://cmake.org/download/) and [Git](https://git-scm.com/download/win) installed and the binaries are in the PATH.
+ - You have an x86 and an x64 JDK installed. I tested with OpenJDK 11.0.13 from [Adoptium](https://adoptium.net/releases.html?variant=openjdk11).
+
+The parameters of the script are the top-level directories of the JDKs (where bin, include etc. live) and an output directory for the created DLLs. Make sure to specify absolute paths for each parameter. 
 
 ### Adding Mclwrap Dependency With Maven
 To add the newest Mclwrap version as a dependency, add this to your project's POM:
