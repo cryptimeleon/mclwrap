@@ -38,6 +38,17 @@ Additionally, you may have to make the script executable by executing `chmod +x 
 The `install_mcl.sh` script takes the `include` path of your Java JVM as its only argument. 
 The path should be given without a trailing forward slash.
 
+#### Linux - Portable Library
+This describes how to compile the mcl library and Java bindings for maximum portability across all kinds of x86 and x86_64 CPUs. This is the exact way the included Linux .so-s were created.  
+Unfortunately, support for non-glibc distributions cannot be assumed (e.g. musl libc in Alpine could not provide all required symbols). However, the same build process works for these platforms as well.
+The `scripts\install_portable_mcljava_linux.sh` should handle this automatically if you have the following prerequisites:
+ - An install of Debian Jessie (the oldest somewhat supported Linux distribution with glibc I could get to install)
+ - packages build-essential, gcc-multilib, g++-multilib, libssl-dev installed
+ - [CMake](https://github.com/KitWare/CMake) version 3.22 built from source installed
+ - You have an x86 and an x64 JDK installed. I tested with OpenJDK 11.0.13 from [Adoptium](https://adoptium.net/releases.html?variant=openjdk11). You can also only use a 64 or a 32 bit JDK, but in this case you cannot test the library for the missing architecture. 
+
+The parameters of the script are the top-level directories of the JDKs (where bin, include etc. live) and an output directory for the created DLLs, in order x86-JDK, x64-JDK, output directory. Make sure to specify absolute paths for each parameter. 
+
 #### Windows - Fast Library
 This describes how to compile the mcl library and Java bindings for maximum performance on modern x64 CPUs.
 
@@ -87,7 +98,7 @@ For me this was `C:\Users\<User>\.jdks\openjdk-15\bin`.
 
 #### Windows - Portable Library
 This describes how to compile the mcl library and Java bindings for maximum portability across all kinds of x86 and x86_64 CPUs. This is the exact way the included Windows DLLs were created.  
-The `scripts\install_portable_mcljava_windows.pl` should handle this automatically if you have the following prerequisites:
+The `scripts\install_portable_mcljava_windows.ps1` should handle this automatically if you have the following prerequisites:
  - Execution of PowerShell Scripts is enabled. For this, run `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` in an Administrator PowerShell prompt. You may want to set this back to `Restricted` when you are finished.
  - You have Visual Studio installed (I tested with 2019) and use a Developer Powershell prompt.
  - You have [CMake](https://cmake.org/download/) and [Git](https://git-scm.com/download/win) installed and the binaries are in the PATH.
