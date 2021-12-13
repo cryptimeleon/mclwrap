@@ -55,7 +55,8 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
 
         String requiredLibraryName = null;
 
-        // OS and arch names defined in windows/native/libjava/java_props_md.c
+        // for Windows, OS and arch names defined in windows/native/libjava/java_props_md.c
+        // should be stable
         if(platformName.contains("win")){
             if(platformArch.equals("x86")){
                 requiredLibraryName="mcljava-win-x86.dll";
@@ -65,13 +66,19 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
             }
         }
         // OS name on Linux / BSDs is as returned by uname(2).
+        // it is unclear whether the naming on linux is stable when it comes to Intel 32 bit
         if(platformName.contains("linux")){
-            // arch names set by build system, follow standard conventions
+            if(platformArch.equals("x86") || platformArch.equals("i386")){
+                requiredLibraryName="mcljava-linux-x86.so";
+            }
             if(platformArch.equals("amd64")){
                 requiredLibraryName="mcljava-linux-x64.so";
             }
-            if(platformArch.equals("i386")){
-                requiredLibraryName="mcljava-linux-x86.so";
+        }
+
+        if(platformName.contains("mac")){
+            if(platformArch.equals("amd64")){
+                requiredLibraryName="mcljava-mac-x64.dylib";
             }
         }
 
