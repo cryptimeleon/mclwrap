@@ -100,13 +100,11 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
 
         File outputFile = new File(tempdir+File.separator+requiredLibraryName);
 
-        if(!outputFile.exists()){
-            // never overwrite a library the user might have provided
-            try{
-                Files.copy(nativeLibrary, outputFile.toPath());
-            } catch (IOException e) {
-                return false;
-            }
+        // never overwrite a library the user might have provided
+        try{
+            Files.copy(nativeLibrary, outputFile.toPath());
+        } catch (IOException e) {
+            return false;
         }
 
         try{
