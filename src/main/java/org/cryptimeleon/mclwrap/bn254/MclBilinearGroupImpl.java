@@ -9,6 +9,11 @@ import org.cryptimeleon.math.structures.groups.elliptic.BilinearMapImpl;
 import org.cryptimeleon.math.structures.groups.mappings.impl.GroupHomomorphismImpl;
 import org.cryptimeleon.math.structures.groups.mappings.impl.HashIntoGroupImpl;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+
 /**
  * A wrapper around the efficient type 3 Barreto-Naehrig pairing implementation with a group order of 254 bits provided
  * by the Mcl library.
@@ -44,19 +49,89 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
         return isInitialized;
     }
 
+    protected static boolean loadIncludedLibrary(){
+        final String platformName = System.getProperty("os.name").toLowerCase();
+        final String platformArch = System.getProperty("os.arch").toLowerCase();
+
+        String requiredLibraryName = null;
+
+        // OS and arch names defined in windows/native/libjava/java_props_md.c
+        if(platformName.contains("win")){
+            if(platformArch.equals("x86")){
+                requiredLibraryName="mcljava-win-x86.dll";
+            }
+            if(platformArch.equals("amd64")){
+                requiredLibraryName="mcljava-win-x64.dll";
+            }
+        }
+        // OS name on Linux / BSDs is as returned by uname(2).
+        if(platformName.contains("linux")){
+            // arch names set by build system, follow standard conventions
+            if(platformArch.equals("amd64")){
+                requiredLibraryName="mcljava-linux-x64.so";
+            }
+            if(platformArch.equals("i386")){
+                requiredLibraryName="mcljava-linux-x86.so";
+            }
+        }
+
+        if(requiredLibraryName == null){
+            return false;
+        }
+        InputStream nativeLibrary = MclBilinearGroupImpl.class.getResourceAsStream(requiredLibraryName);
+
+        if(nativeLibrary == null){
+            return false;
+        }
+
+        String tempdir;
+        try {
+            tempdir = Files.createTempDirectory("mclwrap").toAbsolutePath().toString();
+        } catch (IOException e) {
+            return false;
+        }
+
+        File outputFile = new File(tempdir+File.separator+requiredLibraryName);
+
+        if(!outputFile.exists()){
+            // never overwrite a library the user might have provided
+            try{
+                Files.copy(nativeLibrary, outputFile.toPath());
+            } catch (IOException e) {
+                return false;
+            }
+        }
+
+        try{
+            System.load(outputFile.getAbsolutePath());
+        }
+        catch (Exception e){
+            return false;
+        }
+
+        return true;
+    }
+
     protected static void init(boolean printError) {
         if (!isInitialized) {
             String lib = "mcljava";
             try {
                 System.loadLibrary(lib);
             } catch (UnsatisfiedLinkError le) {
-                if (printError) {
+                boolean couldLoadProvidedLibrary = loadIncludedLibrary();
+                if (printError && !couldLoadProvidedLibrary) {
                     le.printStackTrace();
                     String libName = System.mapLibraryName(lib);
-                    System.err.println("If you get this error, you need to put the file " + libName + " into one of the lib directories:");
+                    System.err.println("If you get this error, the required native library " + libName + " was not found and none of the included libraries could be used!");
+                    System.err.println("You need to retrieve the native mcljava library that is appropriate for your platform and install it into one of the lib directories:");
                     System.err.println(System.getProperty("java.library.path"));
+                    return;
                 }
-                return;
+                else if(printError){
+                        System.err.println("The required native mcl library was not found on this system, but one of the included pre-compiled libraries could be used.");
+                        System.err.println("mclwrap will work as expected, but for optimal run-time performance, please compile the mcljava library from source and install it into one of the lib directories:");
+                        System.err.println(System.getProperty("java.library.path"));
+                }
             }
             try {
                 // TODO: DO we want to offer the other curve type too?
