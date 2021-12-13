@@ -20,7 +20,9 @@ Specifically, the Mclwrap implementation's group operations are roughly 100 time
 
 ## Quickstart
 
-There are two parts to the installation. Compiling and installing the Mcl Java bindings, and adding the Mclwrap project as a dependency.
+There are two parts to the installation. Compiling and installing the Mcl Java bindings, and adding the Mclwrap project as a dependency.  
+You can also skip compiling and installing the Mcl Java bindings. In this case, mclwrap will attempt to use the included pre-compiled native bindings. However, be aware that these might not work on all combinations of operating system and CPU architecture. 
+Also, compiling the bindings yourself will allow the compiler to generate more efficient code, which however might only work on the CPU the binding is built on. 
 
 ### Installing Mcl Java JNI
 
@@ -29,22 +31,22 @@ We give a more detailed tutorial below.
 
 #### Linux/Mac OS - Fast Library
 
-You can peform most of the installation automatically by using the `scripts/install_fast_mcljava_linux.sh` script contained in this repository. 
+You can peform most of the installation automatically by using the `scripts/install_fast_mcljava_linux_mac.sh` script contained in this repository. 
 It will compile the mcl library (version v1.28) as well as the Java bindings, and move the shared library to the correct library folder.
-As a prerequisite, you need to have the `libgmp-dev` package installed.
+As a prerequisite, you need to have the `libgmp-dev` package (i.e. libgmp and the corresponding headers) installed.
 You will also need `make` and `g++` (or `clang++` if using FreeBSD or OpenBSD).
 Additionally, you may have to make the script executable by executing `chmod +x install_mcl.sh` before execution.
 
-The `install_mcl.sh` script takes the `include` path of your Java JVM as its only argument. 
+The `install_mcl.sh` script takes the `include` path of your Java JDK as its only argument. 
 The path should be given without a trailing forward slash.
 
 #### Linux - Portable Library
 This describes how to compile the mcl library and Java bindings for maximum portability across all kinds of x86 and x86_64 CPUs. This is the exact way the included Linux .so-s were created.  
 Unfortunately, support for non-glibc distributions cannot be assumed (e.g. musl libc in Alpine could not provide all required symbols). However, the same build process works for these platforms as well.
 The `scripts\install_portable_mcljava_linux.sh` should handle this automatically if you have the following prerequisites:
- - An install of Debian Jessie (the oldest somewhat supported Linux distribution with glibc I could get to install)
- - packages build-essential, gcc-multilib, g++-multilib, libssl-dev installed
- - [CMake](https://github.com/KitWare/CMake) version 3.22 built from source installed
+ - An install of an old release of a Linux distribution that uses glibc, e.g. Debian Jessie
+ - packages build-essential, gcc-multilib, g++-multilib, libssl-dev or equivalent installed
+ - [CMake](https://github.com/KitWare/CMake) version 3.22 or newer installed or built from source
  - You have an x86 and an x64 JDK installed. I tested with OpenJDK 11.0.13 from [Adoptium](https://adoptium.net/releases.html?variant=openjdk11). You can also only use a 64 or a 32 bit JDK, but in this case you cannot test the library for the missing architecture. 
 
 The parameters of the script are the top-level directories of the JDKs (where bin, include etc. live) and an output directory for the created DLLs, in order x86-JDK, x64-JDK, output directory. Make sure to specify absolute paths for each parameter. 

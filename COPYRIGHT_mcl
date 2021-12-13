@@ -1,4 +1,4 @@
-The source files located under com.herumi are redistributed from https://github.com/herumi/mcl. For those, the following license applies.
+The source files located under com.herumi and the binary dynamic libraries included in the resources directory are redistributed from https://github.com/herumi/mcl. For those, the following license applies.
 
 Copyright (c) 2015 MITSUNARI Shigeo
 All rights reserved.
