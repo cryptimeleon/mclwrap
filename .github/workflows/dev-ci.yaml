@@ -19,8 +19,6 @@ jobs:
         with:
           java-version: 1.8
       - name: Install Mcl Java bindings
-        run: |
-          chmod +x install_mcl.sh
-          ./install_mcl.sh $JAVA_HOME/include
+        run: ./scripts/install_fast_mcljava_linux_mac.sh $JAVA_HOME/include
       - name: Build with Gradle
         run: ./gradlew build -PcheckoutIfCloned
