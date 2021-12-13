@@ -5,9 +5,6 @@ on:
     branches-ignore:
       - main
       - 'release/**'
-  # Nightly builds to ensure dependencies don't break anything
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -22,3 +19,4 @@ jobs:
         run: ./scripts/install_fast_mcljava_linux_mac.sh $JAVA_HOME/include
       - name: Build with Gradle
         run: ./gradlew build -PcheckoutIfCloned
+  
