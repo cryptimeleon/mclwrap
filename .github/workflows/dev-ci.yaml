@@ -1,4 +1,4 @@
-name: Development Java CI
+name: mcl install plus gradle build
 
 on:
   push:
@@ -19,4 +19,3 @@ jobs:
         run: ./scripts/install_fast_mcljava_linux_mac.sh $JAVA_HOME/include
       - name: Build with Gradle
         run: ./gradlew build -PcheckoutIfCloned
-  
