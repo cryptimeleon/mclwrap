@@ -1,6 +1,7 @@
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Development%20Java%20CI/badge.svg)
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Main%20Java%20CI/badge.svg)
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Scheduled%20Main%20Java%20CI/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/actions/workflows/dev-ci.yaml/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/actions/workflows/dev-embedded-mcl-ci.yaml/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/actions/workflows/main-ci.yaml/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/actions/workflows/scheduled-main-ci.yaml/badge.svg)
 # Mclwrap
 
 Mclwrap provides a wrapper around the BN-254 bilinear group implemented in the [MCL library](https://github.com/herumi/mcl). As the bilinear groups implemented in the Cryptimeleon Math library are not particulary efficient, use of this wrapper is recommended for proper benchmarks.
@@ -12,33 +13,61 @@ Specifically, the Mclwrap implementation's group operations are roughly 100 time
 ## Table Of Contents
 
 * [Quickstart Guide](#quickstart)
-    * [Mcl Java JNI Installation](#installing-mcl-java-jni)
     * [Adding Maven Dependency](#adding-mclwrap-dependency-with-maven)
-    * [Adding Gradle Dependency](#adding-gradle-dependency-with-maven)
+    * [Adding Gradle Dependency](#adding-mclwrap-dependency-with-gradle)
+* [Compiling mcl on Linux/macOS](#compiling-mcl-on-linux-or-macos)
+* [Compiling mcl on Windows](#compiling-mcl-on-windows)
 * [Miscellaneous Information](#miscellaneous-information)
-* [Authors](#authors)
 
 ## Quickstart
 
-There are two parts to the installation. Compiling and installing the Mcl Java bindings, and adding the Mclwrap project as a dependency.
+Simply add mclwrap as a dependency (see below for [maven](#adding-mclwrap-dependency-with-maven) and [gradle](#adding-mclwrap-dependency-with-gradle) snippets) and start using the `MclBilinearGroup` in your code. 
 
-### Installing Mcl Java JNI
+For full performance, you should compile the underlying mcl library for your system yourself (by default, a precompiled maximum-compatibility version of mcl is used, which may miss out on some modern processor features).
+Instructions for this can be found below. 
 
-To use the wrapper, you need to compile the mcl library as well as the Java bindings, and copy the latter to one of the paths that JNI will search at runtime (those locations are printed to the console whenever the wrapper is loaded but fails to locate the library).
-We give a more detailed tutorial below.
+### Adding Mclwrap Dependency With Maven
+To add the newest Mclwrap version as a dependency, add this to your project's POM:
 
-#### Linux/Mac OS
+```xml
+<dependency>
+    <groupId>org.cryptimeleon</groupId>
+    <artifactId>mclwrap</artifactId>
+    <version>[3.0,)</version>
+</dependency>
+```
 
-You can peform most of the installation automatically by using the `install_mcl.sh` script contained in this directory. 
+### Adding Mclwrap Dependency With Gradle
+
+Mclwrap is published via Maven Central.
+Therefore, you need to add `mavenCentral()` to the `repositories` section of your project's `build.gradle` file.
+Then, add `implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '3.+'` to the `dependencies` section of your `build.gradle` file.
+
+For example:
+
+```groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '3.+'
+}
+```
+
+## Compiling mcl on Linux or macOS
+This is optional, but strongly recommended for full performance on modern CPUs.
+
+You can peform most of the installation automatically by using the [scripts/install_fast_mcljava_linux_mac.sh](scripts/install_fast_mcljava_linux_mac.sh) script contained in this repository. 
 It will compile the mcl library (version v1.28) as well as the Java bindings, and move the shared library to the correct library folder.
-As a prerequisite, you need to have the `libgmp-dev` package installed.
+As a prerequisite, you need to have the `libgmp-dev` package (i.e. libgmp and the corresponding headers) installed.
 You will also need `make` and `g++` (or `clang++` if using FreeBSD or OpenBSD).
-Additionally, you may have to make the script executable by executing `chmod +x install_mcl.sh` before execution.
 
-The `install_mcl.sh` script takes the `include` path of your Java JVM as its only argument. 
+The [scripts/install_fast_mcljava_linux_mac.sh](scripts/install_fast_mcljava_linux_mac.sh) script takes the `include` path of your Java JDK as its only argument. 
 The path should be given without a trailing forward slash.
 
-#### Windows
+## Compiling mcl on Windows
+This is optional, but strongly recommended for full performance on modern CPUs.
 
 As prerequisites you need Visual Studio with C++ build tools and the Windows 10 SDK installed.
 These should be easily installable using the setup application that comes with Visual Studio, which you can access by going to the program deinstallation settings in Windows and then selecting modify under Visual Studio.
@@ -84,42 +113,10 @@ You can find it under `mcl\bin\mcljava.dll`.
 The target path should be printed in the console when running the Mclwrap tests (the first exception thrown).
 For me this was `C:\Users\<User>\.jdks\openjdk-15\bin`.
 
-### Adding Mclwrap Dependency With Maven
-To add the newest Mclwrap version as a dependency, add this to your project's POM:
-
-```xml
-<dependency>
-    <groupId>org.cryptimeleon</groupId>
-    <artifactId>mclwrap</artifactId>
-    <version>3.0.0</version>
-</dependency>
-```
-
-### Adding Mclwrap Dependency With Gradle
-
-Mclwrap is published via Maven Central.
-Therefore, you need to add `mavenCentral()` to the `repositories` section of your project's `build.gradle` file.
-Then, add `implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '3.0.0'` to the `dependencies` section of your `build.gradle` file.
-
-For example:
-
-```groovy
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '3.0.0'
-}
-```
-
 ## Miscellaneous Information
 
-- Official Documentation can be found [here](https://cryptimeleon.github.io/).
-    - The *For Contributors* area includes information on how to contribute.
+- Official Documentation can be found [here](https://cryptimeleon.org).
 - Mclwrap adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - The changelog can be found [here](CHANGELOG.md).
+- A description of how we have built the packaged precompiled mcl library can be found [here](PORTABLE.md).
 - Mclwrap is licensed under Apache License 2.0, see [LICENSE file](LICENSE).
-
-## Authors
-The library was implemented at Paderborn University in the research group ["Codes und Cryptography"](https://cs.uni-paderborn.de/en/cuk/).
