@@ -1,4 +1,4 @@
-name: mcl install plus gradle build
+name: Dev Native mcl CI
 
 on:
   push:
