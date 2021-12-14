@@ -1,6 +1,7 @@
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Development%20Java%20CI/badge.svg)
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Main%20Java%20CI/badge.svg)
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Scheduled%20Main%20Java%20CI/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/actions/workflows/dev-ci.yaml/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/actions/workflows/dev-embedded-mcl-ci.yaml/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/actions/workflows/main-ci.yaml/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/actions/workflows/scheduled-main-ci.yaml/badge.svg)
 # Mclwrap
 
 Mclwrap provides a wrapper around the BN-254 bilinear group implemented in the [MCL library](https://github.com/herumi/mcl). As the bilinear groups implemented in the Cryptimeleon Math library are not particulary efficient, use of this wrapper is recommended for proper benchmarks.
@@ -35,9 +36,8 @@ You can peform most of the installation automatically by using the `scripts/inst
 It will compile the mcl library (version v1.28) as well as the Java bindings, and move the shared library to the correct library folder.
 As a prerequisite, you need to have the `libgmp-dev` package (i.e. libgmp and the corresponding headers) installed.
 You will also need `make` and `g++` (or `clang++` if using FreeBSD or OpenBSD).
-Additionally, you may have to make the script executable by executing `chmod +x install_mcl.sh` before execution.
 
-The `install_mcl.sh` script takes the `include` path of your Java JDK as its only argument. 
+The `scripts/install_fast_mcljava_linux_mac.sh` script takes the `include` path of your Java JDK as its only argument. 
 The path should be given without a trailing forward slash.
 
 #### Linux - Portable Library

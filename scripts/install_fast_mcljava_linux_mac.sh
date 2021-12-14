@@ -19,12 +19,12 @@ if [ $# -eq 0 ]; then
 	echo "Missing Java include argument"
 	echo "Please specify path of your JDK 'include' directory as first argument"
 	if [ $os == "linux" ]; then
-    echo "For example: ./install_mcl.sh /usr/lib/jvm/java-8-openjdk-amd64/include"
+    echo "For example: ./install_fast_mcljava_linux_mac.sh /usr/lib/jvm/java-8-openjdk-amd64/include"
   else # mac os
-    echo "For example: ./install_mcl.sh /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
+    echo "For example: ./install_fast_mcljava_linux_mac.sh /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
     echo "For your system, it's probably: "
     javahome=$(/usr/libexec/java_home)
-    echo ./install_mcl.sh $javahome/include
+    echo ./install_fast_mcljava_linux_mac.sh $javahome/include
   fi
 	exit 1
 fi
@@ -37,6 +37,13 @@ java_inc=$1
   git clone git://github.com/herumi/mcl
   cd mcl
   git checkout $mcl_version || exit
+  echo "----- Deleting currently installed version of mcl -----"
+  if [ $os == "linux" ]; then
+    sudo rm /usr/lib/libmcljava.so
+  else # mac os
+    mkdir -p ~/Library/Java/Extensions/ #check that this is included here: System.out.println(System.getProperty("java.library.path"));
+	  rm ~/Library/Java/Extensions/libmcljava.dylib
+  fi
   echo "----- Building mcl -----"
   make -j4 || exit # build mcl library
   echo "----- Building mcl java bindings and running tests -----"
@@ -55,4 +62,4 @@ java_inc=$1
   cd ..
   rm -rf mcl
   echo "----- Done -----"
-) || { echo "----- Failed installation. Deleting mcl folder -----"; rm -rf /tmp/mcl; exit 3; }
+) || { echo "----- Failed installation. -----"; rm -rf /tmp/mcl; exit 3; }
