@@ -1,6 +1,7 @@
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Development%20Java%20CI/badge.svg)
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Main%20Java%20CI/badge.svg)
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/Scheduled%20Main%20Java%20CI/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/dev-ci.yaml/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/dev-embedded-mcl-ci.yaml /badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/main-ci.yaml/badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/scheduled-main-ci.yaml/badge.svg)
 # Mclwrap
 
 Mclwrap provides a wrapper around the BN-254 bilinear group implemented in the [MCL library](https://github.com/herumi/mcl). As the bilinear groups implemented in the Cryptimeleon Math library are not particulary efficient, use of this wrapper is recommended for proper benchmarks.
