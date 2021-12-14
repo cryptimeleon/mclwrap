@@ -13,46 +13,61 @@ Specifically, the Mclwrap implementation's group operations are roughly 100 time
 ## Table Of Contents
 
 * [Quickstart Guide](#quickstart)
-    * [Mcl Java JNI Installation](#installing-mcl-java-jni)
     * [Adding Maven Dependency](#adding-mclwrap-dependency-with-maven)
-    * [Adding Gradle Dependency](#adding-gradle-dependency-with-maven)
+    * [Adding Gradle Dependency](#adding-mclwrap-dependency-with-gradle)
+* [Compiling mcl on Linux/macOS](#compiling-mcl-on-linux-or-macos)
+* [Compiling mcl on Windows](#compiling-mcl-on-windows)
 * [Miscellaneous Information](#miscellaneous-information)
-* [Authors](#authors)
 
 ## Quickstart
 
-There are two parts to the installation. Compiling and installing the Mcl Java bindings, and adding the Mclwrap project as a dependency.  
-You can also skip compiling and installing the Mcl Java bindings. In this case, mclwrap will attempt to use the included pre-compiled native bindings. However, be aware that these might not work on all combinations of operating system and CPU architecture. 
-Also, compiling the bindings yourself will allow the compiler to generate more efficient code, which however might only work on the CPU the binding is built on. 
+Simply add mclwrap as a dependency (see below for [maven](#adding-mclwrap-dependency-with-maven) and [gradle](#adding-mclwrap-dependency-with-gradle) snippets) and start using the `MclBilinearGroup` in your code. 
 
-### Installing Mcl Java JNI
+For full performance, you should compile the underlying mcl library for your system yourself (by default, a precompiled maximum-compatibility version of mcl is used, which may miss out on some modern processor features).
+Instructions for this can be found below. 
 
-To use the wrapper, you need to compile the mcl library as well as the Java bindings, and copy the latter to one of the paths that JNI will search at runtime (those locations are printed to the console whenever the wrapper is loaded but fails to locate the library).
-We give a more detailed tutorial below.
+### Adding Mclwrap Dependency With Maven
+To add the newest Mclwrap version as a dependency, add this to your project's POM:
 
-#### Linux/Mac OS - Fast Library
+```xml
+<dependency>
+    <groupId>org.cryptimeleon</groupId>
+    <artifactId>mclwrap</artifactId>
+    <version>[3.0,)</version>
+</dependency>
+```
 
-You can peform most of the installation automatically by using the `scripts/install_fast_mcljava_linux_mac.sh` script contained in this repository. 
+### Adding Mclwrap Dependency With Gradle
+
+Mclwrap is published via Maven Central.
+Therefore, you need to add `mavenCentral()` to the `repositories` section of your project's `build.gradle` file.
+Then, add `implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '3.+'` to the `dependencies` section of your `build.gradle` file.
+
+For example:
+
+```groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '3.+'
+}
+```
+
+## Compiling mcl on Linux or macOS
+This is optional, but strongly recommended for full performance on modern CPUs.
+
+You can peform most of the installation automatically by using the [scripts/install_fast_mcljava_linux_mac.sh](scripts/install_fast_mcljava_linux_mac.sh) script contained in this repository. 
 It will compile the mcl library (version v1.28) as well as the Java bindings, and move the shared library to the correct library folder.
 As a prerequisite, you need to have the `libgmp-dev` package (i.e. libgmp and the corresponding headers) installed.
 You will also need `make` and `g++` (or `clang++` if using FreeBSD or OpenBSD).
 
-The `scripts/install_fast_mcljava_linux_mac.sh` script takes the `include` path of your Java JDK as its only argument. 
+The [scripts/install_fast_mcljava_linux_mac.sh](scripts/install_fast_mcljava_linux_mac.sh) script takes the `include` path of your Java JDK as its only argument. 
 The path should be given without a trailing forward slash.
 
-#### Linux - Portable Library
-This describes how to compile the mcl library and Java bindings for maximum portability across all kinds of x86 and x86_64 CPUs. This is the exact way the included Linux .so-s were created.  
-Unfortunately, support for non-glibc distributions cannot be assumed (e.g. musl libc in Alpine could not provide all required symbols). However, the same build process works for these platforms as well.
-The `scripts\install_portable_mcljava_linux.sh` should handle this automatically if you have the following prerequisites:
- - An install of an old release of a Linux distribution that uses glibc, e.g. Debian Jessie
- - packages build-essential, gcc-multilib, g++-multilib, libssl-dev or equivalent installed
- - [CMake](https://github.com/KitWare/CMake) version 3.22 or newer installed or built from source
- - You have an x86 and an x64 JDK installed. I tested with OpenJDK 11.0.13 from [Adoptium](https://adoptium.net/releases.html?variant=openjdk11). You can also only use a 64 or a 32 bit JDK, but in this case you cannot test the library for the missing architecture. 
-
-The parameters of the script are the top-level directories of the JDKs (where bin, include etc. live) and an output directory for the created DLLs, in order x86-JDK, x64-JDK, output directory. Make sure to specify absolute paths for each parameter. 
-
-#### Windows - Fast Library
-This describes how to compile the mcl library and Java bindings for maximum performance on modern x64 CPUs.
+## Compiling mcl on Windows
+This is optional, but strongly recommended for full performance on modern CPUs.
 
 As prerequisites you need Visual Studio with C++ build tools and the Windows 10 SDK installed.
 These should be easily installable using the setup application that comes with Visual Studio, which you can access by going to the program deinstallation settings in Windows and then selecting modify under Visual Studio.
@@ -98,52 +113,10 @@ You can find it under `mcl\bin\mcljava.dll`.
 The target path should be printed in the console when running the Mclwrap tests (the first exception thrown).
 For me this was `C:\Users\<User>\.jdks\openjdk-15\bin`.
 
-#### Windows - Portable Library
-This describes how to compile the mcl library and Java bindings for maximum portability across all kinds of x86 and x86_64 CPUs. This is the exact way the included Windows DLLs were created.  
-The `scripts\install_portable_mcljava_windows.ps1` should handle this automatically if you have the following prerequisites:
- - Execution of PowerShell Scripts is enabled. For this, run `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` in an Administrator PowerShell prompt. You may want to set this back to `Restricted` when you are finished.
- - You have Visual Studio installed (I tested with 2019) and use a Developer Powershell prompt.
- - You have [CMake](https://cmake.org/download/) and [Git](https://git-scm.com/download/win) installed and the binaries are in the PATH.
- - You have an x86 and an x64 JDK installed. I tested with OpenJDK 11.0.13 from [Adoptium](https://adoptium.net/releases.html?variant=openjdk11).
-
-The parameters of the script are the top-level directories of the JDKs (where bin, include etc. live) and an output directory for the created DLLs. Make sure to specify absolute paths for each parameter. 
-
-### Adding Mclwrap Dependency With Maven
-To add the newest Mclwrap version as a dependency, add this to your project's POM:
-
-```xml
-<dependency>
-    <groupId>org.cryptimeleon</groupId>
-    <artifactId>mclwrap</artifactId>
-    <version>3.0.0</version>
-</dependency>
-```
-
-### Adding Mclwrap Dependency With Gradle
-
-Mclwrap is published via Maven Central.
-Therefore, you need to add `mavenCentral()` to the `repositories` section of your project's `build.gradle` file.
-Then, add `implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '3.0.0'` to the `dependencies` section of your `build.gradle` file.
-
-For example:
-
-```groovy
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation group: 'org.cryptimeleon', name: 'mclwrap', version: '3.0.0'
-}
-```
-
 ## Miscellaneous Information
 
-- Official Documentation can be found [here](https://cryptimeleon.github.io/).
-    - The *For Contributors* area includes information on how to contribute.
+- Official Documentation can be found [here](https://cryptimeleon.org).
 - Mclwrap adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - The changelog can be found [here](CHANGELOG.md).
+- A description of how we have built the packaged precompiled mcl library can be found [here](PORTABLE.md).
 - Mclwrap is licensed under Apache License 2.0, see [LICENSE file](LICENSE).
-
-## Authors
-The library was implemented at Paderborn University in the research group ["Codes und Cryptography"](https://cs.uni-paderborn.de/en/cuk/).
