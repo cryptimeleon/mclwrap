@@ -1,5 +1,5 @@
 ![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/dev-ci.yaml/badge.svg)
-![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/dev-embedded-mcl-ci.yaml /badge.svg)
+![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/dev-embedded-mcl-ci.yaml/badge.svg)
 ![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/main-ci.yaml/badge.svg)
 ![Build Status](https://github.com/cryptimeleon/mclwrap/workflows/scheduled-main-ci.yaml/badge.svg)
 # Mclwrap
