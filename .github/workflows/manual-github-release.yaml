@@ -5,7 +5,7 @@ on:
 
 jobs:
   release:
-    name: "Pre Release"
+    name: "github release"
     runs-on: "ubuntu-latest"
 
     steps:
@@ -15,9 +15,8 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
           prerelease: false
-          draft: false
+          draft: true
           files: |
             LICENSE
             build/libs/*.jar
