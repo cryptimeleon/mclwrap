@@ -32,9 +32,9 @@ fi
 java_inc=$1
 
 (
-  echo "----- Cloning mcl from git://github.com/herumi/mcl -----"
+  echo "----- Cloning mcl from https://github.com/herumi/mcl.git -----"
   cd /tmp
-  git clone git://github.com/herumi/mcl
+  git clone https://github.com/herumi/mcl.git
   cd mcl
   git checkout $mcl_version || exit
   echo "----- Deleting currently installed version of mcl -----"
