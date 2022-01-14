@@ -4,8 +4,8 @@ import org.cryptimeleon.math.serialization.Representation;
 import org.cryptimeleon.math.structures.groups.basic.BasicBilinearGroup;
 
 /**
- * A wrapper (with naive evaluation of operations) around the efficient type 3 Barreto-Naehrig pairing implementation
- * with a group order of 254 bits provided by the Mcl library.
+ * A wrapper (with naive evaluation of operations) around the efficient type 3 Barreto-Naehrig or BLS pairing implementation
+ * provided by the Mcl library.
  * <p>
  * Operation evaluation is done naively via {@link BasicBilinearGroup}.
  *
@@ -14,7 +14,11 @@ import org.cryptimeleon.math.structures.groups.basic.BasicBilinearGroup;
 public class MclBasicBilinearGroup extends BasicBilinearGroup {
 
     public MclBasicBilinearGroup() {
-        super(new MclBilinearGroupImpl());
+        this(MclBilinearGroup.defaultGroup);
+    }
+
+    public MclBasicBilinearGroup(MclBilinearGroup.GroupChoice groupChoice) {
+        super(new MclBilinearGroupImpl(groupChoice));
     }
 
     public MclBasicBilinearGroup(Representation repr) {

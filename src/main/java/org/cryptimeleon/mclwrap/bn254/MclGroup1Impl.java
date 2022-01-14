@@ -9,8 +9,8 @@ import org.cryptimeleon.math.structures.groups.GroupElementImpl;
 class MclGroup1Impl extends MclGroupImpl {
     protected MclGroup1ElementImpl generator = null;
 
-    public MclGroup1Impl() {
-        super();
+    public MclGroup1Impl(MclBilinearGroup.GroupChoice groupChoice) {
+        super(groupChoice);
     }
 
     public MclGroup1Impl(Representation repr) {
@@ -58,7 +58,13 @@ class MclGroup1Impl extends MclGroupImpl {
 
     @Override
     public double estimateCostInvPerOp() {
-        return 1.875;
+        switch (groupChoice) {
+            case BN254:
+                return 1.5;
+            case BLS12_381:
+                return 2;
+        }
+        throw new IllegalArgumentException("Unknown cost estimate.");
     }
 
 }
