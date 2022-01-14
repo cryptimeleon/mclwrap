@@ -4,7 +4,7 @@
 ![Build Status](https://github.com/cryptimeleon/mclwrap/actions/workflows/scheduled-main-ci.yaml/badge.svg)
 # Mclwrap
 
-Mclwrap provides a wrapper around the BN-254 bilinear group implemented in the [MCL library](https://github.com/herumi/mcl). As the bilinear groups implemented in the Cryptimeleon Math library are not particulary efficient, use of this wrapper is recommended for proper benchmarks.
+Mclwrap provides a wrapper around the BN-254 and BLS12-381 bilinear group implemented in the [MCL library](https://github.com/herumi/mcl). As the bilinear groups implemented in the Cryptimeleon Math library are not particulary efficient, use of this wrapper is recommended for proper benchmarks.
 Specifically, the Mclwrap implementation's group operations are roughly 100 times as fast as our own implementation.
 
 ## Security Disclaimer
@@ -21,7 +21,9 @@ Specifically, the Mclwrap implementation's group operations are roughly 100 time
 
 ## Quickstart
 
-Simply add mclwrap as a dependency (see below for [maven](#adding-mclwrap-dependency-with-maven) and [gradle](#adding-mclwrap-dependency-with-gradle) snippets) and start using the `MclBilinearGroup` in your code. 
+Simply add mclwrap as a dependency (see below for [maven](#adding-mclwrap-dependency-with-maven) and [gradle](#adding-mclwrap-dependency-with-gradle) snippets) and start using the `MclBilinearGroup` in your code.
+You can pass `GroupChoice.BN254` or `GroupChoice.BLS12_381` to the constructor of `MclBilinearGroup` to choose which group to use.
+Note that we currently do not support instantiating both groups at the same time.
 
 For full performance, you should compile the underlying mcl library for your system yourself (by default, a precompiled maximum-compatibility version of mcl is used, which may miss out on some modern processor features).
 Instructions for this can be found below. 

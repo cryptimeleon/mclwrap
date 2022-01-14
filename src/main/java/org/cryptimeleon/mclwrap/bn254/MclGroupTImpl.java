@@ -11,8 +11,8 @@ import org.cryptimeleon.math.structures.groups.GroupElementImpl;
 class MclGroupTImpl extends MclGroupImpl {
     protected MclGroupTElementImpl generator = null;
 
-    public MclGroupTImpl() {
-        super();
+    public MclGroupTImpl(MclBilinearGroup.GroupChoice groupChoice) {
+        super(groupChoice);
     }
 
     public MclGroupTImpl(Representation repr) {
@@ -56,8 +56,8 @@ class MclGroupTImpl extends MclGroupImpl {
         if (generator != null)
             return generator;
 
-        G1 g = new MclGroup1Impl().getGenerator().getElement();
-        G2 h = new MclGroup2Impl().getGenerator().getElement();
+        G1 g = new MclGroup1Impl(groupChoice).getGenerator().getElement();
+        G2 h = new MclGroup2Impl(groupChoice).getGenerator().getElement();
 
         GT res = new GT();
         Mcl.pairing(res, g, h);
@@ -67,6 +67,12 @@ class MclGroupTImpl extends MclGroupImpl {
 
     @Override
     public double estimateCostInvPerOp() {
-        return 3.4;
+        switch (groupChoice) {
+            case BN254:
+                return 3;
+            case BLS12_381:
+                return 3.6;
+        }
+        throw new IllegalArgumentException("Unknown cost estimate.");
     }
 }
