@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [3.x] - 2021-09-21
 - A precompiled version of mcl is now packaged with mclwrap.
+- Added BLS12-381. 
 
 ## [2.x] - 2021-06-29
 - Made most of the mcl wrapper classes package-private.

@@ -9,18 +9,18 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class PairingTest extends PairingTests {
-    public PairingTest(BilinearMap pairing) {
+public class BLSPairingTest extends PairingTests {
+    public BLSPairingTest(BilinearMap pairing) {
         super(pairing);
         MclBilinearGroup.resetMclInitializationAndAcceptErrors();
-        MclBilinearGroupImpl.init(MclBilinearGroup.GroupChoice.BN254);
+        MclBilinearGroupImpl.init(MclBilinearGroup.GroupChoice.BLS12_381);
     }
 
     @Parameterized.Parameters(name = "Test: {0}")
     public static Collection<BilinearMap[]> data() {
         MclBilinearGroup.resetMclInitializationAndAcceptErrors();
         BilinearMap[][] params = new BilinearMap[][]{{
-                new MclBilinearGroup(MclBilinearGroup.GroupChoice.BN254).getBilinearMap(),
+                new MclBilinearGroup(MclBilinearGroup.GroupChoice.BLS12_381).getBilinearMap()
         }};
         return Arrays.asList(params);
     }

@@ -8,19 +8,27 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 abstract class MclGroupImpl implements GroupImpl {
+    public final MclBilinearGroup.GroupChoice groupChoice;
 
-    public MclGroupImpl() {
-        MclBilinearGroupImpl.init(true);
+    public MclGroupImpl(MclBilinearGroup.GroupChoice groupChoice) {
+        this.groupChoice = groupChoice;
+        MclBilinearGroupImpl.init(groupChoice);
     }
 
     public MclGroupImpl(Representation repr) {
-        this();
-        //Nothing to do
+        this(MclBilinearGroup.GroupChoice.valueOf(repr.str().get()));
     }
 
     @Override
     public BigInteger size() throws UnsupportedOperationException {
-        return new BigInteger("16798108731015832284940804142231733909759579603404752749028378864165570215949");
+        switch (groupChoice) {
+            case BN254:
+                return new BigInteger("16798108731015832284940804142231733909759579603404752749028378864165570215949");
+            case BLS12_381:
+                return new BigInteger("73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001", 16);
+        }
+
+        throw new IllegalStateException("Unknown size");
     }
 
     @Override
@@ -47,12 +55,12 @@ abstract class MclGroupImpl implements GroupImpl {
 
     @Override
     public Representation getRepresentation() {
-        return new StringRepresentation("BN254");
+        return new StringRepresentation(groupChoice.name());
     }
 
     @Override
     public boolean equals(Object obj) {
-        return obj != null && this.getClass().equals(obj.getClass());
+        return obj != null && this.getClass().equals(obj.getClass()) && ((MclGroupImpl) obj).groupChoice == groupChoice;
     }
 
     @Override

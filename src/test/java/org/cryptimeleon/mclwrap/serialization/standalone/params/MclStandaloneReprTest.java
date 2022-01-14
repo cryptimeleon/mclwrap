@@ -26,7 +26,9 @@ public class MclStandaloneReprTest extends StandaloneReprSubTest {
     }
 
     public void testMclBilinearGroup() {
+        MclBilinearGroup.resetMclInitializationAndAcceptErrors();
         testBilinearGroup(new MclBilinearGroup());
+        MclBilinearGroup.resetMclInitializationAndAcceptErrors();
         testBilinearGroup(new MclBasicBilinearGroup());
     }
 }

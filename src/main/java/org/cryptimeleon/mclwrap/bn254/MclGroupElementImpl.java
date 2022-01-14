@@ -9,6 +9,7 @@ import org.cryptimeleon.math.structures.groups.GroupImpl;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 abstract class MclGroupElementImpl implements GroupElementImpl {
     protected MclGroupImpl group;
@@ -20,17 +21,8 @@ abstract class MclGroupElementImpl implements GroupElementImpl {
     }
 
     public MclGroupElementImpl(MclGroupImpl group, Representation repr) {
-        StringBuilder sb = new StringBuilder();
-        boolean first = true;
-        for (Representation part : repr.list()) {
-            if (!first)
-                sb.append(" ");
-            sb.append(part.bigInt().get().toString());
-            first = false;
-        }
-
         this.group = group;
-        this.element = group.getInternalObjectFromString(sb.toString());
+        this.element = group.getInternalObjectFromString(repr.list().stream().map(r -> r.bigInt().get().toString()).collect(Collectors.joining(" ")));
     }
 
     /**

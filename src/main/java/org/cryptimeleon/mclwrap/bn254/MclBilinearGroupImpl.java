@@ -15,38 +15,31 @@ import java.io.InputStream;
 import java.nio.file.Files;
 
 /**
- * A wrapper around the efficient type 3 Barreto-Naehrig pairing implementation with a group order of 254 bits provided
- * by the Mcl library.
+ * A wrapper around the efficient type 3 Barreto-Naehrig or BLS pairing implementation provided by the Mcl library.
  *
  * @see <a href="https://github.com/herumi/mcl">Mcl library on Github</a>
  */
 class MclBilinearGroupImpl implements BilinearGroupImpl {
-    private static boolean isInitialized = false;
-    protected static MclGroup1Impl g1;
-    protected static MclGroup2Impl g2;
-    protected static MclGroupTImpl gt;
 
-    protected static MclHashIntoG1Impl hashIntoG1;
-    protected static MclHashIntoG2Impl hashIntoG2;
+    protected static MclBilinearGroup.GroupChoice initializedGroup = null;
+    protected MclGroup1Impl g1;
+    protected MclGroup2Impl g2;
+    protected MclGroupTImpl gt;
 
+    protected MclHashIntoG1Impl hashIntoG1;
+    protected MclHashIntoG2Impl hashIntoG2;
 
-    public MclBilinearGroupImpl() {
-        init(true);
+    public MclBilinearGroupImpl(MclBilinearGroup.GroupChoice choice) {
+        init(choice);
+        g1 = new MclGroup1Impl(choice);
+        g2 = new MclGroup2Impl(choice);
+        gt = new MclGroupTImpl(choice);
+        hashIntoG1 = new MclHashIntoG1Impl(g1);
+        hashIntoG2 = new MclHashIntoG2Impl(g2);
     }
 
     public MclBilinearGroupImpl(Representation repr) {
-        this();
-        if (!repr.str().get().equals("bn254")) {
-            throw new IllegalArgumentException("Invalid representation");
-        }
-    }
-
-    /**
-     * Returns true if the native library is available, false otherwise.
-     */
-    public static boolean isAvailable() {
-        init(false);
-        return isInitialized;
+        this(MclBilinearGroup.GroupChoice.valueOf(repr.str().get()));
     }
 
     protected static boolean loadIncludedLibrary(){
@@ -61,7 +54,7 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
             if(platformArch.equals("x86")){
                 requiredLibraryName="mcljava-win-x86.dll";
             }
-            if(platformArch.equals("amd64")){
+            if(platformArch.equals("amd64") || platformArch.equals("x86_64")){
                 requiredLibraryName="mcljava-win-x64.dll";
             }
         }
@@ -71,18 +64,19 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
             if(platformArch.equals("x86") || platformArch.equals("i386")){
                 requiredLibraryName="mcljava-linux-x86.so";
             }
-            if(platformArch.equals("amd64")){
+            if(platformArch.equals("amd64") || platformArch.equals("x86_64")){
                 requiredLibraryName="mcljava-linux-x64.so";
             }
         }
 
         if(platformName.contains("mac")){
-            if(platformArch.equals("amd64")){
+            if(platformArch.equals("amd64") || platformArch.equals("x86_64")){
                 requiredLibraryName="mcljava-mac-x64.dylib";
             }
         }
 
         if(requiredLibraryName == null){
+            System.err.println("Could not find precompiled library for "+platformName+" "+platformArch);
             return false;
         }
         InputStream nativeLibrary = MclBilinearGroupImpl.class.getResourceAsStream(requiredLibraryName);
@@ -117,44 +111,43 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
         return true;
     }
 
-    protected static void init(boolean printError) {
-        if (!isInitialized) {
-            String lib = "mcljava";
-            try {
-                System.loadLibrary(lib);
-            } catch (UnsatisfiedLinkError le) {
-                boolean couldLoadProvidedLibrary = loadIncludedLibrary();
-                if (printError && !couldLoadProvidedLibrary) {
-                    le.printStackTrace();
-                    String libName = System.mapLibraryName(lib);
-                    System.err.println("If you get this error, the required native library " + libName + " was not found and none of the included libraries could be used!");
-                    System.err.println("You need to retrieve the native mcljava library that is appropriate for your platform and install it into one of the lib directories:");
-                    System.err.println(System.getProperty("java.library.path"));
-                    return;
-                }
-                else if(printError){
-                        System.err.println("The required native mcl library was not found on this system, but one of the included pre-compiled libraries could be used.");
-                        System.err.println("mclwrap will work as expected, but for optimal run-time performance, please compile the mcljava library from source and install it into one of the lib directories:");
-                        System.err.println(System.getProperty("java.library.path"));
-                }
-            }
-            try {
-                // TODO: DO we want to offer the other curve type too?
-                Mcl.SystemInit(Mcl.BN254);
-            } catch (UnsatisfiedLinkError le) {
-                if (printError) {
-                    le.printStackTrace();
-                    System.err.println("mcl library was found, but its functions cannot be called properly");
-                }
+    protected static synchronized void init(MclBilinearGroup.GroupChoice groupChoice) {
+        if (initializedGroup == groupChoice)
+            return;
+        if (initializedGroup != null)
+            throw new IllegalArgumentException("mcl has already been initialized with " + initializedGroup + ", you're trying to instantiate " + groupChoice + ". " +
+                    "We currently do not support running multiple mcl settings at once. It's a known limitation of mcl's Java wrapper. " +
+                    "If you promise you won't use the old GroupElements anymore (or don't fear undefined behavior), you can call MclBilinearGroupImpl.resetMclInitialization() and then retry.");
+        //If you really, really want to make the two settings work concurrently, feel free to pull request that. It's nontrivial though.
+        //You'd need to adapt the Java wrapper in this project and the corresponding C code in mcl, see discussion here: https://github.com/cryptimeleon/mclwrap/issues/5.
+
+        String lib = "mcljava";
+        try {
+            System.loadLibrary(lib);
+        } catch (UnsatisfiedLinkError le) {
+            boolean couldLoadProvidedLibrary = loadIncludedLibrary();
+            if (!couldLoadProvidedLibrary) {
+                le.printStackTrace();
+                String libName = System.mapLibraryName(lib);
+                System.err.println("If you get this error, the required native library " + libName + " was not found and none of the included libraries could be used!");
+                System.err.println("You need to retrieve the native mcljava library that is appropriate for your platform and install it into one of the lib directories:");
+                System.err.println(System.getProperty("java.library.path"));
+                System.err.println("See README.md");
                 return;
+            } else {
+                System.err.println("The required native mcl library was not found on this system, but one of the included pre-compiled libraries could be used.");
+                System.err.println("mclwrap will work as expected, but for optimal run-time performance, please compile the mcljava library from source and install it into one of the lib directories:");
+                System.err.println(System.getProperty("java.library.path"));
+                System.err.println("See README.md");
             }
-            isInitialized = true;
-            g1 = new MclGroup1Impl();
-            g2 = new MclGroup2Impl();
-            gt = new MclGroupTImpl();
-            hashIntoG1 = new MclHashIntoG1Impl(g1);
-            hashIntoG2 = new MclHashIntoG2Impl(g2);
         }
+        try {
+            Mcl.SystemInit(groupChoice.mclconstant);
+        } catch (UnsatisfiedLinkError le) {
+            throw new RuntimeException("mcl library was loaded, but cannot be initialized", le);
+        }
+
+        initializedGroup = groupChoice;
     }
 
     @Override
@@ -199,7 +192,13 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
 
     @Override
     public Integer getSecurityLevel() {
-        return 100;
+        switch (g1.groupChoice) {
+            case BN254:
+                return 100; //https://tools.ietf.org/id/draft-yonezawa-pairing-friendly-curves-00.html "BN256"
+            case BLS12_381:
+                return 127; //https://tools.ietf.org/id/draft-yonezawa-pairing-friendly-curves-00.html
+        }
+        throw new IllegalArgumentException("unknown security level");
     }
 
     @Override
@@ -209,7 +208,7 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
 
     @Override
     public Representation getRepresentation() {
-        return new StringRepresentation("bn254");
+        return new StringRepresentation(g1.groupChoice.name());
     }
 
     @Override
@@ -219,6 +218,11 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof MclBilinearGroupImpl;
+        return obj instanceof MclBilinearGroupImpl && ((MclBilinearGroupImpl) obj).g1.equals(g1);
+    }
+
+    @Override
+    public String toString() {
+        return g1.groupChoice.toString();
     }
 }

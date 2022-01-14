@@ -9,12 +9,12 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class GroupTest extends GroupTests {
+public class BLSGroupTest extends GroupTests {
 
-    public GroupTest(GroupTests.TestParams params) {
+    public BLSGroupTest(TestParams params) {
         super(params);
         MclBilinearGroup.resetMclInitializationAndAcceptErrors();
-        MclBilinearGroupImpl.init(MclBilinearGroup.GroupChoice.BN254);
+        MclBilinearGroupImpl.init(MclBilinearGroup.GroupChoice.BLS12_381);
     }
 
     @Parameterized.Parameters(name = "Test: {0}")
@@ -23,9 +23,9 @@ public class GroupTest extends GroupTests {
         MclBilinearGroup.resetMclInitializationAndAcceptErrors();
         // Collect parameters
         TestParams[][] params = new TestParams[][]{
-                {new TestParams(new BasicGroup(new MclGroup1Impl(MclBilinearGroup.GroupChoice.BN254)))},
-                {new TestParams(new BasicGroup(new MclGroup2Impl(MclBilinearGroup.GroupChoice.BN254)))},
-                {new TestParams(new BasicGroup(new MclGroupTImpl(MclBilinearGroup.GroupChoice.BN254)))}
+                {new TestParams(new BasicGroup(new MclGroup1Impl(MclBilinearGroup.GroupChoice.BLS12_381)))},
+                {new TestParams(new BasicGroup(new MclGroup2Impl(MclBilinearGroup.GroupChoice.BLS12_381)))},
+                {new TestParams(new BasicGroup(new MclGroupTImpl(MclBilinearGroup.GroupChoice.BLS12_381)))}
         };
         return Arrays.asList(params);
     }
