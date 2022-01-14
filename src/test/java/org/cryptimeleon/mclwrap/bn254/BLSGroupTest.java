@@ -13,6 +13,8 @@ public class BLSGroupTest extends GroupTests {
 
     public BLSGroupTest(TestParams params) {
         super(params);
+        MclBilinearGroup.resetMclInitializationAndAcceptErrors();
+        MclBilinearGroupImpl.init(MclBilinearGroup.GroupChoice.BLS12_381);
     }
 
     @Parameterized.Parameters(name = "Test: {0}")

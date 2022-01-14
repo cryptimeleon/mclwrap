@@ -12,6 +12,8 @@ import java.util.Collection;
 public class BLSPairingTest extends PairingTests {
     public BLSPairingTest(BilinearMap pairing) {
         super(pairing);
+        MclBilinearGroup.resetMclInitializationAndAcceptErrors();
+        MclBilinearGroupImpl.init(MclBilinearGroup.GroupChoice.BLS12_381);
     }
 
     @Parameterized.Parameters(name = "Test: {0}")

@@ -52,7 +52,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    maxParallelForks 4
+    maxParallelForks = 1
     //we want display the following test events
     testLogging {
         events "PASSED", "STARTED", "FAILED", "SKIPPED"
