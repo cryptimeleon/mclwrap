@@ -54,7 +54,7 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
             if(platformArch.equals("x86")){
                 requiredLibraryName="mcljava-win-x86.dll";
             }
-            if(platformArch.equals("amd64")){
+            if(platformArch.equals("amd64") || platformArch.equals("x86_64")){
                 requiredLibraryName="mcljava-win-x64.dll";
             }
         }
@@ -64,18 +64,19 @@ class MclBilinearGroupImpl implements BilinearGroupImpl {
             if(platformArch.equals("x86") || platformArch.equals("i386")){
                 requiredLibraryName="mcljava-linux-x86.so";
             }
-            if(platformArch.equals("amd64")){
+            if(platformArch.equals("amd64") || platformArch.equals("x86_64")){
                 requiredLibraryName="mcljava-linux-x64.so";
             }
         }
 
         if(platformName.contains("mac")){
-            if(platformArch.equals("amd64")){
+            if(platformArch.equals("amd64") || platformArch.equals("x86_64")){
                 requiredLibraryName="mcljava-mac-x64.dylib";
             }
         }
 
         if(requiredLibraryName == null){
+            System.err.println("Could not find precompiled library for "+platformName+" "+platformArch);
             return false;
         }
         InputStream nativeLibrary = MclBilinearGroupImpl.class.getResourceAsStream(requiredLibraryName);
