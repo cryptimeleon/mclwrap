@@ -62,11 +62,12 @@ This is optional, but strongly recommended for full performance on modern CPUs.
 
 You can peform most of the installation automatically by using the [scripts/install_fast_mcljava_linux_mac.sh](scripts/install_fast_mcljava_linux_mac.sh) script contained in this repository. 
 It will compile the mcl library (version v1.28) as well as the Java bindings, and move the shared library to the correct library folder.
-As a prerequisite, you need to have the `libgmp-dev` package (i.e. libgmp and the corresponding headers) installed.
+As a prerequisite, you need to have the `libgmp-dev` package (i.e. libgmp and the corresponding headers) installed. You can also run the script with an arbitrary second parameter in order to download and compile gmp from source and install it to /usr/local/{include,lib} for future use.
 You will also need `make` and `g++` (or `clang++` if using FreeBSD or OpenBSD).
 
 The [scripts/install_fast_mcljava_linux_mac.sh](scripts/install_fast_mcljava_linux_mac.sh) script takes the `include` path of your Java JDK as its only argument. 
-The path should be given without a trailing forward slash.
+The path should be given without a trailing forward slash.  
+The created binary library is optimized for the specific CPU model the script was executed on and **might not work** on other, even very similar, CPUs. If you want the created library to be portable to other machines, use the scripts whose names contain "portable".
 
 ## Compiling mcl on Windows
 This is optional, but strongly recommended for full performance on modern CPUs.
