@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-mcl_version="45f4504244f535a55cd5b2d19bf01eee86094cf3"
+mcl_version="8591dd0158f33e265e6e6210b62d2af4494d6c50"
 # exit immediately on error
 set -e
 
@@ -13,7 +13,7 @@ gmp_from_source(){
  cd gmp-${GMP_VERSION}
  ./configure --enable-shared --enable-static --enable-cxx || (echo "Could not determine a GMP configuration" && exit 1)
  make -j $(nproc) || (echo "Could not make GMP" && exit 1)
- #make check || (echo "Tests for GMP failed!" && exit 1)
+ make check || (echo "Tests for GMP failed!" && exit 1)
  sudo make install || (echo "Could not install gmp to /usr/" && exit 1)
  cd ..
  rm -r gmp-${GMP_VERSION}
@@ -55,7 +55,7 @@ fi
 java_inc=$1
 
 (
-  echo "----- Cloning mcl from https://github.com/WorldofJARcraft/mcl.git -----"
+  echo "----- Cloning mcl from https://github.com/herumi/mcl.git -----"
   cd /tmp
   git clone https://github.com/herumi/mcl.git
   cd mcl
@@ -85,8 +85,8 @@ java_inc=$1
   else
 	  cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_C_FLAGS="-march=native -mtune=native" -DCMAKE_CXX_FLAGS="-march=native -mtune=native" -DGMP_LINK_DIR=/usr/local/lib
 	  echo cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_C_FLAGS="-march=native -mtune=native" -DCMAKE_CXX_FLAGS="-march=native -mtune=native" 
-  cmake --build . -v
   fi
+  cmake --build . -v
   echo "----- Copying mcl java shared library to /usr/lib/ -----"
   if [ $os == "linux" ]; then
     sudo cp libmcljava.so /usr/lib/
