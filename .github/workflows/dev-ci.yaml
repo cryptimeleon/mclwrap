@@ -15,7 +15,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Install Mcl Java bindings
+      - name: Install Mcl Java bindings without custom GMP
         run: ./scripts/install_fast_mcljava_linux_mac.sh $JAVA_HOME/include
       - name: Build with Gradle
+        run: ./gradlew build -PcheckoutIfCloned
+      - name: Istall Mcl Java bindings with custom GMP
+        run: ./scripts/install_fast_mcljava_linux_mac.sh $JAVA_HOME/include gmp
+      - name: Build with Gradle again
         run: ./gradlew build -PcheckoutIfCloned
