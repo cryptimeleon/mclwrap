@@ -1,7 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 mcl_version="8591dd0158f33e265e6e6210b62d2af4494d6c50"
 # exit immediately on error
 set -e
+
+C_TUNING_FLAGS="-march=native -mtune=native"
+
+if [ "$(uname -m)" = "arm64" ] || [ "$(uname -m)" = "aarch64" ]; then
+  if command -v clang &>/dev/null; then
+    # clang exists and we run on arm64 - clang might be chosen as compiler by CMake, and on this arch, it does not support -march=native
+    # this flag works with both gcc and clang on aarch64, however, and should have the same effect - use it instead
+    C_TUNING_FLAGS="-mcpu=native"
+  fi
+fi
 
 GMP_VERSION=6.2.1
 gmp_from_source(){
@@ -20,10 +30,12 @@ gmp_from_source(){
 }
 # check for operating system
 os=""
-if [ "$(uname)" == "Darwin" ]; then
+if [ "$(uname)" = "Darwin" ]; then
   os="mac"
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
   os="linux"
+elif [ "$(uname)" = "FreeBSD" ]; then
+  os="FreeBSD"
 else
   echo "Unsupported operating system. This script only works on Linux and macOS."
   exit 2
@@ -35,6 +47,8 @@ if [ $# -eq 0 ]; then
 	echo "Please specify path of your JDK 'include' directory as first argument"
 	if [ $os == "linux" ]; then
     echo "For example: ./install_fast_mcljava_linux_mac.sh /usr/lib/jvm/java-8-openjdk-amd64/include"
+  elif [ $os == "FreeBSD" ]; then
+	echo "For example: ./install_fast_mcljava_linux_mac.sh  /usr/local/openjdk17/include/"
   else # mac os
     echo "For example: ./install_fast_mcljava_linux_mac.sh /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
     echo "For your system, it's probably: "
@@ -61,7 +75,7 @@ java_inc=$1
   cd mcl
   git checkout $mcl_version || exit
   echo "----- Deleting currently installed version of mcl -----"
-  if [ $os == "linux" ]; then
+  if [ $os = "linux" ] || [ $os = "FreeBSD" ]; then
     sudo rm /usr/lib/libmcljava.so
   else # mac os
     mkdir -p ~/Library/Java/Extensions/ #check that this is included here: System.out.println(System.getProperty("java.library.path"));
@@ -70,7 +84,7 @@ java_inc=$1
   echo "----- Building mcl -----"
   mkdir build 2>/dev/null
   cd build
-  cmake .. -DCMAKE_C_FLAGS="-march=native -mtune=native" -DCMAKE_CXX_FLAGS="-march=native -mtune=native" -DMCL_STATIC_LIB="ON" 
+  cmake .. -DCMAKE_C_FLAGS=${C_TUNING_FLAGS} -DCMAKE_CXX_FLAGS=${C_TUNING_FLAGS} -DMCL_STATIC_LIB="ON" 
   cmake --build .
   cd ..
   export MCL_LIBDIR=$(pwd)/build/lib
@@ -81,14 +95,13 @@ java_inc=$1
   cd build
   export JAVA_HOME=$1/../
   if [ -z ${2+x} ]; then
-	  cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_C_FLAGS="-march=native -mtune=native" -DCMAKE_CXX_FLAGS="-march=native -mtune=native"
+	  cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS} -I /usr/local/include"
   else
-	  cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_C_FLAGS="-march=native -mtune=native" -DCMAKE_CXX_FLAGS="-march=native -mtune=native" -DGMP_LINK_DIR=/usr/local/lib
-	  echo cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_C_FLAGS="-march=native -mtune=native" -DCMAKE_CXX_FLAGS="-march=native -mtune=native" 
+	  cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS} -I /usr/local/include" -DGMP_LINK_DIR=/usr/local/lib
   fi
   cmake --build . -v
   echo "----- Copying mcl java shared library to /usr/lib/ -----"
-  if [ $os == "linux" ]; then
+  if [ $os = "linux" ] || [ $os = "FreeBSD" ]; then
     sudo cp libmcljava.so /usr/lib/
   else # mac os
     mkdir -p ~/Library/Java/Extensions/ #check that this is included here: System.out.println(System.getProperty("java.library.path"));
