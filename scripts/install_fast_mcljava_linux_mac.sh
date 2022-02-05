@@ -22,7 +22,13 @@ gmp_from_source(){
  rm gmp-${GMP_VERSION}.tar
  cd gmp-${GMP_VERSION}
  ./configure --enable-shared --enable-static --enable-cxx || (echo "Could not determine a GMP configuration" && exit 1)
- make -j $(nproc) || (echo "Could not make GMP" && exit 1)
+ MAKE_PARALLEL=""
+ if command -v nproc &>/dev/null; then
+	 MAKA_PARALLEL="-j $(nproc)"
+ else
+	 echo "nproc was not found on your system - defaulting to default make behavior (usually single-threaded compile)."
+ fi
+ make ${MAKE_PARALLEL} || (echo "Could not make GMP" && exit 1)
  make check || (echo "Tests for GMP failed!" && exit 1)
  sudo make install || (echo "Could not install gmp to /usr/" && exit 1)
  cd ..
