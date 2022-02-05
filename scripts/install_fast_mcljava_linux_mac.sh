@@ -90,7 +90,7 @@ java_inc=$1
   echo "----- Building mcl -----"
   mkdir build 2>/dev/null
   cd build
-  cmake .. -DCMAKE_C_FLAGS=${C_TUNING_FLAGS} -DCMAKE_CXX_FLAGS=${C_TUNING_FLAGS} -DMCL_STATIC_LIB="ON" 
+  cmake .. -DCMAKE_C_FLAGS="${C_TUNING_FLAGS}" -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS}" -DMCL_STATIC_LIB="ON" 
   cmake --build .
   cd ..
   export MCL_LIBDIR=$(pwd)/build/lib
