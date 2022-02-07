@@ -51,9 +51,9 @@ fi
 if [ $# -eq 0 ]; then
 	echo "Missing Java include argument"
 	echo "Please specify path of your JDK 'include' directory as first argument"
-	if [ $os == "linux" ]; then
+	if [ "$os" = "linux" ]; then
     echo "For example: ./install_fast_mcljava_linux_mac.sh /usr/lib/jvm/java-8-openjdk-amd64/include"
-  elif [ $os == "FreeBSD" ]; then
+  elif [ "$os" = "FreeBSD" ]; then
 	echo "For example: ./install_fast_mcljava_linux_mac.sh  /usr/local/openjdk17/include/"
   else # mac os
     echo "For example: ./install_fast_mcljava_linux_mac.sh /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
@@ -105,7 +105,7 @@ java_inc=$1
   else
 	  cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS} -I /usr/local/include" -DGMP_LINK_DIR=/usr/local/lib
   fi
-  cmake --build . -v
+  cmake --build . --target mcljava -v
   echo "----- Copying mcl java shared library to /usr/lib/ -----"
   if [ $os = "linux" ] || [ $os = "FreeBSD" ]; then
     sudo cp libmcljava.so /usr/lib/
@@ -114,6 +114,6 @@ java_inc=$1
 	  cp libmcljava.dylib ~/Library/Java/Extensions/
   fi
   echo "----- Installation finished successfully. Deleting mcl repository folder -----"
-  rm -r /tmp/mcl
+  rm -rf /tmp/mcl
   echo "----- Done -----"
 ) || { echo "----- Failed installation. -----"; rm -rf /tmp/mcl; exit 3; }
