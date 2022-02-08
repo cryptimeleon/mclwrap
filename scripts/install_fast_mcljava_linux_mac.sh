@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-mcl_version="8591dd0158f33e265e6e6210b62d2af4494d6c50"
+mcl_version="5833b40a392ea22ecb086f95055865d3ab1e94f8"
 # exit immediately on error
 set -e
 
@@ -75,9 +75,9 @@ fi
 java_inc=$1
 
 (
-  echo "----- Cloning mcl from https://github.com/herumi/mcl.git -----"
+  echo "----- Cloning mcl from https://github.com/WorldofJARcraft/mcl.git -----"
   cd /tmp
-  git clone https://github.com/herumi/mcl.git
+  git clone https://github.com/WorldofJARcraft/mcl.git
   cd mcl
   git checkout $mcl_version || exit
   echo "----- Deleting currently installed version of mcl -----"
