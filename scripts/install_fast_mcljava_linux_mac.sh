@@ -1,11 +1,13 @@
 #!/usr/bin/env sh
-mcl_version="5833b40a392ea22ecb086f95055865d3ab1e94f8"
+mcl_version="ae1c67a819a81fd645a544d5fb420b980b89816a"
 # exit immediately on error
 set -e
 
 C_TUNING_FLAGS="-march=native -mtune=native"
 
-if [ "$(uname -m)" = "arm64" ] || [ "$(uname -m)" = "aarch64" ]; then
+arch="$(uname -m)"
+
+if [ "$arch" = "arm64" ] || [ "$arch" = "aarch64" ]; then
   if command -v clang &>/dev/null; then
     # clang exists and we run on arm64 - clang might be chosen as compiler by CMake, and on this arch, it does not support -march=native
     # this flag works with both gcc and clang on aarch64, however, and should have the same effect - use it instead
@@ -47,6 +49,12 @@ else
   exit 2
 fi
 
+is_mac_m1=
+if [ "$os" = "mac" ] && [ "$arch" = "arm64" ]; then
+	is_mac_m1 = "y"
+	echo "Apple arm64 silicon detected."
+fi
+
 # check that JAVA_INC is given
 if [ $# -eq 0 ]; then
 	echo "Missing Java include argument"
@@ -63,13 +71,19 @@ if [ $# -eq 0 ]; then
   fi
 	exit 1
 fi
-
+no_gmp_fast_compiler_flags=
 if [ -z ${2+x} ]; then
-	echo "Skipping from-source gmp install. Re-run this script with a second parameter to clone and build gmp from source.";
+	echo "Skipping from-source gmp install and fast compiler flags. Re-run this script with a second parameter to clone and build gmp from source.";
+	no_gmp_fast_compiler_flags=y
 else
-	echo "Building gmp from source for optimal performance.";
-	cd /tmp
-	gmp_from_source
+	if [ -z $is_mac_m1 ]; then
+		echo "Building gmp from source for optimal performance.";
+		cd /tmp
+		gmp_from_source
+	else
+		echo "Currently, the mcl build system does not allow linking a from-source GMP on mac. Skipping GMP build.";
+		no_gmp_fast_compiler_flags=y
+	fi
 fi
 
 java_inc=$1
@@ -77,7 +91,7 @@ java_inc=$1
 (
   echo "----- Cloning mcl from https://github.com/WorldofJARcraft/mcl.git -----"
   cd /tmp
-  git clone https://github.com/WorldofJARcraft/mcl.git
+  git clone https://github.com/herumi/mcl.git
   cd mcl
   git checkout $mcl_version || exit
   echo "----- Deleting currently installed version of mcl -----"
@@ -88,24 +102,34 @@ java_inc=$1
 	  rm ~/Library/Java/Extensions/libmcljava.dylib
   fi
   echo "----- Building mcl -----"
-  mkdir build 2>/dev/null
-  cd build
-  cmake .. -DCMAKE_C_FLAGS="${C_TUNING_FLAGS}" -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS}" -DMCL_STATIC_LIB="ON" 
-  cmake --build .
-  cd ..
-  export MCL_LIBDIR=$(pwd)/build/lib
+
+  if [ -z $is_mac_m1 ] && [ -z $no_gmp_fast_compiler_flags ]; then
+    mkdir build 2>/dev/null
+    cd build
+    cmake .. -DCMAKE_C_FLAGS="${C_TUNING_FLAGS}" -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS}" -DMCL_STATIC_LIB="ON" || exit $?
+    cmake --build . || exit $?
+    cd ..
+    export MCL_LIBDIR=$(pwd)/build/lib
+  else
+    make -j $(nproc) || exit $? # cmake is currently broken on Mac M1
+  fi
+
   echo "----- Building mcl java bindings and running tests -----"
   echo "----- Java include path: $java_inc -----"
   cd ffi/java
-  mkdir build 2>/dev/null
-  cd build
-  export JAVA_HOME=$1/../
-  if [ -z ${2+x} ]; then
-	  cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS} -I /usr/local/include"
+  if [ -z $is_mac_m1 ] && [ -z $no_gmp_fast_compiler_flags ]; then
+    mkdir build 2>/dev/null
+    cd build
+    export JAVA_HOME=$1/../
+    if [ -z ${2+x} ]; then
+      cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS} -I /usr/local/include" || exit $?
+    else
+      cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS} -I /usr/local/include" -DGMP_LINK_DIR=/usr/local/lib || exit $?
+    fi
+    cmake --build . --target mcljava -v || exit $?
   else
-	  cmake .. -DMCL_LINK_DIR=${MCL_LIBDIR} -DCMAKE_CXX_FLAGS="${C_TUNING_FLAGS} -I /usr/local/include" -DGMP_LINK_DIR=/usr/local/lib
+    make test_mcl JAVA_INC=-I$java_inc || exit $? # CMake-based solution might not work on M1
   fi
-  cmake --build . --target mcljava -v
   echo "----- Copying mcl java shared library to /usr/lib/ -----"
   if [ $os = "linux" ] || [ $os = "FreeBSD" ]; then
     sudo cp libmcljava.so /usr/lib/
