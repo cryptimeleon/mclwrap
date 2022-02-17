@@ -26,7 +26,7 @@ gmp_from_source(){
  ./configure --enable-shared --enable-static --enable-cxx || (echo "Could not determine a GMP configuration" && exit 1)
  MAKE_PARALLEL=""
  if command -v nproc &>/dev/null; then
-	 MAKA_PARALLEL="-j $(nproc)"
+	 MAKE_PARALLEL="-j $(nproc)"
  else
 	 echo "nproc was not found on your system - defaulting to default make behavior (usually single-threaded compile)."
  fi
@@ -54,21 +54,19 @@ if [ $# -eq 0 ]; then
 	echo "Missing Java include argument"
 	echo "Please specify path of your JDK 'include' directory as first argument"
 	if [ "$os" = "linux" ]; then
-    echo "For example: ./install_fast_mcljava_linux_mac.sh /usr/lib/jvm/java-8-openjdk-amd64/include"
+    echo "For example: $0 /usr/lib/jvm/java-8-openjdk-amd64/include"
   elif [ "$os" = "FreeBSD" ]; then
-	echo "For example: ./install_fast_mcljava_linux_mac.sh  /usr/local/openjdk17/include/"
+	echo "For example: $0  /usr/local/openjdk17/include/"
   else # mac os
-    echo "For example: ./install_fast_mcljava_linux_mac.sh /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
+    echo "For example: $0 /Library/Java/JavaVirtualMachines/openjdk-13.0.1.jdk/Contents/Home/include"
     echo "For your system, it's probably: "
     javahome=$(/usr/libexec/java_home)
-    echo ./install_fast_mcljava_linux_mac.sh $javahome/include
+    echo $0 $javahome/include
   fi
 	exit 1
 fi
-no_gmp_fast_compiler_flags=
 if [ -z ${2+x} ]; then
-	echo "Skipping from-source gmp install and fast compiler flags. Re-run this script with a second parameter to clone and build gmp from source.";
-	no_gmp_fast_compiler_flags=y
+	echo "Skipping from-source gmp install, assuming that GMP is already installed. To custom-build GMP for your system (with performance gains), call this script with 'gmp' as the second parameter."
 else
 	echo "Building gmp from source for optimal performance.";
 	cd /tmp
@@ -78,7 +76,7 @@ fi
 java_inc=$1
 
 (
-  echo "----- Cloning mcl from https://github.com/WorldofJARcraft/mcl.git -----"
+  echo "----- Cloning mcl from https://github.com/herumi/mcl.git -----"
   cd /tmp
   git clone https://github.com/herumi/mcl.git
   cd mcl
