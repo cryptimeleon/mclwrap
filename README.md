@@ -61,7 +61,7 @@ dependencies {
 This is optional, but strongly recommended for full performance on modern CPUs.
 
 You can peform most of the installation automatically by using the [scripts/install_fast_mcljava_linux_mac.sh](scripts/install_fast_mcljava_linux_mac.sh) script contained in this repository. 
-It will compile the mcl library (version v1.28) as well as the Java bindings, and move the shared library to the correct library folder.
+It will compile the mcl library as well as the Java bindings, and move the shared library to the correct library folder.
 As a prerequisite, you need to have the `libgmp-dev` package (i.e. libgmp and the corresponding headers) installed. You can also run the [install_mcljava_with_optimized_gmp.sh](scripts/install_mcljava_with_optimized_gmp.sh) script with an arbitrary second parameter in order to download and compile gmp from source and install it to /usr/local/{include,lib} for future use.
 You will also need `make` and `g++` (or `clang++` if using FreeBSD or OpenBSD).
 
@@ -86,12 +86,12 @@ The below commands are executed in the Developer Command Prompt for VS 2019 sinc
 Before you start with the actual installation, you need to make sure that x64 is selected as target architecure in the Command Prompt.
 For VS 2017 or later, this is done by executing `vcvarsall.bat x64` in the `C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\` folder (replace with your Visual Studio location). For VS 2015, the batch file will be in `C:\Program Files (x86)\Microsoft Visual Studio 15.0\VC\` instead.
 
-Now, we need to clone [Mcl](https://github.com/herumi/mcl) and [Cybozu_ext](https://github.com/herumi/cybozulib_ext). The repositories need to be in the same folder. Furthermore, we need to ensure that the correct version of Mcl is checked out. We currently use version v1.28.
+Now, we need to clone [Mcl](https://github.com/herumi/mcl) and [Cybozu_ext](https://github.com/herumi/cybozulib_ext). The repositories need to be in the same folder. Furthermore, we need to ensure that the correct version of Mcl is checked out. To set the version (vX.YZ) of mcl in the following snippet see [scripts/install_fast_mcljava_linux_mac.sh](https://github.com/cryptimeleon/mclwrap/blob/f46bfb7e8c18c9534aeabd68612071ae7642362f/scripts/install_fast_mcljava_linux_mac.sh#L2).
 ```
 git clone https://github.com/herumi/mcl.git
 git clone https://github.com/herumi/cybozulib_ext.git
 cd mcl
-git checkout v1.28
+git checkout vX.YZ
 ```
 
 Next, we build Mcl:
