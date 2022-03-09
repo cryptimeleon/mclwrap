@@ -113,10 +113,11 @@ make_wrap
 If you are wondering what is going with that `JAVA_HOME` path, the script seems to not like spaces in folder names so we are using DOS folder names which don't contain spaces.
 You can find out the DOS folder names by executing `dir /X`.
 
-Lastly, we need to move the compiled DLL to the correct path. 
-You can find it under `mcl\bin\mcljava.dll`.
-The target path should be printed in the console when running the Mclwrap tests (the first exception thrown).
-For me this was `C:\Users\<User>\.jdks\openjdk-15\bin`.
+Lastly, we need to move the compiled DLL to the correct path. This is basically a path that is in your system variable PATH.  
+You can find the dll that you have to move under `mcl\bin\mcljava.dll`.
+One way to find one of the target paths is to run the `.\gradlew test` for mclwrap. Then the PATH should be printed in the console in the first warning, because mclwrap cannot find the `mcljava.dll`, but lists all the places where it looked for it. One example is the path: `C:\Users\<User>\.jdks\openjdk-15\bin`, where the jdk may vary depending on your setup.
+The second option is to just look at your PATH (or extend it with a path of your choice) and but the `mcljava.dll` in one of the included paths.
+
 
 ## Miscellaneous Information
 
