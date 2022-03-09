@@ -115,7 +115,7 @@ You can find out the DOS folder names by executing `dir /X`.
 
 Lastly, we need to move the compiled DLL to the correct path. This is basically a path that is in your system variable PATH.  
 You can find the dll that you have to move under `mcl\bin\mcljava.dll`.
-One way to find one of the target paths is to run the .\gradlew test for mclwrap. Then the PATH should be printed in the console as the first exception thrown, because mclwrap cannot find the `mcljava.dll`. One example is the path: `C:\Users\<User>\.jdks\openjdk-15\bin`, where the jdk may vary depending on your setup.
+One way to find one of the target paths is to run the `.\gradlew test` for mclwrap. Then the PATH should be printed in the console in the first warning, because mclwrap cannot find the `mcljava.dll`, but lists all the places where it looked for it. One example is the path: `C:\Users\<User>\.jdks\openjdk-15\bin`, where the jdk may vary depending on your setup.
 The second option is to just look at your PATH (or extend it with a path of your choice) and but the `mcljava.dll` in one of the included paths.
 
 
